@@ -1,0 +1,452 @@
+/**
+ * Newly added global variables
+ */
+:root{
+    --gray-10: #f8f9fa;
+    --gray-20: #e9ecef;
+    --gray-30: #dee2e6;
+    --gray-40: #ced4da;
+    --gray-50: #adb5bd;
+    --gray-60: #6c757d;
+    --gray-70: #495057;
+    --gray-80: #343a40;
+    --gray-90: #212529;
+}
+/**
+ * Color extension classes
+ */
+/*--blue: #007bff;*/
+    .text-blue { color: var(--blue);}
+    .bg-blue { background-color: var(--blue);}
+    .border-blue {border-color: var(--blue)!important;}
+/*--indigo: #6610f2;*/
+    .text-indigo { color: var(--indigo);}
+    .bg-indigo { background-color: var(--indigo);}
+    .border-indigo {border-color: var(--indigo)!important;}
+/*--purple: #6f42c1;*/
+    .text-purple { color: var(--purple);}
+    .bg-purple { background-color: var(--purple);}
+    .border-purple {border-color: var(--purple)!important;}
+/*--pink: #e83e8c;*/
+    .text-pink { color: var(--pink);}
+    .bg-pink { background-color: var(--pink);}
+    .border-pink {border-color: var(--pink)!important;}
+/*--red: #dc3545;*/
+    .text-red { color: var(--red);}
+    .bg-red { background-color: var(--red);}
+    .border-red {border-color: var(--red)!important;}
+/*--orange: #fd7e14;*/
+    .text-orange { color: var(--orange);}
+    .bg-orange { background-color: var(--orange);}
+    .border-orange {border-color: var(--orange)!important;}
+/*--yellow: #ffc107;*/
+    .text-yellow { color: var(--yellow);}
+    .bg-yellow { background-color: var(--yellow);}
+    .border-yellow {border-color: var(--yellow)!important;}
+/*--green: #28a745;*/
+    .text-green { color: var(--green);}
+    .bg-green { background-color: var(--green);}
+    .border-green {border-color: var(--green)!important;}
+/*--teal: #20c997;*/
+    .text-teal { color: var(--teal);}
+    .bg-teal { background-color: var(--teal);}
+    .border-teal {border-color: var(--teal)!important;}
+/*--cyan: #17a2b8;*/
+    .text-cyan { color: var(--cyan);}
+    .bg-cyan { background-color: var(--cyan);}
+    .border-cyan {border-color: var(--cyan)!important;}
+/*--white: #fff;*/
+    .text-white { color: var(--white);}
+    .bg-white { background-color: var(--white);}
+    .border-white {border-color: var(--white)!important;}
+/*--gray: #6c757d;*/
+    .text-gray { color: var(--gray);}
+    .bg-gray { background-color: var(--gray);}
+    .border-gray {border-color: var(--gray)!important;}
+/*--gray-10: #f8f9fa;*/
+    .text-gray-10 { color: var(--gray-10);}
+    .bg-gray-10 { background-color: var(--gray-10);}
+    .border-gray-10 {border-color: var(--gray-10)!important;}
+/*--gray-20: #e9ecef;*/
+    .text-gray-20 { color: var(--gray-20);}
+    .bg-gray-20 { background-color: var(--gray-20);}
+    .border-gray-20 {border-color: var(--gray-20)!important;}
+/*--gray-30: #dee2e6;*/
+    .text-gray-30 { color: var(--gray-30);}
+    .bg-gray-30 { background-color: var(--gray-30);}
+    .border-gray-30 {border-color: var(--gray-30)!important;}
+/*--gray-40: #ced4da;*/
+    .text-gray-40 { color: var(--gray-40);}
+    .bg-gray-40 { background-color: var(--gray-40);}
+    .border-gray-40 {border-color: var(--gray-40)!important;}
+/*--gray-50: #adb5bd;*/
+    .text-gray-50 { color: var(--gray-50);}
+    .bg-gray-50 { background-color: var(--gray-50);}
+    .border-gray-50 {border-color: var(--gray-50)!important;}
+/*--gray-60: #6c757d;*/
+    .text-gray-60 { color: var(--gray-60);}
+    .bg-gray-60 { background-color: var(--gray-60);}
+    .border-gray-60 {border-color: var(--gray-60)!important;}
+/*--gray-70: #495057;*/
+    .text-gray-70 { color: var(--gray-70);}
+    .bg-gray-70 { background-color: var(--gray-70);}
+    .border-gray-70 {border-color: var(--gray-70)!important;}
+/*--gray-80: #343a40;*/
+    .text-gray-80 { color: var(--gray-80);}
+    .bg-gray-80 { background-color: var(--gray-80);}
+    .border-gray-80 {border-color: var(--gray-80)!important;}
+/*--gray-90: #212529;*/
+    .text-gray-90 { color: var(--gray-90);}
+    .bg-gray-90 { background-color: var(--gray-90);}
+    .border-gray-90 {border-color: var(--gray-90)!important;}
+/*--gray-dark: #343a40;*/
+    .text-gray-dark { color: var(--gray-dark);}
+    .bg-gray-dark { background-color: var(--gray-dark);}
+    .border-gray-dark {border-color: var(--gray-dark)!important;}
+/**
+ * Used for the Sidebar view
+ */
+@media screen and (min-width:768px){
+	.coverIt .hideThis{
+		display:none;
+	}
+	.coverIt:hover .hideThis{
+		display:inline-block;
+	}
+	.coverIt .nav-item:hover,.coverIt .dropdown-item:hover{
+  		box-shadow: inset 0 0 100px 100px rgba(0,0,0,0.1);
+	}
+	.coverIt .nav-link:hover,.coverIt .drowdown-item:hover{
+		filter: brightness(1);
+	}
+	.coverIt .nav-link:not(:hover),.coverIt .drowdown-item:not(:hover){
+		filter: brightness(0.95);
+	}
+}
+/**
+ * Smart switch classes for sticky-to-fixed
+ */
+@media screen and (min-width:768px) {
+	.sticky-md-top {
+		position: -webkit-sticky;
+		position: sticky;
+ 		top: 0;
+ 		z-index: 1020;
+	}	
+	.position-md-fixed {
+		position: fixed !important;
+	}
+}
+@media screen and (max-width:768px){
+	.sticky-sm-top{
+ 		position: -webkit-sticky;
+ 		position: sticky;
+ 		top: 0;
+ 		z-index: 1020;
+	}
+	.position-sm-fixed{
+  		position: fixed !important;
+	}
+}
+/**
+ * Static z-index classes. Over-the-top is the origo class, m-1 is below, p-1 is above
+ */
+.over-the-top-p-2 {
+	z-index: 1050 !important; 
+}
+.over-the-top-p-1 {
+	z-index: 1040 !important; 
+}
+.over-the-top {
+	z-index: 1030 !important; 
+}
+.over-the-top-m-1 {
+	z-index: 1020 !important; 
+}
+.over-the-top-m-2 {
+	z-index: 1010 !important; 
+}
+/**
+ * Used for <a> tags to not appear as normal links
+ */
+.navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link {
+    color: inherit;
+}
+a {
+    color:inherit;
+    cursor: pointer;
+}
+a:hover {
+    color:inherit;
+    text-decoration:none;
+}
+/**
+ * Lets selects to be styled with Font Awesome
+ */
+select {
+    font-family: 'FontAwesome', Verdana;
+}
+/**
+ * BlockQoutes styles
+ */
+blockquote {
+	overflow: hidden;
+	padding-right: 1.5em;
+	padding-left: 1.5em;
+	margin-left: 0;
+	margin-right: 0;
+	font-style: italic;
+	border-left: 5px solid #ccc;
+}
+figure.table table{
+	width: 100%;
+}
+/**
+ * Specific style for navigation bar
+ */
+@media (min-width: 780px) and (max-width: 1280px){
+	.hideOnSmall .hideThis{
+		display:none;
+	}
+	.hideOnSmall:hover .hideThis{
+		display:inline-block;
+	}
+}
+/**
+ * Print view styles
+ */
+@media screen {
+	#printSection {
+		display: none;
+	}
+}
+@media print {
+	body * {
+		visibility:hidden;
+	}
+	#printSection, #printSection * {
+		visibility:visible;
+	}
+	#printSection {
+		position:absolute;
+		left:0;
+		top:0;
+	}
+}
+/**
+ * Modal notification
+ */
+/*.modal-bottom {
+    position: absolute;
+    padding: 20px;
+    width: auto;
+    border-radius: 10px;
+}
+
+.modal-bottom-content {
+    position: fixed;
+    bottom: 10px; 
+    left: 50%;
+    margin: 0 auto;
+    width: auto;
+    display: inline-block;
+    background-color: #28a745;
+    color: #ffffff;
+}
+*/
+
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #04AA6D; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+hr.dashed {
+  border-top: 2px dashed #bbb;
+}
+
+ul li {
+  position: relative;
+	padding-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li.arrow:before{
+   content: '';
+   position: absolute;
+   border-right:3px solid black;
+   border-bottom:3px solid black;
+   width:10px;
+   height:10px;
+   top: calc(50% - 6px);
+   left: -20px;
+   transform: translateY(-50%) rotate(-45deg);
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  background-color: #474e5d;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin-left: -3px;
+}
+
+/* Container around content */
+.timeline-container {
+  padding: 10px 0px;
+  position: relative;
+  background-color: inherit;
+  width: 100%;
+}
+
+/* The circles on the timeline */
+.timeline-container::after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: -9px;
+  background-color: white;
+  border: 4px solid #FF9F55;
+  top: 15px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Place the container to the left */
+.timeline-container-left {
+  left: 0;
+}
+
+/* Place the container to the right */
+.timeline-container-right {
+  left: 50%;
+}
+
+/* Add arrows to the left container (pointing right) */
+.timeline-container-left::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  right: 30px;
+  border: medium solid #E7E9EB;
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent #e1e2e3;
+}
+
+/* Add arrows to the right container (pointing left) */
+.timeline-container-right::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  left: 30px;
+  border: medium solid #E7E9EB;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent #e1e2e3 transparent transparent;
+}
+
+/* Fix the circle for containers on the right side */
+.timeline-container-right::after {
+  left: -16px;
+}
+
+/* The actual content */
+.timeline-container-content {
+  padding: 5px 5px;
+  background-color: #E7E9EB;
+  border: 2px solid #e1e2e3;
+  position: relative;
+  border-radius: 6px;
+}
+
+/* Media queries - Responsive timeline on screens less than 600px wide */
+@media screen and (max-width: 600px) {
+/* Place the timelime to the left */
+  .timeline::after {
+    left: 31px;
+  }
+
+/* Full-width containers */
+  .timeline-container {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+  }
+
+/* Make sure that all arrows are pointing leftwards */
+  .timeline-container::before {
+    left: 60px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+  }
+
+/* Make sure all circles are at the same spot */
+  .timeline-container-left::after, .right::after {
+    left: 15px;
+  }
+
+/* Make all right containers behave like the left ones */
+  .timeline-container-right {
+    left: 0%;
+  }
+}

@@ -1,0 +1,27 @@
+Version Notice:
+
+**Version 2.01.02 - PLANNED**
+    - Introducing "Quick Notes" under the "Jegyzetek" menu for convenient note-taking.
+    - Dashboard upgrade inspired by the article at [AnyChart](https://www.anychart.com/blog/2017/12/06/pie-chart-create-javascript/).
+    - Language switch functionality, including translation files for multiple languages and centralized translation classes for consistent output.
+    - Enhanced Calendar features, including a to-do list, user view, and organization view calendars.
+    - Introduction of personal file storage.
+
+**Version 2.01.01 - DEPLOYED**
+    - Calendar with events, powered by [jQueryScript](https://www.jqueryscript.net/time-clock/event-calendar-evo.html).
+      - Added the "Add Event" button for ease of use.
+      - Revamped style and configuration for a better user experience.
+    - Visual upgrade across pages and forms, with improved loading functionality, descriptions for each page, and enhanced aesthetics.
+    - Backend optimization, resulting in improved page loading times.
+    - Thorough validation to ensure all file paths are sourced from a global variable.
+    - Introduction of a dedicated Devices feature:
+      - Device table and parameters creation.
+      - Device page creation and seamless integration with file storage.
+      - Secure device password storage.
+    - Introduction of Passtorage:
+      - Password storage table and parameters creation.
+      - Password storage page creation and integration with file storage.
+      - Password storage linkage for easy access to passwords.
+
+**Version 2.01.01 - DISCARDED**
+    - Discarded the creation of dynamic tables for param_table, param_col, and param_val in favor of more efficient alternatives.
