@@ -91,8 +91,6 @@ const iAjaxParams = (iAjaxParams = Object) => class extends iAjaxParams
             get( ) {
                 return [
                     "Administrative/Tools/Logs"
-                    ,"Administrative/Tools/Knowledge_Type"
-                    ,"Administrative/Tools/Company_Site_Type"
                 ];
             }
         } );
@@ -159,8 +157,6 @@ const iAjaxParams = (iAjaxParams = Object) => class extends iAjaxParams
                     ,"tableAdminMembership"
                     ,"tableAccessAccess"
                     ,"tableAdminLogs"
-                    ,"tableAdminCompanySiteType"
-                    ,"tableAdminKnowledgeType"
                     ,"tableHomeUsers"
                 ];
             }

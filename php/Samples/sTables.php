@@ -11,16 +11,11 @@ use Toolkit\{
 };
 
 class sTables implements
-    sTables\ACCESS
-    ,sTables\ADMIN
-    ,sTables\COMPANY
-    ,sTables\PASSTORAGE
+    sTables\ADMIN
     ,sTables\USERS
-    ,sTables\KNOWLEDGE
-    ,sTables\HARDWARE
 {
 /** @var const ACTIONS Array of actions */
-    const ACTIONS = array('Edit', 'View', 'Delete', 'Reset', 'Filter2Company', 'Upload');
+    const ACTIONS = array('Edit', 'View', 'Delete', 'Reset', 'Upload');
 /** @var const ENABLED_ACTIONS Array of enabled action by default */
     const ENABLED_ACTIONS = array('View');
 

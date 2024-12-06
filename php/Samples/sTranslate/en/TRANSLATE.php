@@ -65,8 +65,6 @@ interface TRANSLATE
                     <b>Manage user groups</b> - Create and manage user groups<br />
                     <b>Manage administrative tools</b> - Access to special administrative functions<br />
                     <b>View the interface of registered users</b> - View public data of registered users<br />
-                    <b>Access rights interface</b> - Add and manage access data<br />
-                    <b>Hardware interface access</b> - Add and manage hardware<br />
                     <b>Edit profile</b> - Can the user edit their own profile<br />
                     <b>Login</b> - Active state of the user, if prohibited, the user is inactive<br />
                     <br />
@@ -121,10 +119,6 @@ interface TRANSLATE
                 ,'title' => ''
                 ,'content' => '
                     <b>User Events </b> View recent user activities<br />
-                    <b>Knowledge Article Types </b> Manage knowledge article types (add, delete, modify)<br />
-                    <b>Site Types </b> Manage site types (add, delete, modify)<br />
-                    <b>Import Data from Emu </b>
-                    <b>Reset Database </b> Discard the current database and rebuild it<br />
                 '
             )
             ,"action" => array(

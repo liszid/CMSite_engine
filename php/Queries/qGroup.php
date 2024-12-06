@@ -69,13 +69,6 @@ class qGroup
 				,mngHuntgroups=:mngHuntgroups/**/
 				,mngTools=:mngTools/**/
 				,canUsers=:canUsers/**/
-				,canCompany=:canCompany/**/
-				,canKnowledge=:canKnowledge/**/
-				,canAccess=:canAccess/**/
-				,canPasstorage=:canPasstorage/**/
-				,canHardware=:canHardware/**/
-				,canInformations=:canInformations/**/
-				,canCalendar=:canCalendar/**/
 				,canEdit=:canEdit/**/
 				,canLogin=:canLogin/**/
 			WHERE

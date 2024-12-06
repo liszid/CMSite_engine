@@ -33,8 +33,6 @@ if (
 /** @var array $nonModal Indicates which actions should be shown as is*/
     $nonModal = array(
         'Logs'
-        ,'Knowledge_Type'
-        ,'Company_Site_Type'
     );
 /** @var array $printView Sets actions to get print view*/
     $printView = array();

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 /** @var array $GLOBALS['Upload'] Upload function needs it */
 $GLOBALS['Upload'] = array(
-	41 => array(
+/*
+  	41 => array(
 		'name' => 'knowledgeFileName'
 		,'type' => 'knowledgeFileType'
 		,'tmp_name' => 'knowledgeFileTmpName'
@@ -24,4 +25,5 @@ $GLOBALS['Upload'] = array(
 		,'className' => 'Data\\dHardware_File'
 		,'generated_file_path' => 'hardwareFilePath'
 	)
+*/
 );

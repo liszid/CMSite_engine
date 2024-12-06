@@ -20,12 +20,7 @@ class sRoles
         if (isset($array)) {
             $prompt = '';
 /** @var array $elementArray Array of privileges used */
-            $elementArray = array('canAdministrative','canUsers','canCompany','canKnowledge','canAccess','canPasstorage','canHardware','canInformations','canCalendar');
-
-            foreach ($elementArray as $e) {
-                $prompt .= sActivity::promptActivity( array("desc" => sTranslate::TRANSLATE[sTranslate::ROLE[$e]['respective']]['navbar'], "data" => $array[$e]));
-            }
-
+            $elementArray = array('canAdministrative','canUsers');
             return '
                 <ul class="list-group">
                     <li class="list-group-item text-muted">
