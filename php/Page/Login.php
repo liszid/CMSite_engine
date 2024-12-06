@@ -9,7 +9,6 @@ use Samples\ {
 	sFrame
 	,sForm
 	,sRedirect
-	,sActivity
 	,sTranslate
 };
 use Data\ {
@@ -27,7 +26,6 @@ if (! Valid::vArray($sessionUsr)) {
 			$userVar = $dCombined->Select($selectLogin[0], 'User_Full');
 			if (isset($userVar[0]) && Valid::vArray($userVar[0])) {
 				if ($userVar[0]['canLogin'] > 0) {
-					sActivity::Set($userVar[0]);
 					$returnText = sTranslate::ACTION['Success']['content'];
 				}
 			}

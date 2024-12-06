@@ -417,7 +417,7 @@ evntCopyDisabled() {
                         var dataBlob = dataUriToBlob(dataUri);
                         forceBlobDownload(dataBlob, fileName);
                     } catch (e) {
-                        alert(e)
+                        alert(e);
                     }
                 });
             })(links[index]);

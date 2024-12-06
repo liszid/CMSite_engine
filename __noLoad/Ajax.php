@@ -10,7 +10,6 @@ use Toolkit\ {
 	,Check
 	,Valid
 };
-use Samples\sActivity;
 use Data\dCombined;
 use Database\Table;
 
@@ -21,9 +20,6 @@ $formPage = Check::isEither(array('post' => array('a', 'x'), 'get' => 'p', 'fall
 if (isset($_SESSION['User'])) {
 	$dCombined = new dCombined();
 	$userVar = $dCombined->Select($_SESSION['User'], 'User_Full');
-	if (isset($userVar[0])) {
-		sActivity::Set($userVar[0]);
-	}
 }
 
 /** @var array $sessionUsr Globally useable, shorthand for $_SESSION['User'] */
@@ -31,9 +27,6 @@ $sessionUsr = (isset($_SESSION['User'])) ? $_SESSION['User'] : array();
 
 /** @var array $sessionId Globally useable, shorthand for $_SESSION['User']['userId'] */
 $sessionId = (!empty($sessionUsr)) ? $sessionUsr['userId'] : 0;
-
-/** @var array $sessionAct Globally useable, shorthand for $_SESSION['User']['Activity'] */
-$sessionAct = (!empty($sessionUsr)) ? $sessionUsr['Activity'] : array();
 
 /** Checks if database tables are all set */
 if (!isset($_SESSION['Database'])) {

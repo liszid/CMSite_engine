@@ -85,33 +85,4 @@ interface ADMIN
         ,"button" => array()
     );
 
-    const ADMIN_COMPANY_SITE_TYPE = array(
-        "tableId" => "tableAdminCompanySiteType"
-        ,"tableRoot" => "Administrative/Tools/Company_Site_Type"
-        ,"tableRole" => "mngTools"
-        ,"data" => array(
-            "companySiteTypeId" => array("text" => "Id", "tooltip" => "")
-            ,"companySiteTypeName" => array("text" => "Megnevezés", "tooltip" => "")
-            ,"companySiteTypeDate" => array("text" => "Dátum", "tooltip" => "")
-        )
-        ,"button" => array(
-            array('color' => 'warning', 'fa' => 'pencil', 'action' => 'Edit', 'tooltip' => 'Szerkesztés', 'level' => 1)
-            ,array('color' => 'danger', 'fa' => 'trash', 'action' => 'Delete', 'tooltip' => 'Törlés', 'level' => 1)
-        )
-    );
-
-    const ADMIN_KNOWLEDGE_TYPE = array(
-        "tableId" => "tableAdminKnowledgeType"
-        ,"tableRoot" => "Administrative/Tools/Knowledge_Type"
-        ,"tableRole" => "mngTools"
-        ,"data" => array(
-            "knowledgeTypeId" => array("text" => "Id", "tooltip" => "")
-            ,"knowledgeTypeName" => array("text" => "Megnevezés", "tooltip" => "")
-            ,"knowledgeTypeDate" => array("text" => "Dátum", "tooltip" => "")
-        )
-        ,"button" => array(
-            array('color' => 'warning', 'fa' => 'pencil', 'action' => 'Edit', 'tooltip' => 'Szerkesztés', 'level' => 1)
-            ,array('color' => 'danger', 'fa' => 'trash', 'action' => 'Delete', 'tooltip' => 'Törlés', 'level' => 1)
-        )
-    );
 }

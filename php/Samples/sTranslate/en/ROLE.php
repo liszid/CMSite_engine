@@ -57,62 +57,6 @@ const ROLE = array(
 ,'desc' => '<b>[Users]</b> permission'
 ,'select_type' => 'state'
 )
-,'canCalendar' => array(
-'color' => self::ROLE_CARD_COLOR
-,'header' => 'Available function'
-,'respective' => 'Calendar'
-,'short' => 'cCal'
-,'desc' => '<b>[Calendar]</b> permission'
-,'select_type' => 'state'
-)
-,'canCompany' => array(
-'color' => self::ROLE_CARD_COLOR
-,'header' => 'Available function'
-,'respective' => 'Company'
-,'short' => 'cC'
-,'desc' => '<b>[Customers]</b> privilege'
-,'select_type' => 'access'
-)
-,'canInformations' => array(
-'color' => self::ROLE_CARD_COLOR
-,'header' => 'Available function'
-,'respective' => 'Informations'
-,'short' => 'cI'
-,'desc' => '<b>[Informations]</b> permission'
-,'select_type' => 'access'
-)
-,'canKnowledge' => array(
-'color' => self::ROLE_CARD_COLOR
-,'header' => 'Available function'
-,'respective' => 'Informations/Knowledge'
-,'short' => 'cK'
-,'desc' => '<b>[Knowledge Article]</b> permission'
-,'select_type' => 'access'
-)
-,'canAccess' => array(
-'color' => self::ROLE_CARD_COLOR
-,'header' => 'Available function'
-,'respective' => 'Informations/Access'
-,'short' => 'cP'
-,'desc' => '<b>[Access]</b> privilege'
-,'select_type' => 'access'
-)
-,'canPasstorage' => array(
-'color' => self::ROLE_CARD_COLOR
-,'header' => 'Available function'
-,'respective' => 'Informations/Passtorage'
-,'short' => 'cI'
-,'desc' => '<b>[Pastorage]</b> permission'
-,'select_type' => 'access'
-)
-,'canHardware' => array(
-'color' => self::ROLE_CARD_COLOR
-,'header' => 'Available function'
-,'respective' => 'Informations/Device'
-,'short' => 'cHw'
-,'desc' => '<b>[Hardware]</b> permission'
-,'select_type' => 'state'
-)
 ,'canEdit' => array(
 'color' => self::ROLE_CARD_COLOR
 ,'header' => 'Available function'

@@ -77,9 +77,6 @@ const iAjaxParams = (iAjaxParams = Object) => class extends iAjaxParams
                 return [
                     ["Login", "sm"]
                     ,["Logout", "sm"]
-                    ,["Informations/Knowledge/Add", "xl"]
-                    ,["Informations/Knowledge/View", "xl"]
-                    ,["Informations/Knowledge/Edit", "xl"]
                     ,["Administrative/Tools/Logs", "xl"]
                 ];
             }
@@ -93,11 +90,7 @@ const iAjaxParams = (iAjaxParams = Object) => class extends iAjaxParams
         {
             get( ) {
                 return [
-                    "Company/Company/Filter2Company"
-                    ,"Company/Site/Filter2Company"
-                    ,"Administrative/Tools/Logs"
-                    ,"Administrative/Tools/Knowledge_Type"
-                    ,"Administrative/Tools/Company_Site_Type"
+                    "Administrative/Tools/Logs"
                 ];
             }
         } );
@@ -147,20 +140,6 @@ const iAjaxParams = (iAjaxParams = Object) => class extends iAjaxParams
                     ,["admHuntgroupsEdit", "x=Administrative&y=Huntgroups&z=Edit&Save=", "button", [], "modalDialog"]
                     ,["admMemsEdit", "x=Administrative&y=Users&z=Edit&Save=", "button", [], "modalDialog"]
                     ,["admUsrPass", "x=Administrative&y=Users&z=Reset&Save=", "button", [], "modalDialog"]
-                    ,["usrKnowledgeKnowledgeAdd", "x=Informations&y=Knowledge&z=Add&Save=", "button", [], "modalDialog"]
-                    ,["usrKnowledgeKnowledgeEdit", "x=Informations&y=Knowledge&z=Edit&Save=", "button", [], "modalDialog"]
-                    ,["usrKnowledgeKnowledgeUpload", "x=Informations&y=Knowledge&z=Upload&Save=", "button", [], "modalDialog"]
-                    ,["usrAccessAdd", "x=Informations&y=Access&z=Add&Save=", "button", [], "modalDialog"]
-                    ,["usrAccessEdit", "x=Informations&y=Access&z=Edit&Save=", "button", [], "modalDialog"]
-                    ,["usrCmpCmpAdd", "x=Company&y=Company&z=Add&Save=", "button", [], "modalDialog"]
-                    ,["usrCmpCmpEdit", "x=Company&y=Company&z=Edit&Save=", "button", [], "modalDialog"]
-                    ,["usrCmpSiteAdd", "x=Company&y=Site&z=Add&Save=", "button", [], "modalDialog"]
-                    ,["usrCmpSiteEdit", "x=Company&y=Site&z=Edit&Save=", "button", [], "modalDialog"]
-                    ,["usrInfosPasstorageAdd", "x=Informations&y=Passtorage&z=Add&Save=", "button", [], "modalDialog"]
-                    ,["usrInfosPasstorageEdit", "x=Informations&y=Passtorage&z=Edit&Save=", "button", [], "modalDialog"]
-                    ,["usrInfosDeviceAdd", "x=Informations&y=Device&z=Add&Save=", "button", [], "modalDialog"]
-                    ,["usrInfosDeviceEdit", "x=Informations&y=Device&z=Edit&Save=", "button", [], "modalDialog"]
-                    ,["usrCalendarAdd", "x=Plans&y=Calendar&z=Add&Save=", "button", [], "modalDialog"]
                 ];
             }
         } );
@@ -178,18 +157,7 @@ const iAjaxParams = (iAjaxParams = Object) => class extends iAjaxParams
                     ,"tableAdminMembership"
                     ,"tableAccessAccess"
                     ,"tableAdminLogs"
-                    ,"tableAdminCompanySiteType"
-                    ,"tableAdminKnowledgeType"
                     ,"tableHomeUsers"
-                    ,"tableKnowledgeKnowledge"
-                    ,"tableCompanyCompany"
-                    ,"tableCompanySite"
-                    ,"tableCompanyFilterCompanySite"
-                    ,"tableCompanyFilterPasstorage"
-                    ,"tableCompanyFilterKnowledge"
-                    ,"tableCompanyFilterDevice"
-                    ,"tableInformationsPasstorage"
-                    ,"tableInformationsDevice"
                 ];
             }
         });

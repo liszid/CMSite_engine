@@ -45,7 +45,6 @@ class sSite
     {
         self::$sessionUsr   = (isset($_SESSION['User']))? $_SESSION['User'] : array();
         self::$sessionId    = (! empty(self::$sessionUsr))? self::$sessionUsr['userId'] : 0;
-        self::$sessionAct   = (! empty(self::$sessionUsr))? self::$sessionUsr['Activity'] : array();
         return true;
     }
 
@@ -125,20 +124,6 @@ class sSite
 				$navName = "Administrative";
 				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Users', 'Groups', 'Huntgroups', 'Tools'), 'Desc' => sTranslate::Prompt($navName));
 			}
-            if ((int)self::$sessionUsr['canCalendar'] > 0) {
-				$navName = "Plans";
-				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Calendar', 'Kanban', 'Groceries'), 'Desc' => sTranslate::Prompt($navName));
-			}
-			if ((int)self::$sessionUsr['canInformations'] > 0) {
-				$navName = "Informations";
-				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Knowledge', 'Device', 'Passtorage', 'Access'), 'Desc' => sTranslate::Prompt($navName));
-			}
-/*
-			if ((int)self::$sessionUsr['canCompany'] > 0) {
-				$navName = "Company";
-				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Company', 'Site'), 'Desc' => sTranslate::Prompt($navName));
-			}
-*/
 			$navName = "Profile";
 			$navArray[] = array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName));
 		}

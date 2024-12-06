@@ -106,9 +106,7 @@ class sRedirect
             if (isset($array['update']) && $array['update']) {
                 $dUser = new dUser;
                 $dUser::Reload($array['id']);
-            } elseif (isset($array['login']) && $array['login']) {
-                sActivity::Set(intval($array['id']));
-            }
+            } 
             if (isset($array['redirect']['success'])) {
                 $redirectArray['script'] = $array['redirect']['success'];
             }

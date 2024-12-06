@@ -21,7 +21,6 @@ use Samples\
     ,sForm
     ,sProfile
     ,sRedirect
-    ,sActivity
     ,sTranslate
 };
 
@@ -39,7 +38,6 @@ if (isset($sessionUsr['userId'])) {
         $returnText = sTranslate::ACTION['Fail']['content'];
 
         if ($dUser::Update($_POST, Check::isPost('y'))) {
-            sActivity::Set(($dCombined->Select($sessionUsr,'User_Full'))[0]);
             $returnText = sTranslate::ACTION['Success']['content'];
         }
 
@@ -70,8 +68,6 @@ if (isset($sessionUsr['userId'])) {
                         '.$modalText.'
                     </div>
                     <div class="col-md-4">
-                        '.(sActivity::Prompt($sessionAct)).'
-                        <br />
                         '.(sRoles::Prompt($sessionUsr)).'
                     </div>
                 </div>

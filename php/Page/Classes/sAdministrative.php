@@ -19,10 +19,6 @@ use Data\{
     ,dCombined
     ,dTools
     ,dLog
-    ,dKnowledge
-    ,dKnowledge_File
-    ,dKnowledge_Type
-    ,dCompany_Site_Type
 };
 
 use Samples\{
@@ -49,14 +45,6 @@ class sAdministrative {
     protected static $dTools;
 /** @var object $dLog dLog class object */
     protected static $dLog;
-/** @var object $dKnowledge dKnowledge class object */
-    protected static $dKnowledge;
-/** @var object $dKnowledge_File dKnowledge_File class object */
-    protected static $dKnowledge_File;
-/** @var object $dKnowledge_Type dKnowledge_Type class object */
-    protected static $dKnowledge_Type;
-/** @var object $dCompany_Site_Type dCompany_Site_Type class object */
-    protected static $dCompany_Site_Type;
 /**
  * Sets the class object : dUser
  *
@@ -128,42 +116,6 @@ class sAdministrative {
     protected static function setDLog()
     {
         self::$dLog = new dLog();
-    }
-/**
- * Sets the class object : dTools
- *
- * @author Liszi Dániel
- */
-    protected static function setDKnowledge()
-    {
-        self::$dKnowledge = new dKnowledge();
-    }
-/**
- * Sets the class object : dTools
- *
- * @author Liszi Dániel
- */
-    protected static function setDKnowledge_File()
-    {
-        self::$dKnowledge_File = new dKnowledge_File();
-    }
-/**
- * Sets the class object : dTools
- *
- * @author Liszi Dániel
- */
-    protected static function setDKnowledge_Type()
-    {
-        self::$dKnowledge_Type = new dKnowledge_Type();
-    }
-/**
- * Sets the class object : dTools
- *
- * @author Liszi Dániel
- */
-    protected static function setDCompany_Site_Type()
-    {
-        self::$dCompany_Site_Type = new dCompany_Site_Type();
     }
 /**
  * User interactions/events/actions are handled here
@@ -269,8 +221,6 @@ class sAdministrative {
         $returnString = '';
         $nestedPages = array(
             'Logs'
-            ,'Knowledge_Type'
-            ,'Company_Site_Type'
         );
 
         if (isset($_POST['c']) && in_array($_POST['c'], $nestedPages)) {
@@ -280,12 +230,6 @@ class sAdministrative {
                 case 'Logs':
                     $returnString .= $wclass::Logs($array);
                     break;
-                case 'Knowledge_Type':
-                    $returnString .= $wclass::Knowledge_Type($array);
-                    break;
-                case 'Company_Site_Type':
-                    $returnString .= $wclass::Company_Site_Type($array);
-                    break;
             }
         } else {
             if (Valid::vString($array['path'])) {
@@ -293,9 +237,6 @@ class sAdministrative {
                     sCard::Collapsible(sTranslate::Info($array['path']))
                     .'<div class="card-columns m-2">'
                         .sCard::Blank(array('color' => 'secondary','title' => 'Felhasználói események','button' => sForm::Button(array('color' => 'success','fa' => 'search','text' => ' Megtekintés','path' => $array['path'].'/Logs','nonModal' => true))))
-                        .sCard::Blank(array('color' => 'secondary','title' => 'Tudáscikk típusok','button' => sForm::Button(array('color' => 'success','fa' => 'search','text' => ' Megtekintés','path' => $array['path'].'/Knowledge_Type','nonModal' => true))))
-                        .sCard::Blank(array('color' => 'secondary','title' => 'Telephely típusok','button' => sForm::Button(array('color' => 'success','fa' => 'search','text' => ' Megtekintés','path' => $array['path'].'/Company_Site_Type','nonModal' => true))))
-//                      .sCard::Blank(array('color' => 'secondary','title' => 'Adatbázis alaphelyzetbe állítása','button' => sForm::Button(array('color' => 'danger','fa' => 'trash','text' => ' Végrehajt','path' => $array['path'].'/Delete','dp' => 'Database'))))
                     .'</div>';
 
             }

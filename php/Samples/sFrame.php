@@ -60,14 +60,8 @@ class sFrame {
             $bgColor = $GLOBALS['Site']['Style']['BGColor'][$bgColor];
             $textColor = $GLOBALS['Site']['Style']['Text']['Body'];
             $headerTextColor = $GLOBALS['Site']['Style']['Text']['Header'];
-//position-fixed over-the-top-m-1
             $returnString = '
                 <div class="container-fluid col-12 bg-'.$bgColor.' pt-3">'.''
-/*
-                    <div class="text-'.$headerTextColor.' pl-5 py-2">
-                        '.sTranslate::Title($array['path']).'
-                    </div>
-*/
                 .'</div>
                 <div class="mx-md-3 row pt-1 justify-content-center">
                     <div class="d-none d-md-block col-11 pt-2">
