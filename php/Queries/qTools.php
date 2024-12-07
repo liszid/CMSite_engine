@@ -41,7 +41,7 @@ class qTools
 	private static function Delete()
 	{
 		return array(
-			'Database' => "DROP DATABASE `plfemnag_tattoo`"
+			'Database' => "DROP DATABASE `plfmnag`"
 		);
 	}
 }

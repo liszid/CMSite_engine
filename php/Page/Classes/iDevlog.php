@@ -20,7 +20,7 @@ interface iDevlog
         <div style="padding-left: 1em;">
             <b>Updates</b>
              <ul>
-                <li class="arrow">Rekeased old functionalities</li> 
+                <li class="arrow">Removed old functionalities</li> 
             </ul>
         </div>
         ';

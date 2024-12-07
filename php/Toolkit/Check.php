@@ -103,7 +103,6 @@ class Check
 	public static function isDataSet(array $haystack, string $needle, string $true, string $false): string
 	{
 		$true = (isset($true) && ! empty($true))? $true : $haystack[$needle];
-		
 		return (
 			( isset($haystack[$needle]))
 				? (string) $true

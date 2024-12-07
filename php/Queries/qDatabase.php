@@ -26,7 +26,7 @@ class qDatabase
 	{
 		return array(
 			'Database' => "
-				CREATE DATABASE IF NOT EXISTS `plfemnag_tattoo`"
+				CREATE DATABASE IF NOT EXISTS `plfmnag`"
 			,0 => "
 				CREATE TABLE IF NOT EXISTS `User`(
 					userId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -115,7 +115,7 @@ class qDatabase
 				INSERT INTO `User`(
 					userName, pWord, userThumbnail, userFirstName, userLastName, userContEmail, userContPhone, userContSite, isDelete
 				) VALUES
-					('admin', md5('ksys'), 'cogs', 'Admin', '', 'admin@p-l1fem4nag3r.hu/', '0036301234567', 'Törökbálint', 0)"
+					('root', md5('root'), 'cogs', 'Root', '', 'admin@plfmnag.hu/', '0036201234567', 'Budapest', 0)"
 			,1 => "
 				INSERT INTO `Group`(
 					groupName, groupDesc, canAdministrative, mngGroups, mngHuntgroups, mngUsers, mngTools, canUsers, canEdit, canLogin, isDelete
