@@ -79,7 +79,6 @@ class sForm
     public static function Input(array $array): string
     {
         $returnString = $input = '';
-
         $array['inputId'] = (isset($array['origo']) && isset($array['data'])) ? $array['origo'].'-'.$array['data'] : '';
         $array['desc'] = Check::isDataSet($array, 'desc', '', '');
         $array['value'] = Check::isDataSet($array, 'value', '', '');

@@ -68,8 +68,8 @@ class Huntgroups extends \Page\Classes\sAdministrative
                     <div class="form-group col p-0">
                         <div class="col-12 row">'
                             .sForm::Input(array('origo' => 'admHuntgroupsEdit', 'data' => 'huntgroupId', 'desc' => 'Id', 'value' => $Huntgroup['huntgroupId'], 'type' => 'hidden'))
-                            .sForm::Input(array('origo' => 'admHuntgroupsEdit', 'data' => 'huntgroupName', 'desc' => 'Név', 'value' => $Huntgroup['huntgroupName'], 'must-fill' => true))
-                            .sForm::Input(array('origo' => 'admHuntgroupsEdit', 'data' => 'huntgroupDesc', 'desc' => 'Leírás', 'value' => $Huntgroup['huntgroupDesc']))
+                            .sForm::Input(array('origo' => 'admHuntgroupsEdit', 'data' => 'huntgroupName', 'desc' => 'Név', 'value' => $Huntgroup['huntgroupName'],'type' => 'text', 'must-fill' => true))
+                            .sForm::Input(array('origo' => 'admHuntgroupsEdit', 'data' => 'huntgroupDesc', 'desc' => 'Leírás', 'value' => $Huntgroup['huntgroupDesc'], 'type' => 'text'))
                             .self::Prompt_Checkbox($array)
                         .'</div>
                     </div>
@@ -105,8 +105,8 @@ class Huntgroups extends \Page\Classes\sAdministrative
                 <div class="form-group col p-0">
                     <div class="col-12 row">
                         '.sForm::Input(array('origo' => 'admHuntgroupsView', 'data' => 'huntgroupId', 'desc' => 'Id', 'value' => $Huntgroup['huntgroupId'], 'type' => 'hidden')).'
-                        '.sForm::Input(array('origo' => 'admHuntgroupsView', 'data' => 'huntgroupName', 'desc' => 'Név', 'value' => $Huntgroup['huntgroupName'],  'disabled' => true)).'
-                        '.sForm::Input(array('origo' => 'admHuntgroupsView', 'data' => 'huntgroupDesc', 'desc' => 'Leírás', 'value' => $Huntgroup['huntgroupDesc'], 'disabled' => true)).'
+                        '.sForm::Input(array('origo' => 'admHuntgroupsView', 'data' => 'huntgroupName', 'desc' => 'Név', 'value' => $Huntgroup['huntgroupName'],  'type' => 'text', 'disabled' => true)).'
+                        '.sForm::Input(array('origo' => 'admHuntgroupsView', 'data' => 'huntgroupDesc', 'desc' => 'Leírás', 'value' => $Huntgroup['huntgroupDesc'], 'type' => 'text', 'disabled' => true)).'
                         '.self::Prompt_Checkbox($array, true).'
                     </div>
                 </div>

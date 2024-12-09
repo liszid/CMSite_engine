@@ -143,7 +143,7 @@ class Queries extends Database
                     $statement->bindParam(':'.$v,  $array['vData'][$v]);
                 }
             }
-//            Log::Export(self::qGetVNames($array['query']));
+            //Log::Export(self::qGetVNames($array['query']));
             $statement->execute();
             return $statement;
         } catch(PDOException $e) {

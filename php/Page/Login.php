@@ -26,6 +26,12 @@ if (! Valid::vArray($sessionUsr)) {
 			$userVar = $dCombined->Select($selectLogin[0], 'User_Full');
 			if (isset($userVar[0]) && Valid::vArray($userVar[0])) {
 				if ($userVar[0]['canLogin'] > 0) {
+					if (Valid::vArray($userVar[0])) {
+						if (isset($_SESSION['User'])) {
+							unset($_SESSION['User']);
+						}
+						$_SESSION['User'] = $userVar[0];
+					}
 					$returnText = sTranslate::ACTION['Success']['content'];
 				}
 			}

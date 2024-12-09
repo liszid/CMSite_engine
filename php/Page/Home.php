@@ -16,8 +16,7 @@ use Data\
 
 use Samples\
 {
-    sRoles
-    ,sCard
+    sCard
     ,sFrame
     ,sForm
     ,sProfile
@@ -48,14 +47,11 @@ if (! isset($sessionUsr['userId']) ) {
     $returnContent .= '
         <div class="container bootstrap snippet" style="color:black">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         '.$modalText.'
                         <div class=" bg-light">
                             <div class="container p-3 my-3 bg-light">'.cDevlog::Latest().'</div><br />
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="container p-3 my-3 bg-dark text-white lead font-weight-bold"><i class="fa fa-dashboard"></i> Tevékenység</div>
                     </div>
                     <div class="row"><div class="col-12" style="color:transparent; height:40vh;">0</div></div>
                 </div>

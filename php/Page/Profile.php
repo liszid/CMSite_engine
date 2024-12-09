@@ -16,8 +16,7 @@ use Data\
 
 use Samples\
 {
-    sRoles
-    ,sFrame
+    sFrame
     ,sForm
     ,sProfile
     ,sRedirect
@@ -64,11 +63,8 @@ if (isset($sessionUsr['userId'])) {
         $modalBody = '
             <div class="container bootstrap snippet">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         '.$modalText.'
-                    </div>
-                    <div class="col-md-4">
-                        '.(sRoles::Prompt($sessionUsr)).'
                     </div>
                 </div>
             </div>';
