@@ -93,7 +93,7 @@ class dHuntgroup implements iData
                 $dHuntgroup_Member = new dHuntgroup_Member();
                 $Members = $dHuntgroup_Member->Select($array, 'byHuntgroupId');
                 foreach ($Members as $i) {
-                    $dHuntgroup_Member->Update(array('userId' => $i['userId'], 'huntgroupId' => $array['huntgroupId']));
+                    $dHuntgroup_Member->Update(array('userId' => $i['userId'], 'huntgroupId' => $array['huntgroupId']), 'byUserId');
                 }
                 return self::$dbHuntgroup->Delete($array, $type);
             } else {
