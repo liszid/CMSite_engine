@@ -122,6 +122,45 @@
 	.coverIt .nav-link:not(:hover),.coverIt .drowdown-item:not(:hover){
 		filter: brightness(0.95);
 	}
+	/* Sidebar styling */
+	.sidebar {
+		width: 80px;
+		transition: width 0.3s;
+	}
+
+	.sidebar:hover {
+		width: 250px;
+	}
+
+	.sidebar .nav-link {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.sidebar .nav-link i {
+		margin-right: 10px;
+	}
+
+	.hideThis {
+		display: none;
+	}
+
+	.sidebar:hover .hideThis {
+		display: inline;
+	}
+
+	.dropdown-menu {
+		display: none;
+	}
+
+	.nav-item:hover .dropdown-menu {
+		display: block;
+		position: relative;
+		top: 0;
+		left: auto;
+		right: auto;
+	}
 }
 /**
  * Smart switch classes for sticky-to-fixed

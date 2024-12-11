@@ -23,7 +23,7 @@ class dbHuntgroup_Member extends Table implements iDatabase
 
     public static function Insert(array $array = array()): bool
     {
-         Log::Export($array);
+//         Log::Export($array);
         if (! empty($array) && Valid::vString(self::$classQueries['Insert'])) {
             return (
                 self::qRun(

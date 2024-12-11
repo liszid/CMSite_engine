@@ -18,8 +18,8 @@ $GLOBALS['Site'] = array(
 		,'City' => 'Budapest'
     )
     ,'Style' => array(
-        'Site' => $GLOBALS['templateProperties']['0']
-        ,'BGColor' => $GLOBALS['colorPatterns']['3']['BGColor']
-        ,'Text' => $GLOBALS['colorPatterns']['3']['Text']
+        'Site' => $GLOBALS['templateProperties']['1']
+        ,'BGColor' => $GLOBALS['colorPatterns']['2']['BGColor']
+        ,'Text' => $GLOBALS['colorPatterns']['2']['Text']
     )
 );

@@ -36,9 +36,7 @@ class sSite
  * Sets session variables into static local variables
  *
  * @return bool
- *
  * @author Liszi Dániel
- *
  * @deprecated As theres a GLOBAL version available
  */
     private static function setSessionVariables(): bool
@@ -52,7 +50,6 @@ class sSite
  * Returns the <head> part of the HTML
  *
  * @return string
- *
  * @author Liszi Dániel
  */
     private static function Head(): string
@@ -86,7 +83,6 @@ class sSite
  * Sets the <footer> part of the HTML
  *
  * @return string
- *
  * @author Liszi Dániel
  */
 	private static function Footer(): string
@@ -101,10 +97,10 @@ class sSite
 	{
 		if (!empty(self::$sessionUsr)) {
 			$navName = "Logout";
-			return array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName));
+			return array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName), 'hidden' => 0);
 		} else {
 			$navName = "Login";
-			return array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName));
+			return array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName), 'hidden' => 0);
 		}
 	}
 	
@@ -115,17 +111,14 @@ class sSite
 		
 		if (!empty(self::$sessionUsr)) {
 			$navName = "Home";
-			$navArray[] = array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => false, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName));
+			$navArray[] = array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => false, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);
 	    	
-	    	$navName = "Devlog";
-			$navArray[] = array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => false, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName));
-			
 			if ((int)self::$sessionUsr['mngGroups'] === 1 && (int)self::$sessionUsr['mngUsers'] === 1) {
 				$navName = "Administrative";
-				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Users', 'Groups', 'Huntgroups', 'Tools'), 'Desc' => sTranslate::Prompt($navName));
+				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Users', 'Groups', 'Huntgroups', 'Tools'), 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);
 			}
 			$navName = "Profile";
-			$navArray[] = array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName));
+			$navArray[] = array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);
 		}
 		return $navArray;
 	}
