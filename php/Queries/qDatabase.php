@@ -90,6 +90,115 @@ class qDatabase
 					CONSTRAINT primaryKeyHuntgroup_Member PRIMARY KEY (huntgroupMemberId),
 					CONSTRAINT huntgroupMemberGroupCascade FOREIGN KEY (huntgroupId) REFERENCES `Huntgroup` (huntgroupId) ON DELETE CASCADE,
 					CONSTRAINT huntgroupMemberUserCascade FOREIGN KEY (userId) REFERENCES `User` (userId) ON DELETE CASCADE
+				);"			
+            ,10 => "
+				CREATE TABLE IF NOT EXISTS `Symmetrix` (
+					id INT AUTO_INCREMENT NOT NULL,
+					symId VARCHAR(20) NOT NULL,
+					CONSTRAINT primaryKeySymId PRIMARY KEY (id)
+				);"
+			,11 => "
+				CREATE TABLE IF NOT EXISTS `SRP` (
+					id INT AUTO_INCREMENT NOT NULL,
+					symmetrix_id INT NOT NULL,
+					name VARCHAR(50),
+					physical_capacity_gigabytes DECIMAL(10, 2),
+					usable_capacity_gigabytes DECIMAL(10, 2),
+					compression_state VARCHAR(20),
+					compression_ratio VARCHAR(10),
+					data_reduction_ratio VARCHAR(10),
+					srdf_dse_allocated_gigabytes VARCHAR(10),
+					snapshot_effective_capacity_gigabytes DECIMAL(10, 2),
+					snapshots_allocated_gigabytes DECIMAL(10, 2),
+					total_subscribed_pct VARCHAR(10),
+					input_date DATETIME,
+					CONSTRAINT primaryKeySRPId PRIMARY KEY (id),
+					CONSTRAINT srpOnSymmetrixCascade FOREIGN KEY (symmetrix_id) REFERENCES `Symmetrix` (id) ON DELETE CASCADE
+				);"
+			,12 => "
+				CREATE TABLE IF NOT EXISTS `SG_Info` (
+					id INT AUTO_INCREMENT NOT NULL,
+					srp_id INT NOT NULL,
+					SG_Name VARCHAR(50),
+					provisioned_gigabytes DECIMAL(10, 2),
+					subscribed_capacity_gigabytes DECIMAL(10, 2),
+					user_data_gigabytes DECIMAL(10, 2),
+					total_effective_used_gigabytes DECIMAL(10, 2),
+					total_physical_used_gigabytes DECIMAL(10, 2),
+					total_unreducible_used_gigabytes DECIMAL(10, 2),
+					total_data_reduction_ratio VARCHAR(10),
+					effective_used_gigabytes DECIMAL(10, 2),
+					allocated_capacity_gigabytes DECIMAL(10, 2),
+					physical_used_gigabytes DECIMAL(10, 2),
+					used_capacity_gigabytes DECIMAL(10, 2),
+					unreducible_used_cap_gigabytes DECIMAL(10, 2),
+					data_reduction_ratio VARCHAR(10),
+					compression_ratio VARCHAR(10),
+					snap_effective_used_gigabytes DECIMAL(10, 2),
+					snap_allocated_capacity_gigabytes DECIMAL(10, 2),
+					snap_physical_used_gigabytes DECIMAL(10, 2),
+					snap_used_capacity_gigabytes DECIMAL(10, 2),
+					snap_unreducible_used_cap_gigabytes DECIMAL(10, 2),
+					snap_data_reduction_ratio VARCHAR(10),
+					compression_snapshot_ratio VARCHAR(10),
+					input_date DATETIME,
+					CONSTRAINT primaryKeySGInfoId PRIMARY KEY (id),
+					CONSTRAINT sgInfoOnSRPIdCascade FOREIGN KEY (srp_id) REFERENCES `SRP` (id) ON DELETE CASCADE
+				);"
+			,13 => "
+				CREATE VIEW IF NOT EXISTS `SG_View` AS SELECT 
+					s.symid,
+					sr.name AS srp_name,
+					sg.SG_Name,
+					sg.provisioned_gigabytes,
+					sg.subscribed_capacity_gigabytes,
+					sg.user_data_gigabytes,
+					sg.total_effective_used_gigabytes,
+					sg.total_physical_used_gigabytes,
+					sg.total_unreducible_used_gigabytes,
+					sg.total_data_reduction_ratio,
+					sg.effective_used_gigabytes,
+					sg.allocated_capacity_gigabytes,
+					sg.physical_used_gigabytes,
+					sg.used_capacity_gigabytes,
+					sg.unreducible_used_cap_gigabytes,
+					sg.data_reduction_ratio,
+					sg.compression_ratio,
+					sg.snap_effective_used_gigabytes,
+					sg.snap_allocated_capacity_gigabytes,
+					sg.snap_physical_used_gigabytes,
+					sg.snap_used_capacity_gigabytes,
+					sg.snap_unreducible_used_cap_gigabytes,
+					sg.snap_data_reduction_ratio,
+					sg.compression_snapshot_ratio,
+					sg.input_date
+				FROM 
+					Symmetrix s
+				JOIN 
+					SRP sr ON s.id = sr.symmetrix_id
+				JOIN 
+					SG_Info sg ON sr.id = sg.srp_id;"
+			,14 => "
+				CREATE TABLE IF NOT EXISTS `Total_SG` (
+					id INT AUTO_INCREMENT NOT NULL,
+					srp_id INT NOT NULL,
+					provisioned_capacity_gigabytes DECIMAL(10, 2),
+					subscribed_capacity_gigabytes DECIMAL(10, 2),
+					effective_used_gigabytes VARCHAR(10),
+					allocated_capacity_gigabytes VARCHAR(10),
+					physical_used_gigabytes DECIMAL(10, 2),
+					used_capacity_gigabytes DECIMAL(10, 2),
+					unreducible_used_cap_gigabytes DECIMAL(10, 2),
+					compression_ratio VARCHAR(10),
+					snap_effective_used_gigabytes VARCHAR(10),
+					snap_capacity_gigabytes VARCHAR(10),
+					snap_physical_used_gigabytes DECIMAL(10, 2),
+					snap_used_capacity_gigabytes DECIMAL(10, 2),
+					snap_unreducible_used_cap_gigabytes DECIMAL(10, 2),
+					compression_snapshot_ratio VARCHAR(10),
+					input_date DATETIME,
+					CONSTRAINT primaryKeySGTotalId PRIMARY KEY (id),
+					CONSTRAINT sgTotalOnSRPIdCascade FOREIGN KEY (srp_id) REFERENCES `SRP` (id) ON DELETE CASCADE
 				);"
 			,90 => "
 				CREATE TABLE IF NOT EXISTS `Log`(

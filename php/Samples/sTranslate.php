@@ -4,109 +4,97 @@ declare(strict_types=1);
 
 namespace Samples;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 $lang = 'hu';
 
-abstract class abstractTranslate{
 /**
- * Prompts respective name from array[type]
- *
- * @param $string string
- * @param $type string
- *
- * @return string
- *
+ * @update 2024.12.11
  * @author Liszi Dániel
  */
+abstract class AbstractTranslate
+{
+    /**
+     * Prompts respective name from array[type]
+     *
+     * @param string $string
+     * @param string $type
+     * @return string
+     */
     public static function Prompt(string $string, string $type = 'navbar'): string
     {
-        if (array_key_exists($string, static::TRANSLATE)) {
-            return  static::TRANSLATE[$string][$type];
-        } else {
-            $explString = explode("/", $string);
-            if (count($explString) === 3) {
-                $explMain = $explString[0]."/".$explString[1];
-                if (array_key_exists($explString[2], static::TRANSLATE[$explMain]['action'])) {
-                    return static::TRANSLATE[$explMain]['action'][$explString[2]];
-                }
-            }
-            return 'Ismeretlen kifejezés';
+        if (isset(static::TRANSLATE[$string][$type])) {
+            return static::TRANSLATE[$string][$type];
         }
+
+        $explString = explode('/', $string);
+        if (count($explString) === 3) {
+            $explMain = $explString[0] . '/' . $explString[1];
+            if (isset(static::TRANSLATE[$explMain]['action'][$explString[2]])) {
+                return static::TRANSLATE[$explMain]['action'][$explString[2]];
+            }
+        }
+
+        return 'Ismeretlen kifejezés';
     }
 
-/**
- * Returns the info array of the key if exists
- *
- * @param $string string
- *
- * @return array
- *
- * @author Liszi Dániel
- */
+    /**
+     * Returns the info array of the key if exists
+     *
+     * @param string $string
+     * @return array
+     */
     public static function Info(string $string): array
     {
-        if (array_key_exists($string, static::TRANSLATE)) {
-            if(isset(static::TRANSLATE[$string]['info'])) {
-                $array = static::TRANSLATE[$string]['info'];
-                $array['path'] = $string;
-                return  $array;
-    	    } else {
-                return array();
-    	    }
-    	} else {
-    	    return array();
-    	}
+        if (isset(static::TRANSLATE[$string]['info'])) {
+            return ['path' => $string] + static::TRANSLATE[$string]['info'];
+        }
+
+        return [];
     }
 
-/**
- * Returns a HTML Title on set size
- *
- * @param $array array
- * @param $size int
- *
- * @return string
- *
- * @author Liszi Dániel
- */
+    /**
+     * Returns a HTML Title on set size
+     *
+     * @param string $string
+     * @param int $size
+     * @return string
+     */
     public static function Title(string $string, int $size = 1): string
     {
-            if (array_key_exists($string, static::TRANSLATE)) {
-                return '<h'.$size.'><i class="fa fa-'.static::TRANSLATE[$string]['fa'].'" aria-hidden="true"></i> '.static::TRANSLATE[$string]['title'].'</h'.$size.'>';
-            } else {
-                $explString = explode("/", $string);
-                if (count($explString) === 3) {
-                    $explMain = $explString[0]."/".$explString[1];
-                    if (array_key_exists($explString[2], static::TRANSLATE[$explMain]['action'])) {
-                        return '<h'.$size.'><i class="fa fa-'.static::TRANSLATE[$explMain]['fa'].'" aria-hidden="true"></i> '.static::TRANSLATE[$explMain]['action'][$explString[2]].'</h'.$size.'>';
-                    }
-                }
-                return '<h'.$size.'><i class="fa fa-question" aria-hidden="true"></i> Ismeretlen</h'.$size.'>';
+        if (isset(static::TRANSLATE[$string])) {
+            return sprintf('<h%d><i class="fa fa-%s" aria-hidden="true"></i> %s</h%d>', $size, static::TRANSLATE[$string]['fa'], static::TRANSLATE[$string]['title'], $size);
+        }
+
+        $explString = explode('/', $string);
+        if (count($explString) === 3) {
+            $explMain = $explString[0] . '/' . $explString[1];
+            if (isset(static::TRANSLATE[$explMain]['action'][$explString[2]])) {
+                return sprintf('<h%d><i class="fa fa-%s" aria-hidden="true"></i> %s</h%d>', $size, static::TRANSLATE[$explMain]['fa'], static::TRANSLATE[$explMain]['action'][$explString[2]], $size);
             }
+        }
+
+        return sprintf('<h%d><i class="fa fa-question" aria-hidden="true"></i> Ismeretlen</h%d>', $size, $size);
     }
-    
 }
 
-if ($lang == 'en') {
-     class sTranslate extends abstractTranslate implements
-        sTranslate\en\ACTION,
-        sTranslate\en\ROLE,
-        sTranslate\en\ROLE_SELECT,
-        sTranslate\en\TRANSLATE {}
-} else if ($lang == 'hu') {
-     class sTranslate extends abstractTranslate implements
-        sTranslate\hu\ACTION,
-        sTranslate\hu\ROLE,
-        sTranslate\hu\ROLE_SELECT,
-        sTranslate\hu\TRANSLATE {}
-} else  {
-     class sTranslate extends abstractTranslate implements
-        sTranslate\en\ACTION,
-        sTranslate\en\ROLE,
-        sTranslate\en\ROLE_SELECT,
-        sTranslate\en\TRANSLATE {}
+switch($lang) {
+    case 'hu':
+        class sTranslate extends AbstractTranslate implements 
+            sTranslate\hu\ACTION, 
+            sTranslate\hu\ROLE, 
+            sTranslate\hu\ROLE_SELECT, 
+            sTranslate\hu\TRANSLATE 
+        {
+        }
+        break;
+    case 'en':
+        class sTranslate extends AbstractTranslate implements 
+            sTranslate\en\ACTION, 
+            sTranslate\en\ROLE, 
+            sTranslate\en\ROLE_SELECT, 
+            sTranslate\en\TRANSLATE 
+        {
+        }
+        break;
 }

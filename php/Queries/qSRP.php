@@ -10,9 +10,9 @@ use Toolkit\{
     ,Valid
 };
 
-class dbHuntgroup_Member extends Table implements iDatabase
+class dbGroup extends Table implements iDatabase
 {
-    const CLASS_ID = 4;
+    const CLASS_ID = 1;
 
     private static $classQueries = array();
 
@@ -23,7 +23,6 @@ class dbHuntgroup_Member extends Table implements iDatabase
 
     public static function Insert(array $array = array()): bool
     {
-//         Log::Export($array);
         if (! empty($array) && Valid::vString(self::$classQueries['Insert'])) {
             return (
                 self::qRun(
@@ -41,7 +40,7 @@ class dbHuntgroup_Member extends Table implements iDatabase
     public static function Select(array $array = array(), string $type = ''): array
     {
         if (Valid::vString(self::$classQueries['Select'][$type])) {
-            if (
+    	    if (
                 (
                     $tempVar = self::qRun(
                         array(
@@ -52,21 +51,21 @@ class dbHuntgroup_Member extends Table implements iDatabase
                 )->rowCount() > 0
             ) {
                 return $tempVar->fetchAll();
-            } else {
+    	    } else {
                 return array();
-            }
+    	    }
         } else {
-            return array();
+    	    return array();
         }
     }
 
     public static function Update(array $array = array(), string $type = ''): bool
     {
-        if (! empty($array) && Valid::vString(self::$classQueries['Update'][$type])) {
+        if (! empty($array) && Valid::vString(self::$classQueries['Update'])) {
             return (
                 self::qRun(
                     array(
-                        'query' => self::$classQueries['Update'][$type]
+                        'query' => self::$classQueries['Update']
                         ,'vData' => $array
                     )
                 )->rowCount() > 0

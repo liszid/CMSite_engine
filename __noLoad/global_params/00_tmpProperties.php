@@ -11,7 +11,7 @@ $GLOBALS['templateProperties'] = array(
     )
 //Sidebar navbar with mobile slide-in
     ,'1' => array(
-    	'templateClass' => 'Samples\\sSite_Template_01'
+    	'templateClass' => 'Samples\\sSite_Vertical'
     	,'templateType' => 'sidebar'
     	,'titleBgColor' => 'Navbar_Side'
     )
