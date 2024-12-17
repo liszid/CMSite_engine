@@ -22,8 +22,8 @@ $GLOBALS['colorPatterns'] = array(
     )
 //dark
     ,'2' => array(
-        'BGColor' => array('Navbar_Top' => 'dark' ,'Navbar_Side' => 'secondary' ,'Brand' => 'dark' ,'Body' => 'light' ,'Card' => 'secondary' ,'Footer' => 'dark')
-        ,'Text' => array('Navbar' => 'light' ,'Footer' => 'white-50' ,'Card' => array('Content' => 'dark' ,'Header' => 'white'), 'Header' => 'white', 'Body' => 'white', 'Link' => 'white')
+        'BGColor' => array('Navbar_Top' => 'dark' ,'Navbar_Side' => 'dark' ,'Brand' => 'dark' ,'Body' => 'secondary' ,'Card' => 'dark' ,'Footer' => 'dark')
+        ,'Text' => array('Navbar' => 'light' ,'Footer' => 'white' ,'Card' => array('Content' => 'white' ,'Header' => 'white'), 'Header' => 'grey', 'Body' => 'grey', 'Link' => 'white')
     )
 //indigo
     ,'3' => array(

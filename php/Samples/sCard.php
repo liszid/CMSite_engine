@@ -180,7 +180,7 @@ class sCard
     public static function Fill(array $array = []): string
     {
         $cardColor = self::getResolvedStyle('card_color') ?? $array['color'];
-        $cardContentColor = self::getResolvedStyle('card_header_color') ?? 'white';
+        $cardContentColor = self::getResolvedStyle('card_content_color') ?? 'white';
         $cardHeaderColor = self::getResolvedStyle('card_header_color') ?? 'white';
 
         $elements = [

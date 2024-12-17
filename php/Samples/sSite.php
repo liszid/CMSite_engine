@@ -115,7 +115,7 @@ class sSite
 	    	
 			if ((int)self::$sessionUsr['mngGroups'] === 1 && (int)self::$sessionUsr['mngUsers'] === 1) {
 				$navName = "Administrative";
-				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Users', 'Groups', 'Huntgroups', 'Tools'), 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);
+				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Users', 'Groups', 'Huntgroups'), 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);
 			}
 			$navName = "Profile";
 			$navArray[] = array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);

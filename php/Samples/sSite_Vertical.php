@@ -154,7 +154,7 @@ class sSite_Vertical
             $dataToggle .= 'href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"';
             $dataItems .= sprintf('<ul class="dropdown-menu" aria-labelledby="nav-%s">', $array['dataLink']);
             
-            $dataItems .= implode('', array_map(fn($i) => sprintf('<li><a class="dropdown-item" data-link="%s/%s">%s</a></li>', $array['dataLink'], $i, $i), $array['dataItems']));
+            $dataItems .= implode('', array_map(fn($i) => sprintf('<li><a class="dropdown-item" data-link="%s/%s">%s</a></li>', $array['dataLink'], $i, sTranslate::Prompt($array['dataLink'].'/'.$i)), $array['dataItems']));
 
             $dataItems .= '</ul>';
         } else {
