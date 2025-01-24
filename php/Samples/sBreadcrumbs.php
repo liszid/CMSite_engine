@@ -102,7 +102,7 @@ class sBreadcrumbs
         return sprintf(
             '<div class="col-12">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-%s" style="color:%s">%s</ol>
+                    <ol class="breadcrumb bg-%s text-%s">%s</ol>
                 </nav>
             </div>',
             (self::getResolvedStyle('card_color')?? 'light'),

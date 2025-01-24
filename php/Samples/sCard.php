@@ -21,6 +21,7 @@ class sCard
         'card_color' => 'Site.Style.BGColor.Card',
         'card_content_color' => 'Site.Style.Text.Card.Content',
         'card_header_color' => 'Site.Style.Text.Card.Header',
+        'card_body_color' => 'Site.Style.Text.Body',
     ];
 
     private static $resolvedStyles = [];
@@ -92,7 +93,7 @@ class sCard
      */
     private static function Card(string $string): string
     {
-        $cardColor = self::getResolvedStyle('card_color') ?? sTranslate::ROLE[$string]['color'];
+        $cardColor = self::getResolvedStyle('card_body_color') ?? sTranslate::ROLE[$string]['color'];
         $respective = sTranslate::ROLE[$string]['respective'] ?? null;
 
         if (isset(sTranslate::ROLE[$string]) && isset(sTranslate::TRANSLATE[$respective])) {
@@ -141,7 +142,7 @@ class sCard
      */
     public static function Blank(array $array = []): string
     {
-        $cardColor = self::getResolvedStyle('card_color') ?? $array['color'];
+        $cardColor = self::getResolvedStyle('card_body_color') ?? $array['color'];
         $cardContentColor = self::getResolvedStyle('card_content_color') ?? 'white';
         $cardHeaderColor = self::getResolvedStyle('card_header_color') ?? 'white';
 
@@ -153,14 +154,14 @@ class sCard
         ];
 
         return sprintf(
-            '<div class="card border-%s %s" %s>
+            '<div class="card bg-%s %s" %s>
                 <div class="card-body text-%s">
                     %s
                     %s
                     %s
                 </div>
             </div>',
-            $cardContentColor,
+            $cardColor,
             $array['class'] ?? '',
             isset($array['bool']) ? 'style="max-width: 18rem;"' : '',
             $cardContentColor,
@@ -179,7 +180,7 @@ class sCard
      */
     public static function Fill(array $array = []): string
     {
-        $cardColor = self::getResolvedStyle('card_color') ?? $array['color'];
+        $cardColor = self::getResolvedStyle('card_body_color') ?? $array['color'];
         $cardContentColor = self::getResolvedStyle('card_content_color') ?? 'white';
         $cardHeaderColor = self::getResolvedStyle('card_header_color') ?? 'white';
 
@@ -229,10 +230,10 @@ class sCard
         if (Valid::vArray($array)) {
             return sprintf(
                 '<div id="%s" class="mb-2 col-12">
-                    <div class="card">
+                    <div class="card bg-%s">
                         <div class="d-flex flex-nowrap flex-column flex-sm-row m-1" id="%s">
                             <h5 class="mb-0 col-12 col-sm">
-                                <button class="d-flex justify-content-sm-start justify-content-center col-12 btn btn-link collapsed" data-toggle="collapse" data-target="#%s" aria-expanded="false" aria-controls="%s">
+                                <button class="d-flex justify-content-sm-start justify-content-center col-12 btn btn-link collapsed text-%s" data-toggle="collapse" data-target="#%s" aria-expanded="false" aria-controls="%s">
                                     %s
                                 </button>
                             </h5>
@@ -246,7 +247,9 @@ class sCard
                     </div>
                 </div>',
                 $accordionId,
+                self::getResolvedStyle('card_body_color'),
                 $headingId,
+                self::getResolvedStyle('card_content_color'),
                 $collapseId,
                 $collapseId,
                 $contHeader,

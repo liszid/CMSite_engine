@@ -42,9 +42,6 @@ if (! isset($sessionUsr['userId']) ) {
                 <div class="row">
                     <div class="col-md-12">
                         '.$modalText.'
-                        <div class=" bg-light">
-                            <div class="container p-3 my-3 bg-light"></div><br />
-                        </div>
                     </div>
                     <div class="row"><div class="col-12" style="color:transparent; height:40vh;">0</div></div>
                 </div>
@@ -52,3 +49,5 @@ if (! isset($sessionUsr['userId']) ) {
 }
 
 echo sFrame::Page(array('path' => 'Home', 'content' => $returnContent));
+
+?>

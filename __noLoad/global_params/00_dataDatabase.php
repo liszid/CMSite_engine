@@ -9,4 +9,6 @@ $GLOBALS['Database'] = array(
     ,'host' => 'localhost'
     ,'port' => 3306
     ,'db'   => 'plfmnag'
+    ,'type' => 'mysql'
 );
+?>

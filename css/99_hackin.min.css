@@ -162,6 +162,12 @@
 		right: auto;
 	}
 }
+.tableBeautify{
+	padding-top:10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+}
 /**
  * Smart switch classes for sticky-to-fixed
  */

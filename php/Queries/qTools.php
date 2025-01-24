@@ -40,8 +40,7 @@ class qTools
 	
 	private static function Delete()
 	{
-		return array(
-			'Database' => "DROP DATABASE `plfmnag`"
-		);
+		return '';
 	}
 }
+?>

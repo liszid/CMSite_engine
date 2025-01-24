@@ -103,3 +103,4 @@ class dbTools extends Table implements iDatabase
     }
 
 }
+?>

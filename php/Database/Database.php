@@ -87,3 +87,4 @@ class Database
         return true;
     }
 }
+?>

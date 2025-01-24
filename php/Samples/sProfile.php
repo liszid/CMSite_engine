@@ -75,7 +75,7 @@ class sProfile implements sProfile\ICONS {
 		} else {
 		    return '
 			<div class="col-md-12 m-0 p-0">
-				<div class="form-group row">
+				<div class="form-group row text-'.$GLOBALS['Site']['Style']['Text']['Card']['Content'].'">
 				    <div class="col-md-3">
     					<h1>' . $array['userName'] . '</h1>
     					<i class="fa fa-' . $array['userThumbnail'] . ' fa-5x"></i>
