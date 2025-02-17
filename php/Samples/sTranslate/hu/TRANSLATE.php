@@ -177,5 +177,22 @@ interface TRANSLATE
             ,"help" => "Profilja szerkesztéséhez kattintson a menüsávban a 'Profil' gombra és a 'Profil' oldalon a 'Szerkesztés' gombra"
             ,"card" => "Profilja szerkesztéséhez kattintson a menüsávban a 'Profil' gombra és a 'Profil' oldalon a 'Szerkesztés' gombra"
         )
+        ,"Capacity" => array(
+            "navbar" => "Kapacitás"
+            ,"fa" => "pencil-square"
+            ,"title" => "Kapacitás menedzsment"
+            ,"help" => ""
+            ,"card" => ""
+        )
+        ,"Capacity/SRP" => array(
+            "navbar" => "SRP"
+            ,"fa" => "user"
+            ,"title" => "SRP-k megtekintése"
+            ,"help" => ""
+            ,"card" => ""
+            ,"action" => array(
+                "View" => "SRP Megtekintése"
+            )
+        )
     );
 }

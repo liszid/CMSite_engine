@@ -33,3 +33,4 @@ if (
 } else {
     echo sRedirect::Home();
 }
+?>

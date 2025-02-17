@@ -8,7 +8,7 @@ interface SELECT
 {
      const SELECT = array(
 			 'Database' => "
-			 		SELECT USERNAME FROM ALL_USERS WHERE USERNAME = 'CAP_MNGMT'",
+			 		SELECT USERNAME FROM ALL_USERS WHERE USERNAME = 'cap_mngmt'",
 			 'Table' => "
                     SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = :sqlDB/**/ AND TABLE_NAME = :tableName/**/"
      );

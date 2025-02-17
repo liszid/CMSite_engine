@@ -11,7 +11,8 @@ use Toolkit\{
 };
 
 use Data\{
-    dCapacity
+    dSRP
+    ,dSG
 };
 
 use Samples\{
@@ -25,21 +26,35 @@ use Samples\{
 class sCapacity
 {
 /** @var object $dHardware dHardware class object */
-    protected static $dCapacity;
+    protected static dSG;
     
 /** @var const RETURN_PATH Used to define Spinner return path */
     const RETURN_PATH=array(
-        'Access' => array('x' => 'Capacity', 'y' => 'Capacity')
+        'Access' => array('x' => 'Capacity', 'y' => 'SRP')
     );
 /** @var const Insance Data form variables/elements */
     const FORMDATA = array(
         'Capacity' => array(
-            array('data' => 'symid', 'desc' => '', 'type' => 'hidden', 'tags' => 'view')
-            ,array('data' => 'accessUsername', 'desc' => 'Felhasználónév', 'type' => 'text', 'tags' => 'View')
-            ,array('data' => 'accessPassword', 'desc' => 'Jelszó', 'type' => 'text', 'tags' => 'View')
-    		,array('data' => 'accessLabel', 'desc' => 'Cimke', 'type' => 'text', 'tags' => 'View')
-            ,array('data' => 'accessLink', 'desc' => 'Hivatkozás', 'type' => 'text', 'tags' => 'View')
-            ,array('data' => 'passtorageId', 'desc' => 'Tároló', 'type' => 'layeredselect', 'tags' => 'View')
+            array('data' => 'srp_id', 'desc' => '', 'type' => 'hidden', 'tags' => 'view')
+            ,array('data' => 'name', 'desc' => 'Név', 'type' => 'text', 'tags' => 'View')
+            ,array('data' => 'physical_capacity', 'desc' => 'physical_capacity', 'type' => 'text', 'tags' => 'View')
+    		,array('data' => 'usable_capacity', 'desc' => 'usable_capacity', 'type' => 'text', 'tags' => 'View')
+            ,array('data' => 'compression_state', 'desc' => 'compression_state', 'type' => 'text', 'tags' => 'View')
+            ,array('data' => 'srdf_dse_allocated', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'snapshot_effective_capacity', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'snapshots_allocated', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'provisioned_capacity_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'subscribed_capacity_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'effective_used_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'allocated_capacity_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'physical_used_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'used_capacity_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'unreducible_used_cap_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'snap_effective_used_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'snap_capacity_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'snap_physical_used_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'snap_used_capacity_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
+            ,array('data' => 'snap_unreducible_used_cap_gigabytes', 'desc' => 'srdf_dse_allocated', 'type' => 'layeredselect', 'tags' => 'View')
         )
     );
     
@@ -47,8 +62,8 @@ class sCapacity
     const TYPES = array(
         "Access" => array(
             "origo" => ''
-            ,"tableQuery" => 'Capacity_Table'
-            ,"tableName" => 'CAPACITY_CAPACITY'
+            ,"tableQuery" => 'SRP_Table'
+            ,"tableName" => 'SRP_DP'
         )
     );
 /**
@@ -56,9 +71,9 @@ class sCapacity
  *
  * @author Liszi Dániel
  */
-    protected static function setDCapacity()
+    protected static function setDSRP()
     {
-        self::$dCapacity = new dCapacity();
+        self::$dSRP = new dSRP();
     }
 /**
  * Handles the page actions, events, launched by users
@@ -175,3 +190,4 @@ class sCapacity
 	    }
     }
 }
+?>

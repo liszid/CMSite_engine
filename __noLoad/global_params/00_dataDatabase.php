@@ -8,7 +8,7 @@ $GLOBALS['Database'] = array(
     ,'pass' => 'plfmnag'
     ,'host' => 'localhost'
     ,'port' => 3306
-    ,'db'   => 'plfmnag'
+    ,'db'   => 'cap_mngmt'
     ,'type' => 'mysql'
 );
 ?>

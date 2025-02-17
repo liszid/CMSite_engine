@@ -1,0 +1,115 @@
+Tábla javaslatok
+- SYM tábla: A különböző Symmetrix adatokat tartalmazza.
+- SRP tábla: Az SRP információkat tartalmazza, külön sorokban a fizikai kapacitás, használható kapacitás stb.
+- SG tábla: Tárolási csoport (SG) adatok különböző kapacitás mérőszámokkal.
+  
+SYM tábla
+| Oszlop neve | Típus | Leírás |
+|-------------|-------|--------|
+| symid       | TEXT  | Azonosító |
+
+
+CREATE TABLE SYM (
+    symid VARCHAR(255) PRIMARY KEY
+);
+
+
+SELECT * FROM SYM;
+
+### Frissített SRP tábla
+| Oszlop neve                         | Típus   | Leírás                                              |
+|-------------------------------------|---------|-----------------------------------------------------|
+| srp_id                              | INTEGER | Azonosító                                           |
+| symid                               | TEXT    | Hivatkozás a Symmetrix tábla symid oszlopára        |
+| name                                | TEXT    | SRP név                                             |
+| physical_capacity                   | INTEGER | Fizikai kapacitás gigabájtban                       |
+| usable_capacity                     | INTEGER | Használható kapacitás gigabájtban                   |
+| compression_state                   | TEXT    | Tömörítési állapot                                  |
+| srdf_dse_allocated                  | INTEGER | SRDF DSE allokált kapacitás gigabájtban             |
+| snapshot_effective_capacity         | INTEGER | Snapshot hatékony kapacitás gigabájtban             |
+| snapshots_allocated                 | INTEGER | Snapshots allokált kapacitás gigabájtban            |
+| provisioned_capacity_gigabytes      | INTEGER | Provisioned kapacitás gigabájtban                   |
+| subscribed_capacity_gigabytes       | INTEGER | Előfizetett kapacitás gigabájtban                   |
+| effective_used_gigabytes            | INTEGER | Effektív használatban lévő kapacitás gigabájtban    |
+| allocated_capacity_gigabytes        | INTEGER | Allokált kapacitás gigabájtban                      |
+| physical_used_gigabytes             | INTEGER | Fizikailag használatban lévő kapacitás gigabájtban  |
+| used_capacity_gigabytes             | INTEGER | Használatban lévő kapacitás gigabájtban             |
+| unreducible_used_cap_gigabytes      | INTEGER | Nem csökkenthető használt kapacitás gigabájtban     |
+| snap_effective_used_gigabytes       | INTEGER | Snapshot effektív használatban lévő kapacitás gigabájtban |
+| snap_capacity_gigabytes             | INTEGER | Snapshot kapacitás gigabájtban                      |
+| snap_physical_used_gigabytes        | INTEGER | Snapshot fizikailag használatban lévő kapacitás gigabájtban |
+| snap_used_capacity_gigabytes        | INTEGER | Snapshot használatban lévő kapacitás gigabájtban    |
+| snap_unreducible_used_cap_gigabytes | INTEGER | Snapshot nem csökkenthető használt kapacitás gigabájtban |
+
+CREATE TABLE SRP (
+    srp_id INT AUTO_INCREMENT PRIMARY KEY,
+    symid VARCHAR(255),
+    name VARCHAR(255),
+    physical_capacity INT,
+    usable_capacity INT,
+    compression_state VARCHAR(255),
+    srdf_dse_allocated INT,
+    snapshot_effective_capacity INT,
+    snapshots_allocated INT,
+    provisioned_capacity_gigabytes INT,
+    subscribed_capacity_gigabytes INT,
+    effective_used_gigabytes INT,
+    allocated_capacity_gigabytes INT,
+    physical_used_gigabytes INT,
+    used_capacity_gigabytes INT,
+    unreducible_used_cap_gigabytes INT,
+    snap_effective_used_gigabytes INT,
+    snap_capacity_gigabytes INT,
+    snap_physical_used_gigabytes INT,
+    snap_used_capacity_gigabytes INT,
+    snap_unreducible_used_cap_gigabytes INT,
+    FOREIGN KEY (symid) REFERENCES Symmetrix(symid)
+);
+
+
+SELECT * FROM SRP;
+
+SG tábla
+| Oszlop neve                         | Típus   | Leírás                                              |
+|-------------------------------------|---------|-----------------------------------------------------|
+| sg_id                               | INTEGER | Azonosító                                           |
+| srp_id                              | INTEGER | Hivatkozás az SRP tábla srp_id oszlopára            |
+| sg_name                             | TEXT    | Tárolási csoport név                                |
+| provisioned_capacity                | INTEGER | Provisionált kapacitás gigabájtban                  |
+| subscribed_capacity                 | INTEGER | Előfizetett kapacitás gigabájtban                   |
+| user_data                           | INTEGER | Felhasználói adatok gigabájtban                     |
+| total_effective_used                | INTEGER | Teljes hatékonyan használt kapacitás gigabájtban    |
+| total_physical_used                 | INTEGER | Teljes fizikailag használt kapacitás gigabájtban    |
+| total_unreducible_used              | INTEGER | Teljes nem csökkenthető használt kapacitás gigabájtban |
+| snap_effective_used                 | INTEGER | Snapshot hatékonyan használt kapacitás gigabájtban  |
+| snap_allocated_capacity             | INTEGER | Snapshot allokált kapacitás gigabájtban             |
+| snap_physical_used                  | INTEGER | Snapshot fizikailag használt kapacitás gigabájtban  |
+| snap_used_capacity                  | INTEGER | Snapshot használt kapacitás gigabájtban             |
+| snap_unreducible_used_cap           | INTEGER | Snapshot nem csökkenthető használt kapacitás gigabájtban |
+
+CREATE TABLE SG (
+    sg_id INT AUTO_INCREMENT PRIMARY KEY,
+    srp_id INT,
+    sg_name VARCHAR(255),
+    provisioned_capacity INT,
+    subscribed_capacity INT,
+    user_data INT,
+    total_effective_used INT,
+    total_physical_used INT,
+    total_unreducible_used INT,
+    snap_effective_used INT,
+    snap_allocated_capacity INT,
+    snap_physical_used INT,
+    snap_used_capacity INT,
+    snap_unreducible_used_cap INT,
+	sg_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (srp_id) REFERENCES SRP(srp_id)
+);
+
+SELECT * FROM SG;
+
+### SYM és SRP inner join
+SELECT * FROM SYM s JOIN SRP sr ON s.symid = sr.symid;
+
+### SYM, SRP és SG inner join
+SELECT * FROM SYM s JOIN SRP sr ON s.symid = sr.symid JOIN SG sg ON sr.srp_id = sg.srp_id;

@@ -29,19 +29,9 @@ class dbGroup extends Table implements iDatabase
 	
 	private static function Select()
 	{
-		return array(
-            'All' => 'SELECT * FROM SRP;'
-            , 'bySym' => '
-                SELECT p.* 
-                FROM SRP p 
-                WHERE p.symid=:symid/**/;'
-            , 'SRP_Table' => '
-                SELECT symid ,srp_id ,name ,usable_capacity
-                FROM SRP;'
-        );
+		return 'SELECT * FROM SYM;';
 	}
 	
-    
 	private static function Update()
 	{
 		return '';

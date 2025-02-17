@@ -87,8 +87,6 @@ evntCopyDisabled() {
     }
 }
 
-
-
 /**
  * Sets DataTables, jQuery used
  *

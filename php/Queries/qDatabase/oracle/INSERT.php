@@ -8,10 +8,11 @@ interface INSERT
 {
      const INSERT = array(
          0 => "
-			INSERT INTO `User`(
+			INSERT INTO `User` (
 				userName, pWord, userThumbnail, userFirstName, userLastName, userContEmail, userContPhone, userContSite, isDelete
-			) VALUES
-				('root', md5('root'), 'cogs', 'Root', '', 'admin@plfmnag.hu/', '0036201234567', 'Budapest', 0)"
+			) VALUES (
+				'root', DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW('root'), 2), 'cogs', 'Root', '', 'admin@cap_mngmt.hu/', '0036201234567', 'Budapest', 0
+			);"
 		,1 => "
 			INSERT INTO `Group`(
 				groupName, groupDesc, canAdministrative, mngGroups, mngHuntgroups, mngUsers, mngTools, canUsers, canEdit, canLogin, isDelete

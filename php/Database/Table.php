@@ -29,6 +29,7 @@ class Table extends Queries
     public static function initTable(): bool
     {
         if (! isset($_SESSION['Database'])) {
+            $tableQueries = \Queries\qDatabase::Get();
             //Ki kelllett szedni az initDatabase() feltételt
             foreach (self::TABLENAMES as $key => $query) {
                 if (self::qCheck($key)) {

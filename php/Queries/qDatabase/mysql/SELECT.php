@@ -13,7 +13,7 @@ interface SELECT
             FROM
                 INFORMATION_SCHEMA.SCHEMATA
             WHERE
-                SCHEMA_NAME = 'plfmnag'",
+                SCHEMA_NAME = 'cap_mngmt'",
         'Table' => "
             SELECT
                 TABLE_NAME
