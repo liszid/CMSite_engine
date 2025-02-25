@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Data;
 
-use Database\dbSymmetrix;
+use Database\dbStorageId;
 
 use Toolkit\{
     Log
@@ -12,42 +12,42 @@ use Toolkit\{
     ,Valid
 };
 
-class dSymmetrix implements iData
+class dStorageId implements iData
 {
-    private static $dbSymmetrix;
+    private static $dbStorageId;
 
     public function __construct()
     {
-        self::$dbSymmetrix = new dbSymmetrix();
+        self::$dbStorageId = new dbStorageId();
     }
 
     public static function Insert(array $array = array()): bool
     {
-        return self::$dbSymmetrix->Insert($array);
+        return self::$dbStorageId->Insert($array);
     }
 
     public static function Select(array $array = array(), string $type = ''): array
     {
-        return self::$dbSymmetrix->Select($array, $type);
+        return self::$dbStorageId->Select($array, $type);
     }
 
     public static function Update(array $array = array(), string $type = ''): bool
     {
-        return self::$dbSymmetrix->Update($array, $type);
+        return self::$dbStorageId->Update($array, $type);
     }
 
     public static function Delete(array $array = array(), string $type = ''): bool
     {
-        return self::$dbSymmetrix->Delete($array, $type);
+        return self::$dbStorageId->Delete($array, $type);
     }
 
     public static function Class_Id(): int
     {
-        return self::$dbSymmetrix->Class_Id();
+        return self::$dbStorageId->Class_Id();
     }
 
     public static function Check( ): bool
     {
-        return (self::$dbSymmetrix->Check());
+        return (self::$dbStorageId->Check());
     }
 }

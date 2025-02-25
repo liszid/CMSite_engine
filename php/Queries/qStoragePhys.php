@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database;
+namespace Queries;
 
 use Toolkit\{
     Log
@@ -10,7 +10,7 @@ use Toolkit\{
     ,Valid
 };
 
-class dbGroup extends Table implements iDatabase
+class qStoragePhys 
 {
     public static function Get(): array
     {
@@ -29,12 +29,20 @@ class dbGroup extends Table implements iDatabase
 	
 	private static function Select()
 	{
-        return 'SELECT g.* 
-                FROM SG g, SRP p 
-                WHERE p.symid=:symid/**/
-                AND g.srp_id=:srp_id/**/;';
+		return array(
+            'All' => '
+				SELECT si.sym_id, si.srp_name, sp.*
+				FROM StoragePhys sp
+				JOIN StorageId si ON sp.storage_id = si.storage_id;'
+            , 'byId' => '
+                SELECT si.sym_id, si.srp_name, sp.*
+				FROM StoragePhys sp
+				JOIN StorageId si ON sp.storage_id = si.storage_id
+				WHERE sp.sphys_id=:sphys_id/**/;'
+        );
 	}
 	
+    
 	private static function Update()
 	{
 		return '';

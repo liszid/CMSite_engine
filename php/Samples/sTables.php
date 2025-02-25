@@ -16,8 +16,9 @@ use Toolkit\{
  */
 
 class sTables implements
-    sTables\ADMIN,
-    sTables\USERS
+    sTables\ADMIN
+    ,sTables\USERS
+    ,sTables\STORAGE
 {
     /** @var const ACTIONS Array of actions */
     const ACTIONS = ['Edit', 'View', 'Delete', 'Reset', 'Upload'];

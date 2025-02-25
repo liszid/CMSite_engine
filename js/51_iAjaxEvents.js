@@ -106,8 +106,7 @@ evntCopyDisabled() {
                             {
                                 var title = $(this).text();
                                 if(
-                                    title !== ""
-                                    && ! $(this).hasClass('never')
+                                    title !== "" && ! $(this).hasClass('never')
                                 ) {
                                     $(this).html( '<center><input type="text" placeholder="'+title+'" /></center>' );
                                     $( 'input', this).attr('size', $( 'input', this).attr('placeholder').length);
@@ -267,7 +266,7 @@ evntCopyDisabled() {
  * @param tag object
  *
  * @author Liszi Dániel
- */
+ 
     evntChart ()
     {
         let _self = this;
@@ -286,6 +285,86 @@ evntCopyDisabled() {
             	}]
             });
             chart.render();
+        }
+    }
+*/
+    evntChart() {
+        function convertToDate(timestamp) {
+            return new Date(timestamp * 1000);
+        }
+        
+        let containers = document.querySelectorAll('.chartContainer');
+
+        CanvasJS.addColorSet("greenShades", [
+            "#ffff31",
+            "#efcc00",
+            "#fff8dc",
+            "#90EE90"
+        ]);
+
+        containers.forEach(function(container) {
+            let data = JSON.parse(container.textContent);
+            let chartType = container.getAttribute('data-chart-type');
+            let chartLabel = container.getAttribute('data-label');
+            
+            data.forEach(function(series) {
+                series.dataPoints.forEach(function(point) {
+                    point.x = convertToDate(point.x);
+                });
+                series.dataPoints.sort(function(a, b) {
+                    return a.x - b.x;
+                });
+            });
+            
+            let chartOptions = {
+                theme: "dark1",
+                colorSet: "greenShades",
+                animationEnabled: true,
+                title: {
+                    text: chartLabel
+                },
+                axisX: {
+                    valueFormatString: "YYYY-MM-DD HH:mm:ss" 
+                },
+                axisY: {
+                    title: "Values",
+                    suffix: ""
+                },
+                legend:{
+                    cursor: "pointer",
+                    fontSize: 16,
+                    itemclick: toggleDataSeries
+                },
+                toolTip:{
+                    shared: true
+                },
+                data: []
+            };
+
+            if (chartType === 'multi') {
+                data.forEach(series => {
+                    chartOptions.data.push({
+                        name: series.name,
+                        type: series.type,
+                        showInLegend: true,
+                        dataPoints: series.dataPoints
+                    });
+                });
+            } else {
+                console.error("Unsupported chart type: " + chartType);
+            }
+
+            let chart = new CanvasJS.Chart(container, chartOptions);
+            chart.render();
+        });
+
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            e.chart.render();
         }
     }
 
@@ -389,7 +468,32 @@ evntCopyDisabled() {
             }
         }
     }
+
+    
+/**
+ * Sets events on Collapsible elements, dynamic workaround
+ *
+ * @param tag object
+ *
+ * @author Liszi Dániel
+ */
+    initializeCollapsibles() {
+        var collapsibles = document.getElementsByClassName("collapsible");
+
+        for (var i = 0; i < collapsibles.length; i++) {
+            collapsibles[i].addEventListener("click", function() {
+                this.classList.toggle("collapsible-active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+    }
 };
+
 /*
  * Download management
  * 

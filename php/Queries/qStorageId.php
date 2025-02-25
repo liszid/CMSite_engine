@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database;
+namespace Queries;
 
 use Toolkit\{
     Log
@@ -10,7 +10,7 @@ use Toolkit\{
     ,Valid
 };
 
-class dbGroup extends Table implements iDatabase
+class qStorageId 
 {
     public static function Get(): array
     {
@@ -29,7 +29,13 @@ class dbGroup extends Table implements iDatabase
 	
 	private static function Select()
 	{
-		return 'SELECT * FROM SYM;';
+		return array(
+            'All' => '
+				SELECT * FROM StorageId;'
+            , 'byId' => '
+                SELECT p.* FROM StorageId p 
+                WHERE p.storage_id=:storage_id/**/;'
+        );
 	}
 	
 	private static function Update()

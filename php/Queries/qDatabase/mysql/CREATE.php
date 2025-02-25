@@ -71,53 +71,85 @@ interface CREATE
                 CONSTRAINT huntgroupMemberGroupCascade FOREIGN KEY (huntgroupId) REFERENCES `Huntgroup` (huntgroupId) ON DELETE CASCADE,
                 CONSTRAINT huntgroupMemberUserCascade FOREIGN KEY (userId) REFERENCES `User` (userId) ON DELETE CASCADE
             );"			
-        ,10 => "
-            CREATE TABLE SYM (
-                symid VARCHAR(255) PRIMARY KEY
+        ,10 =>"
+            CREATE TABLE `StorageId` (
+                storage_id INT AUTO_INCREMENT PRIMARY KEY,
+                sym_id VARCHAR(255),
+                srp_name VARCHAR(255),
+                insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );"
         ,11 => "
-            CREATE TABLE SRP (
-                srp_id INT AUTO_INCREMENT PRIMARY KEY,
-                symid VARCHAR(255),
-                name VARCHAR(255),
+            CREATE TABLE `StoragePhys` (
+                sphys_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                storage_id INT NOT NULL,
                 physical_capacity INT,
                 usable_capacity INT,
                 compression_state VARCHAR(255),
+                compression_ratio DECIMAL(5,2),
+                data_reduction_ratio DECIMAL(5,2),
                 srdf_dse_allocated INT,
                 snapshot_effective_capacity INT,
                 snapshots_allocated INT,
-                provisioned_capacity_gigabytes INT,
-                subscribed_capacity_gigabytes INT,
-                effective_used_gigabytes INT,
-                allocated_capacity_gigabytes INT,
-                physical_used_gigabytes INT,
-                used_capacity_gigabytes INT,
-                unreducible_used_cap_gigabytes INT,
-                snap_effective_used_gigabytes INT,
-                snap_capacity_gigabytes INT,
-                snap_physical_used_gigabytes INT,
-                snap_used_capacity_gigabytes INT,
-                snap_unreducible_used_cap_gigabytes INT,
-                FOREIGN KEY (symid) REFERENCES SYM(symid)
+                total_subscribed_pct DECIMAL(5,2),
+                insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT storagePhysCascade FOREIGN KEY (storage_id) REFERENCES `StorageId` (storage_id) ON DELETE CASCADE
             );"
         ,12 => "
-            CREATE TABLE SG (
-                sg_id INT AUTO_INCREMENT PRIMARY KEY,
-                srp_id INT,
-                sg_name VARCHAR(255),
+            CREATE TABLE `StorageTotal` (
+                stotal_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                sphys_id INT NOT NULL,
                 provisioned_capacity INT,
                 subscribed_capacity INT,
+                effective_used INT,
+                effective_used_pct DECIMAL(5,2),
+                allocated_capacity INT,
+                allocated_capacity_pct DECIMAL(5,2),
+                physical_used INT,
+                used_capacity INT,
+                unreducible_used_cap INT,
+                compression_ratio DECIMAL(5,2),
+                snap_effective_used INT,
+                snap_capacity INT,
+                snap_physical_used INT,
+                snap_used_capacity INT,
+                snap_unreducible_used_cap INT,
+                compression_snapshot_ratio DECIMAL(5,2),
+                insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT storageTotalCascade FOREIGN KEY (sphys_id) REFERENCES `StoragePhys` (sphys_id) ON DELETE CASCADE
+            );"
+        ,13 => "
+            CREATE TABLE `StorageGroup` (
+                sgroup_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                sphys_id INT NOT NULL,
+                group_name VARCHAR(255),
+                provisioned INT,
+                subscribed_capacity INT,
                 user_data INT,
+                user_data_percent DECIMAL(5,2),
                 total_effective_used INT,
                 total_physical_used INT,
+                total_physical_used_percent DECIMAL(5,2),
                 total_unreducible_used INT,
+                total_data_reduction_ratio DECIMAL(5,2),
+                effective_used INT,
+                effective_used_pct DECIMAL(5,2),
+                allocated_capacity INT,
+                allocated_capacity_pct DECIMAL(5,2),
+                physical_used INT,
+                used_capacity INT,
+                unreducible_used_cap INT,
+                data_reduction_ratio DECIMAL(5,2),
+                compression_ratio DECIMAL(5,2),
                 snap_effective_used INT,
                 snap_allocated_capacity INT,
                 snap_physical_used INT,
                 snap_used_capacity INT,
                 snap_unreducible_used_cap INT,
-                sg_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (srp_id) REFERENCES SRP(srp_id)
+                snapshot_resources_used_percent DECIMAL(5,2),
+                snap_data_reduction_ratio DECIMAL(5,2),
+                compression_snapshot_ratio DECIMAL(5,2),
+                insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT storageGroupCascade FOREIGN KEY (sphys_id) REFERENCES `StoragePhys` (sphys_id) ON DELETE CASCADE
             );"
         ,90 => "
             CREATE TABLE IF NOT EXISTS `Log`(

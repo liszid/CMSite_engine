@@ -117,6 +117,8 @@ class sSite
 				$navName = "Administrative";
 				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Users', 'Groups', 'Huntgroups'), 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);
 			}
+			$navName = "Capacity";
+				$navArray[] = array('liClass' => ' dropdown', 'aClass' => ' dropdown-toggle', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => 'dropdown', 'dataLink' => $navName, 'dataItems' => array('Storage', 'Group'), 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);
 			$navName = "Profile";
 			$navArray[] = array('liClass' => '', 'aClass' => '', 'faClass' => sTranslate::Prompt($navName, 'fa'), 'dataToggle' => true, 'dataLink' => $navName, 'Desc' => sTranslate::Prompt($navName), 'hidden' => 1);
 		}

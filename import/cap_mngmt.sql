@@ -1,276 +1,179 @@
-################################################################################################################################################
-### StorageId tábla
-| Oszlop neve   | Típus       | Leírás                                              |
-|---------------|-------------|-----------------------------------------------------|
-| storage_id    | INT         | Egyedi azonosító, automatikusan növekszik           |
-| sym_id        | VARCHAR(255)| Hivatkozás a Symmetrix azonosítóra                  |
-| srp_name      | VARCHAR(255)| SRP név                                             |
-| insert_date   | TIMESTAMP   | Az adatbázisba történő beillesztés időpontja, alapértelmezés szerint a jelenlegi időbélyeg |
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Gép: 127.0.0.1
+-- Létrehozás ideje: 2025. Feb 25. 15:23
+-- Kiszolgáló verziója: 10.4.32-MariaDB
+-- PHP verzió: 8.2.12
 
-CREATE TABLE `StorageId` (
-	storage_id INT AUTO_INCREMENT PRIMARY KEY,
-	sym_id VARCHAR(255),
-	srp_name VARCHAR(255),
-	insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-INSERT INTO StorageId (sym_id, srp_name) VALUES ('<sym_id_value>', '<srp_name_value>');
-
-SELECT * FROM StorageId;
-
-################################################################################################################################################
-### StoragePhys tábla
-| Oszlop neve                  | Típus       | Leírás                                              |
-|------------------------------|-------------|-----------------------------------------------------|
-| sphys_id                     | INT         | Egyedi azonosító, automatikusan növekszik, nem lehet null értékű  |
-| storage_id                   | INT         | Hivatkozás a StorageId táblára, nem lehet null értékű |
-| physical_capacity            | INT         | Fizikai kapacitás gigabájtban                       |
-| usable_capacity              | INT         | Használható kapacitás gigabájtban                   |
-| compression_state            | VARCHAR(255)| Tömörítési állapot                                  |
-| compression_ratio            | DECIMAL(5,2)| Tömörítési arány                                    |
-| data_reduction_ratio         | DECIMAL(5,2)| Adatcsökkentési arány                               |
-| srdf_dse_allocated           | INT         | SRDF DSE allokált kapacitás gigabájtban             |
-| snapshot_effective_capacity  | INT         | Snapshot hatékony kapacitás gigabájtban             |
-| snapshots_allocated          | INT         | Snapshots allokált kapacitás gigabájtban            |
-| total_subscribed_pct         | DECIMAL(5,2)| Teljes előfizetett kapacitás százalékban            |
-| insert_date                  | TIMESTAMP   | Az adatbázisba történő beillesztés időpontja, alapértelmezés szerint a jelenlegi időbélyeg |
-| storagePhysCascade           | FOREIGN KEY | Kapcsolat a StorageId táblával, tároló azonosító alapján, törlési kaszkád |
-
-CREATE TABLE `StoragePhys` (
-	sphys_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	storage_id INT NOT NULL,
-	physical_capacity INT,
-	usable_capacity INT,
-	compression_state VARCHAR(255),
-	compression_ratio DECIMAL(5,2),
-	data_reduction_ratio DECIMAL(5,2),
-	srdf_dse_allocated INT,
-	snapshot_effective_capacity INT,
-	snapshots_allocated INT,
-	total_subscribed_pct DECIMAL(5,2),
-	insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT storagePhysCascade FOREIGN KEY (storage_id) REFERENCES `StorageId` (storage_id) ON DELETE CASCADE
-);
-
-INSERT INTO StoragePhys (storage_id, physical_capacity, usable_capacity, compression_state, compression_ratio, data_reduction_ratio, srdf_dse_allocated, snapshot_effective_capacity, snapshots_allocated, total_subscribed_pct) 
-VALUES (<storage_id_value>, <physical_capacity_value>, <usable_capacity_value>, '<compression_state_value>', <compression_ratio_value>, <data_reduction_ratio_value>, <srdf_dse_allocated_value>, <snapshot_effective_capacity_value>, <snapshots_allocated_value>, <total_subscribed_pct_value>);
-
-SELECT sp.*, si.sym_id, si.srp_name, si.insert_date AS storageId_insert_date
-FROM StoragePhys sp
-JOIN StorageId si ON sp.storage_id = si.storage_id;
-
-################################################################################################################################################
-### StorageTotal tábla
-| Oszlop neve                  | Típus       | Leírás                                              |
-|------------------------------|-------------|-----------------------------------------------------|
-| stotal_id                    | INT         | Egyedi azonosító, automatikusan növekszik, nem lehet null értékű  |
-| sphys_id                     | INT         | Hivatkozás a StoragePhys táblára, nem lehet null értékű |
-| provisioned_capacity         | INT         | Provisioned kapacitás                               |
-| subscribed_capacity          | INT         | Előfizetett kapacitás                               |
-| effective_used               | INT         | Effektív használatban lévő kapacitás                |
-| effective_used_pct           | DECIMAL(5,2)| Effektív használat százalékban                      |
-| allocated_capacity           | INT         | Allokált kapacitás                                  |
-| allocated_capacity_pct       | DECIMAL(5,2)| Allokált kapacitás százalékban                      |
-| physical_used                | INT         | Fizikailag használatban lévő kapacitás              |
-| used_capacity                | INT         | Használatban lévő kapacitás                         |
-| unreducible_used_cap         | INT         | Nem csökkenthető használt kapacitás                 |
-| compression_ratio            | DECIMAL(5,2)| Tömörítési arány                                    |
-| snap_effective_used          | INT         | Snapshot effektív használatban lévő kapacitás       |
-| snap_capacity                | INT         | Snapshot kapacitás                                  |
-| snap_physical_used           | INT         | Snapshot fizikailag használatban lévő kapacitás     |
-| snap_used_capacity           | INT         | Snapshot használatban lévő kapacitás                |
-| snap_unreducible_used_cap    | INT         | Snapshot nem csökkenthető használt kapacitás        |
-| compression_snapshot_ratio   | DECIMAL(5,2)| Snapshot tömörítési arány                           |
-| insert_date                  | TIMESTAMP   | Az adatbázisba történő beillesztés időpontja, alapértelmezés szerint a jelenlegi időbélyeg |
-| storageTotalCascade          | FOREIGN KEY | Kapcsolat a StoragePhys táblával, fizikai azonosító alapján, törlési kaszkád |
-
-CREATE TABLE `StorageTotal` (
-	stotal_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	sphys_id INT NOT NULL,
-	provisioned_capacity INT,
-	subscribed_capacity INT,
-	effective_used INT,
-	effective_used_pct DECIMAL(5,2),
-	allocated_capacity INT,
-	allocated_capacity_pct DECIMAL(5,2),
-	physical_used INT,
-	used_capacity INT,
-	unreducible_used_cap INT,
-	compression_ratio DECIMAL(5,2),
-	snap_effective_used INT,
-	snap_capacity INT,
-	snap_physical_used INT,
-	snap_used_capacity INT,
-	snap_unreducible_used_cap INT,
-	compression_snapshot_ratio DECIMAL(5,2),
-	insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT storageTotalCascade FOREIGN KEY (sphys_id) REFERENCES `StoragePhys` (sphys_id) ON DELETE CASCADE
-);
-	
-INSERT INTO StorageTotal (sphys_id, provisioned_capacity, subscribed_capacity, effective_used, effective_used_pct, allocated_capacity, allocated_capacity_pct, physical_used, used_capacity, unreducible_used_cap, compression_ratio, snap_effective_used, snap_capacity, snap_physical_used, snap_used_capacity, snap_unreducible_used_cap, compression_snapshot_ratio) 
-VALUES (<sphys_id_value>, <provisioned_capacity_value>, <subscribed_capacity_value>, <effective_used_value>, <effective_used_pct_value>, <allocated_capacity_value>, <allocated_capacity_pct_value>, <physical_used_value>, <used_capacity_value>, <unreducible_used_cap_value>, <compression_ratio_value>, <snap_effective_used_value>, <snap_capacity_value>, <snap_physical_used_value>, <snap_used_capacity_value>, <snap_unreducible_used_cap_value>, <compression_snapshot_ratio_value>);
-
-SELECT st.*, sp.physical_capacity, sp.usable_capacity, sp.compression_state, sp.compression_ratio AS storagePhys_compression_ratio,
-       sp.data_reduction_ratio AS storagePhys_data_reduction_ratio, sp.srdf_dse_allocated, sp.snapshot_effective_capacity,
-       sp.snapshots_allocated, sp.total_subscribed_pct, sp.insert_date AS storagePhys_insert_date,
-       si.sym_id, si.srp_name, si.insert_date AS storageId_insert_date
-FROM StorageTotal st
-JOIN StoragePhys sp ON st.sphys_id = sp.sphys_id
-JOIN StorageId si ON sp.storage_id = si.storage_id;
-	
-################################################################################################################################################
-### StorageGroup tábla
-| Oszlop neve                         | Típus       | Leírás                                              |
-|-------------------------------------|-------------|-----------------------------------------------------|
-| sgroup_id                           | INT         | Egyedi azonosító, automatikusan növekszik           |
-| sphys_id                            | INT         | Hivatkozás a StoragePhys táblára                    |
-| group_name                          | VARCHAR(255)| A csoport neve                                      |
-| provisioned                         | INT         | Provisioned kapacitás                               |
-| subscribed_capacity                 | INT         | Előfizetett kapacitás                               |
-| user_data                           | INT         | Felhasználói adatok                                 |
-| user_data_percent                   | DECIMAL(5,2)| Felhasználói adatok százaléka                       |
-| total_effective_used                | INT         | Teljes effektív használatban lévő kapacitás         |
-| total_physical_used                 | INT         | Teljes fizikailag használatban lévő kapacitás       |
-| total_physical_used_percent         | DECIMAL(5,2)| Teljes fizikailag használatban lévő kapacitás százaléka |
-| total_unreducible_used              | INT         | Teljes nem csökkenthető használt kapacitás          |
-| total_data_reduction_ratio          | DECIMAL(5,2)| Teljes adatcsökkentési arány                        |
-| effective_used                      | INT         | Effektív használatban lévő kapacitás                |
-| effective_used_pct                  | DECIMAL(5,2)| Effektív használat százalékban                      |
-| allocated_capacity                  | INT         | Allokált kapacitás                                  |
-| allocated_capacity_pct              | DECIMAL(5,2)| Allokált kapacitás százalékban                      |
-| physical_used                       | INT         | Fizikailag használatban lévő kapacitás              |
-| used_capacity                       | INT         | Használatban lévő kapacitás                         |
-| unreducible_used_cap                | INT         | Nem csökkenthető használt kapacitás                 |
-| data_reduction_ratio                | DECIMAL(5,2)| Adatcsökkentési arány                               |
-| compression_ratio                   | DECIMAL(5,2)| Tömörítési arány                                    |
-| snap_effective_used                 | INT         | Snapshot effektív használatban lévő kapacitás       |
-| snap_allocated_capacity             | INT         | Snapshot allokált kapacitás                         |
-| snap_physical_used                  | INT         | Snapshot fizikailag használatban lévő kapacitás     |
-| snap_used_capacity                  | INT         | Snapshot használatban lévő kapacitás                |
-| snap_unreducible_used_cap           | INT         | Snapshot nem csökkenthető használt kapacitás        |
-| snapshot_resources_used_percent     | DECIMAL(5,2)| Snapshot források használatának százaléka           |
-| snap_data_reduction_ratio           | DECIMAL(5,2)| Snapshot adatcsökkentési arány                      |
-| compression_snapshot_ratio          | DECIMAL(5,2)| Snapshot tömörítési arány                           |
-| insert_date                          | TIMESTAMP   | Az adatbázisba történő beillesztés időpontja, alapértelmezés szerint a jelenlegi időbélyeg |
-| storageGroupCascade                 | FOREIGN KEY | Kapcsolat a StoragePhys táblával, fizikai azonosító alapján, törlési kaszkád |
-
-CREATE TABLE StorageGroup (
-	sgroup_id INT AUTO_INCREMENT PRIMARY KEY,
-	sphys_id INT,
-	group_name VARCHAR(255),
-	provisioned INT,
-	subscribed_capacity INT,
-	user_data INT,
-	user_data_percent DECIMAL(5,2),
-	total_effective_used INT,
-	total_physical_used INT,
-	total_physical_used_percent DECIMAL(5,2),
-	total_unreducible_used INT,
-	total_data_reduction_ratio DECIMAL(5,2),
-	effective_used INT,
-	effective_used_pct DECIMAL(5,2),
-	allocated_capacity INT,
-	allocated_capacity_pct DECIMAL(5,2),
-	physical_used INT,
-	used_capacity INT,
-	unreducible_used_cap INT,
-	data_reduction_ratio DECIMAL(5,2),
-	compression_ratio DECIMAL(5,2),
-	snap_effective_used INT,
-	snap_allocated_capacity INT,
-	snap_physical_used INT,
-	snap_used_capacity INT,
-	snap_unreducible_used_cap INT,
-	snapshot_resources_used_percent DECIMAL(5,2),
-	snap_data_reduction_ratio DECIMAL(5,2),
-	compression_snapshot_ratio DECIMAL(5,2),
-	insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT storageGroupCascade FOREIGN KEY (sphys_id) REFERENCES `StoragePhys` (sphys_id) ON DELETE CASCADE
-);
-
-SELECT * FROM StorageId;
-
-SELECT si.sym_id, si.srp_name, sp.*
-FROM StoragePhys sp
-JOIN StorageId si ON sp.storage_id = si.storage_id;
-
-SELECT sg.*, sp.physical_capacity, sp.usable_capacity, sp.compression_state, sp.compression_ratio AS storagePhys_compression_ratio,
-	   sp.data_reduction_ratio AS storagePhys_data_reduction_ratio, sp.srdf_dse_allocated, sp.snapshot_effective_capacity,
-	   sp.snapshots_allocated, sp.total_subscribed_pct, si.sym_id, si.srp_name
-FROM StorageGroup sg
-JOIN StoragePhys sp ON sg.sphys_id = sp.sphys_id
-JOIN StorageId si ON sp.storage_id = si.storage_id;
-
-SELECT si.storage_id, sp.physical_capacity, sp.usable_capacity, sp.compression_state, sp.compression_ratio AS storagePhys_compression_ratio,
-	   sp.data_reduction_ratio AS storagePhys_data_reduction_ratio, sp.srdf_dse_allocated, sp.snapshot_effective_capacity,
-	   sp.snapshots_allocated, sp.total_subscribed_pct, si.sym_id, si.srp_name, st.provisioned_capacity, st.subscribed_capacity, 
-	   st.effective_used, st.effective_used_pct, st.allocated_capacity, st.allocated_capacity_pct, st.physical_used, st.used_capacity, 
-	   st.unreducible_used_cap, st.compression_ratio, st.snap_effective_used, st.snap_capacity, st.snap_physical_used, st.snap_used_capacity,
-	   st.snap_unreducible_used_cap, st.compression_snapshot_ratio, sp.insert_date			
-FROM StorageTotal st
-JOIN StoragePhys sp ON st.sphys_id = sp.sphys_id
-JOIN StorageId si ON sp.storage_id = si.storage_id;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
-INSERT INTO `StorageId` (sym_id, srp_name, insert_date) VALUES
-('SYM001', 'SRP1', '2025-01-01 10:00:00'),
-('SYM002', 'SRP2', '2025-01-02 11:00:00');
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-INSERT INTO `StoragePhys` (storage_id, physical_capacity, usable_capacity, compression_state, compression_ratio, data_reduction_ratio, srdf_dse_allocated, snapshot_effective_capacity, snapshots_allocated, total_subscribed_pct, insert_date) VALUES
-(1, 100, 90, 'Active', 1.5, 1.8, 50, 70, 80, 95.00, '2025-01-01 10:05:00'),
-(1, 115, 105, 'Active', 1.4, 1.9, 55, 80, 85, 92.00, '2025-01-02 10:10:00'),
-(1, 110, 100, 'Active', 1.6, 1.7, 48, 75, 82, 96.00, '2025-01-03 10:15:00'),
-(1, 130, 115, 'Active', 1.55, 2.0, 60, 85, 90, 94.00, '2025-01-04 10:20:00'),
-(1, 125, 110, 'Active', 1.7, 1.95, 53, 78, 88, 97.00, '2025-01-05 10:25:00'),
-(1, 135, 125, 'Active', 1.65, 2.1, 65, 82, 95, 91.00, '2025-01-06 10:30:00'),
-(1, 125, 115, 'Active', 1.8, 2.05, 58, 80, 92, 98.00, '2025-01-07 10:35:00'),
-(1, 150, 130, 'Active', 1.75, 2.3, 70, 90, 100, 95.50, '2025-01-08 10:40:00'),
-(1, 140, 120, 'Active', 1.85, 2.1, 68, 82, 97, 98.50, '2025-01-09 10:45:00'),
-(1, 160, 140, 'Active', 1.8, 2.25, 73, 88, 105, 99.00, '2025-01-10 10:50:00'),
-(1, 145, 130, 'Active', 1.95, 2.2, 75, 85, 100, 100.00, '2025-01-11 10:55:00'),
-(1, 170, 150, 'Active', 1.9, 2.35, 78, 92, 110, 100.50, '2025-01-12 11:00:00'),
-(2, 210, 170, 'Active', 2.75, 1.95, 90, 110, 120, 92.00, '2025-01-13 11:05:00'),
-(2, 180, 160, 'Inactive', 1.50, 2.25, 95, 115, 130, 98.50, '2025-01-14 11:10:00'),
-(2, 230, 195, 'Active', 2.80, 3.50, 70, 100, 110, 87.50, '2025-01-15 11:15:00'),
-(2, 200, 190, 'Active', 1.60, 1.70, 75, 95, 105, 102.00, '2025-01-16 11:20:00'),
-(2, 220, 180, 'Inactive', 3.10, 2.20, 85, 105, 115, 94.00, '2025-01-17 11:25:00'),
-(2, 240, 210, 'Active', 2.25, 2.85, 100, 120, 130, 89.50, '2025-01-18 11:30:00'),
-(2, 190, 150, 'Inactive', 1.20, 2.60, 60, 90, 100, 99.00, '2025-01-19 11:35:00'),
-(2, 215, 185, 'Active', 2.55, 3.00, 110, 125, 135, 96.50, '2025-01-20 11:40:00'),
-(2, 205, 170, 'Inactive', 1.90, 2.35, 65, 85, 95, 101.00, '2025-01-21 11:45:00'),
-(2, 225, 200, 'Active', 2.85, 3.10, 105, 130, 140, 95.00, '2025-01-22 11:50:00'),
-(2, 195, 160, 'Inactive', 1.70, 2.40, 50, 75, 85, 100.50, '2025-01-23 11:55:00'),
-(2, 250, 220, 'Active', 2.95, 2.75, 115, 140, 150, 93.50, '2025-01-24 12:00:00'),
-(2, 185, 165, 'Inactive', 1.30, 2.10, 55, 80, 90, 97.00, '2025-01-25 12:05:00'),
-(2, 210, 190, 'Active', 2.65, 3.20, 100, 115, 125, 90.00, '2025-01-26 12:10:00');
+--
+-- Adatbázis: `cap_mngmt`
+--
 
-INSERT INTO `StorageTotal` (sphys_id, provisioned_capacity, subscribed_capacity, effective_used, effective_used_pct, allocated_capacity, allocated_capacity_pct, physical_used, used_capacity, unreducible_used_cap, compression_ratio, snap_effective_used, snap_capacity, snap_physical_used, snap_used_capacity, snap_unreducible_used_cap, compression_snapshot_ratio, insert_date) VALUES
-(1, 210, 155, 133, 84.50, 105, 94.50, 82, 92, 52, 1.45, 32, 42, 62, 72, 22, 1.35, '2025-01-01 10:05:00'),
-(2, 225, 165, 137, 85.75, 112, 96.75, 87, 97, 57, 1.55, 37, 47, 67, 77, 27, 1.45, '2025-01-02 10:10:00'),
-(3, 218, 162, 142, 86.00, 108, 96.00, 89, 99, 54, 1.60, 38, 48, 68, 78, 28, 1.50, '2025-01-03 10:15:00'),
-(4, 235, 175, 148, 88.25, 120, 97.25, 93, 103, 62, 1.65, 45, 55, 75, 85, 35, 1.55, '2025-01-04 10:20:00'),
-(5, 245, 185, 153, 89.75, 125, 98.75, 98, 108, 65, 1.70, 50, 60, 80, 90, 40, 1.60, '2025-01-05 10:25:00'),
-(6, 260, 195, 158, 90.50, 132, 99.50, 102, 112, 70, 1.75, 55, 65, 85, 95, 45, 1.65, '2025-01-06 10:30:00'),
-(7, 255, 205, 165, 91.25, 135, 100.25, 105, 115, 73, 1.80, 58, 68, 88, 98, 48, 1.70, '2025-01-07 10:35:00'),
-(8, 275, 220, 172, 92.50, 142, 102.50, 110, 120, 75, 1.85, 63, 73, 93, 103, 53, 1.75, '2025-01-08 10:40:00'),
-(9, 288, 230, 177, 93.25, 148, 103.75, 115, 125, 82, 1.90, 67, 77, 97, 107, 57, 1.80, '2025-01-09 10:45:00'),
-(10, 295, 240, 180, 94.00, 150, 104.00, 120, 130, 85, 1.95, 70, 80, 100, 110, 60, 1.85, '2025-01-10 10:50:00'),
-(11, 305, 250, 185, 95.00, 155, 105.00, 125, 135, 90, 2.00, 75, 85, 105, 115, 65, 1.90, '2025-01-11 10:55:00'),
-(12, 315, 260, 188, 95.50, 158, 105.50, 128, 138, 92, 2.05, 78, 88, 108, 118, 68, 1.95, '2025-01-12 11:00:00'),
-(13, 322, 275, 195, 96.75, 160, 106.75, 130, 140, 95, 2.10, 80, 90, 110, 120, 70, 2.00, '2025-01-14 11:05:00'),
-(14, 340, 280, 200, 97.00, 165, 108.00, 135, 145, 98, 2.20, 83, 93, 113, 123, 73, 2.10, '2025-01-15 11:10:00'),
-(15, 348, 290, 205, 98.25, 170, 109.25, 140, 150, 100, 2.30, 88, 98, 118, 128, 78, 2.20, '2025-01-16 11:15:00'),
-(16, 355, 305, 210, 99.50, 175, 110.50, 145, 155, 105, 2.40, 93, 103, 123, 133, 83, 2.30, '2025-01-17 11:20:00'),
-(17, 365, 315, 215, 100.25, 180, 111.25, 150, 160, 108, 2.50, 95, 105, 125, 135, 85, 2.40, '2025-01-18 11:25:00'),
-(18, 375, 320, 220, 101.00, 185, 112.00, 155, 165, 110, 2.60, 98, 108, 128, 138, 88, 2.50, '2025-01-19 11:30:00'),
-(19, 388, 335, 225, 102.25, 190, 113.25, 160, 170, 115, 2.70, 103, 113, 133, 143, 93, 2.60, '2025-01-20 11:35:00'),
-(20, 395, 340, 230, 103.50, 195, 114.50, 165, 175, 118, 2.80, 108, 118, 138, 148, 98, 2.70, '2025-01-21 11:40:00'),
-(21, 405, 355, 235, 104.75, 200, 115.75, 170, 180, 120, 2.90, 113, 123, 143, 153, 103, 2.80, '2025-01-22 11:45:00'),
-(22, 418, 365, 240, 105.50, 205, 116.50, 175, 185, 125, 3.00, 115, 125, 145, 155, 105, 2.90, '2025-01-23 11:50:00'),
-(23, 425, 370, 245, 106.00, 210, 117.00, 180, 190, 128, 3.10, 118, 128, 148, 158, 108, 3.00, '2025-01-24 11:55:00'),
-(24, 435, 380, 250, 107.25, 215, 118.25, 185, 195, 130, 3.20, 120, 130, 150, 160, 110, 3.10, '2025-01-25 12:00:00'),
-(25, 445, 390, 255, 108.50, 220, 119.50, 190, 200, 135, 3.30, 123, 133, 153, 163, 113, 3.20, '2025-01-26 12:05:00'),
-(26, 450, 400, 260, 109.00, 225, 120.00, 195, 205, 140, 3.40, 125, 135, 155, 165, 115, 3.30, '2025-01-27 12:10:00');
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `group`
+--
+
+CREATE TABLE `group` (
+  `groupId` int(6) UNSIGNED NOT NULL,
+  `groupName` varchar(32) NOT NULL,
+  `groupDesc` varchar(256) NOT NULL,
+  `canAdministrative` int(1) DEFAULT 0,
+  `mngGroups` int(1) DEFAULT 0,
+  `mngHuntgroups` int(1) DEFAULT 0,
+  `mngUsers` int(1) DEFAULT 0,
+  `mngTools` int(1) DEFAULT 0,
+  `canUsers` int(1) DEFAULT 0,
+  `canEdit` int(1) DEFAULT 0,
+  `canLogin` int(1) DEFAULT 0,
+  `isDelete` int(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `group`
+--
+
+INSERT INTO `group` (`groupId`, `groupName`, `groupDesc`, `canAdministrative`, `mngGroups`, `mngHuntgroups`, `mngUsers`, `mngTools`, `canUsers`, `canEdit`, `canLogin`, `isDelete`) VALUES
+(1, 'Adminisztrátor', 'Adminisztratív jogosultság', 1, 1, 1, 1, 1, 1, 1, 1, 0),
+(2, 'Alapértelmezett', 'Alapértelmezett jogosultság', 0, 0, 0, 0, 0, 1, 1, 1, 0),
+(3, 'Korlátozott', 'Korlátozott hozzáféréssel rendelkezö jogosultság', 0, 0, 0, 0, 0, 1, 1, 1, 0),
+(4, 'Törölt', 'Törölt felhasználók jogosultsága', 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `group_member`
+--
+
+CREATE TABLE `group_member` (
+  `groupMemberId` int(6) UNSIGNED NOT NULL,
+  `userId` int(6) UNSIGNED NOT NULL,
+  `groupId` int(6) UNSIGNED NOT NULL,
+  `isDelete` int(6) UNSIGNED DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `group_member`
+--
+
+INSERT INTO `group_member` (`groupMemberId`, `userId`, `groupId`, `isDelete`) VALUES
+(1, 1, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `huntgroup`
+--
+
+CREATE TABLE `huntgroup` (
+  `huntgroupId` int(6) UNSIGNED NOT NULL,
+  `huntgroupName` varchar(32) NOT NULL,
+  `huntgroupDesc` varchar(256) NOT NULL,
+  `isDelete` int(6) UNSIGNED DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `huntgroup`
+--
+
+INSERT INTO `huntgroup` (`huntgroupId`, `huntgroupName`, `huntgroupDesc`, `isDelete`) VALUES
+(1, 'Alapértelmezett', 'Alapértelmezett adatok gyüjtő csoportja', 0),
+(2, '#_admin', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `huntgroup_member`
+--
+
+CREATE TABLE `huntgroup_member` (
+  `huntgroupMemberId` int(6) UNSIGNED NOT NULL,
+  `userId` int(6) UNSIGNED NOT NULL,
+  `huntgroupId` int(6) UNSIGNED NOT NULL,
+  `isDelete` int(6) UNSIGNED DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `huntgroup_member`
+--
+
+INSERT INTO `huntgroup_member` (`huntgroupMemberId`, `userId`, `huntgroupId`, `isDelete`) VALUES
+(1, 1, 1, 0),
+(2, 1, 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `log`
+--
+
+CREATE TABLE `log` (
+  `logId` int(6) UNSIGNED NOT NULL,
+  `logType` varchar(64) DEFAULT NULL,
+  `logAction` varchar(64) DEFAULT NULL,
+  `logCategory` varchar(64) DEFAULT NULL,
+  `logText` text DEFAULT NULL,
+  `logBool` varchar(16) DEFAULT NULL,
+  `logDate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `userId` int(6) UNSIGNED NOT NULL,
+  `isDelete` int(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `storagegroup`
+--
+
+CREATE TABLE `storagegroup` (
+  `sgroup_id` int(11) NOT NULL,
+  `sphys_id` int(11) NOT NULL,
+  `group_name` varchar(255) DEFAULT NULL,
+  `provisioned` int(11) DEFAULT NULL,
+  `subscribed_capacity` int(11) DEFAULT NULL,
+  `user_data` int(11) DEFAULT NULL,
+  `user_data_percent` decimal(5,2) DEFAULT NULL,
+  `total_effective_used` int(11) DEFAULT NULL,
+  `total_physical_used` int(11) DEFAULT NULL,
+  `total_physical_used_percent` decimal(5,2) DEFAULT NULL,
+  `total_unreducible_used` int(11) DEFAULT NULL,
+  `total_data_reduction_ratio` decimal(5,2) DEFAULT NULL,
+  `effective_used` int(11) DEFAULT NULL,
+  `effective_used_pct` decimal(5,2) DEFAULT NULL,
+  `allocated_capacity` int(11) DEFAULT NULL,
+  `allocated_capacity_pct` decimal(5,2) DEFAULT NULL,
+  `physical_used` int(11) DEFAULT NULL,
+  `used_capacity` int(11) DEFAULT NULL,
+  `unreducible_used_cap` int(11) DEFAULT NULL,
+  `data_reduction_ratio` decimal(5,2) DEFAULT NULL,
+  `compression_ratio` decimal(5,2) DEFAULT NULL,
+  `snap_effective_used` int(11) DEFAULT NULL,
+  `snap_allocated_capacity` int(11) DEFAULT NULL,
+  `snap_physical_used` int(11) DEFAULT NULL,
+  `snap_used_capacity` int(11) DEFAULT NULL,
+  `snap_unreducible_used_cap` int(11) DEFAULT NULL,
+  `snapshot_resources_used_percent` decimal(5,2) DEFAULT NULL,
+  `snap_data_reduction_ratio` decimal(5,2) DEFAULT NULL,
+  `compression_snapshot_ratio` decimal(5,2) DEFAULT NULL,
+  `insert_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `storagegroup`
+--
 
 INSERT INTO `storagegroup` (`sgroup_id`, `sphys_id`, `group_name`, `provisioned`, `subscribed_capacity`, `user_data`, `user_data_percent`, `total_effective_used`, `total_physical_used`, `total_physical_used_percent`, `total_unreducible_used`, `total_data_reduction_ratio`, `effective_used`, `effective_used_pct`, `allocated_capacity`, `allocated_capacity_pct`, `physical_used`, `used_capacity`, `unreducible_used_cap`, `data_reduction_ratio`, `compression_ratio`, `snap_effective_used`, `snap_allocated_capacity`, `snap_physical_used`, `snap_used_capacity`, `snap_unreducible_used_cap`, `snapshot_resources_used_percent`, `snap_data_reduction_ratio`, `compression_snapshot_ratio`, `insert_date`) VALUES
 (1, 1, 'Group q', 160, 135, 128, 83.50, 115, 105, 77.00, 52, 2.55, 92, 84.25, 72, 95.00, 82, 87, 42, 1.80, 1.60, 32, 42, 38, 48, 28, 96.00, 2.12, 1.52, '2025-01-01 09:05:00'),
@@ -404,3 +307,353 @@ INSERT INTO `storagegroup` (`sgroup_id`, `sphys_id`, `group_name`, `provisioned`
 (129, 26, 'Group r', 170, 165, 145, 92.00, 127, 115, 84.50, 68, 3.00, 105, 89.50, 82, 100.00, 98, 100, 58, 1.95, 1.80, 47, 50, 52, 62, 43, 99.50, 2.30, 1.70, '2025-01-26 11:10:00'),
 (130, 26, 'Group t', 175, 170, 150, 94.25, 130, 117, 87.00, 72, 3.15, 110, 91.25, 85, 102.00, 103, 105, 62, 2.00, 1.85, 52, 52, 57, 67, 48, 100.00, 2.35, 1.75, '2025-01-26 11:10:00');
 
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `storageid`
+--
+
+CREATE TABLE `storageid` (
+  `storage_id` int(11) NOT NULL,
+  `sym_id` varchar(255) DEFAULT NULL,
+  `srp_name` varchar(255) DEFAULT NULL,
+  `insert_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `storageid`
+--
+
+INSERT INTO `storageid` (`storage_id`, `sym_id`, `srp_name`, `insert_date`) VALUES
+(1, 'SYM001', 'SRP1', '2025-01-01 09:00:00'),
+(2, 'SYM002', 'SRP2', '2025-01-02 10:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `storagephys`
+--
+
+CREATE TABLE `storagephys` (
+  `sphys_id` int(11) NOT NULL,
+  `storage_id` int(11) NOT NULL,
+  `physical_capacity` int(11) DEFAULT NULL,
+  `usable_capacity` int(11) DEFAULT NULL,
+  `compression_state` varchar(255) DEFAULT NULL,
+  `compression_ratio` decimal(5,2) DEFAULT NULL,
+  `data_reduction_ratio` decimal(5,2) DEFAULT NULL,
+  `srdf_dse_allocated` int(11) DEFAULT NULL,
+  `snapshot_effective_capacity` int(11) DEFAULT NULL,
+  `snapshots_allocated` int(11) DEFAULT NULL,
+  `total_subscribed_pct` decimal(5,2) DEFAULT NULL,
+  `insert_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `storagephys`
+--
+
+INSERT INTO `storagephys` (`sphys_id`, `storage_id`, `physical_capacity`, `usable_capacity`, `compression_state`, `compression_ratio`, `data_reduction_ratio`, `srdf_dse_allocated`, `snapshot_effective_capacity`, `snapshots_allocated`, `total_subscribed_pct`, `insert_date`) VALUES
+(1, 1, 100, 90, 'Active', 1.50, 1.80, 50, 70, 80, 95.00, '2025-01-01 09:05:00'),
+(2, 1, 115, 105, 'Active', 1.40, 1.90, 55, 80, 85, 92.00, '2025-01-02 09:10:00'),
+(3, 1, 110, 100, 'Active', 1.60, 1.70, 48, 75, 82, 96.00, '2025-01-03 09:15:00'),
+(4, 1, 130, 115, 'Active', 1.55, 2.00, 60, 85, 90, 94.00, '2025-01-04 09:20:00'),
+(5, 1, 125, 110, 'Active', 1.70, 1.95, 53, 78, 88, 97.00, '2025-01-05 09:25:00'),
+(6, 1, 135, 125, 'Active', 1.65, 2.10, 65, 82, 95, 91.00, '2025-01-06 09:30:00'),
+(7, 1, 125, 115, 'Active', 1.80, 2.05, 58, 80, 92, 98.00, '2025-01-07 09:35:00'),
+(8, 1, 150, 130, 'Active', 1.75, 2.30, 70, 90, 100, 95.50, '2025-01-08 09:40:00'),
+(9, 1, 140, 120, 'Active', 1.85, 2.10, 68, 82, 97, 98.50, '2025-01-09 09:45:00'),
+(10, 1, 160, 140, 'Active', 1.80, 2.25, 73, 88, 105, 99.00, '2025-01-10 09:50:00'),
+(11, 1, 145, 130, 'Active', 1.95, 2.20, 75, 85, 100, 100.00, '2025-01-11 09:55:00'),
+(12, 1, 170, 150, 'Active', 1.90, 2.35, 78, 92, 110, 100.50, '2025-01-12 10:00:00'),
+(13, 2, 210, 170, 'Active', 2.75, 1.95, 90, 110, 120, 92.00, '2025-01-13 10:05:00'),
+(14, 2, 180, 160, 'Inactive', 1.50, 2.25, 95, 115, 130, 98.50, '2025-01-14 10:10:00'),
+(15, 2, 230, 195, 'Active', 2.80, 3.50, 70, 100, 110, 87.50, '2025-01-15 10:15:00'),
+(16, 2, 200, 190, 'Active', 1.60, 1.70, 75, 95, 105, 102.00, '2025-01-16 10:20:00'),
+(17, 2, 220, 180, 'Inactive', 3.10, 2.20, 85, 105, 115, 94.00, '2025-01-17 10:25:00'),
+(18, 2, 240, 210, 'Active', 2.25, 2.85, 100, 120, 130, 89.50, '2025-01-18 10:30:00'),
+(19, 2, 190, 150, 'Inactive', 1.20, 2.60, 60, 90, 100, 99.00, '2025-01-19 10:35:00'),
+(20, 2, 215, 185, 'Active', 2.55, 3.00, 110, 125, 135, 96.50, '2025-01-20 10:40:00'),
+(21, 2, 205, 170, 'Inactive', 1.90, 2.35, 65, 85, 95, 101.00, '2025-01-21 10:45:00'),
+(22, 2, 225, 200, 'Active', 2.85, 3.10, 105, 130, 140, 95.00, '2025-01-22 10:50:00'),
+(23, 2, 195, 160, 'Inactive', 1.70, 2.40, 50, 75, 85, 100.50, '2025-01-23 10:55:00'),
+(24, 2, 250, 220, 'Active', 2.95, 2.75, 115, 140, 150, 93.50, '2025-01-24 11:00:00'),
+(25, 2, 185, 165, 'Inactive', 1.30, 2.10, 55, 80, 90, 97.00, '2025-01-25 11:05:00'),
+(26, 2, 210, 190, 'Active', 2.65, 3.20, 100, 115, 125, 90.00, '2025-01-26 11:10:00');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `storagetotal`
+--
+
+CREATE TABLE `storagetotal` (
+  `stotal_id` int(11) NOT NULL,
+  `sphys_id` int(11) NOT NULL,
+  `provisioned_capacity` int(11) DEFAULT NULL,
+  `subscribed_capacity` int(11) DEFAULT NULL,
+  `effective_used` int(11) DEFAULT NULL,
+  `effective_used_pct` decimal(5,2) DEFAULT NULL,
+  `allocated_capacity` int(11) DEFAULT NULL,
+  `allocated_capacity_pct` decimal(5,2) DEFAULT NULL,
+  `physical_used` int(11) DEFAULT NULL,
+  `used_capacity` int(11) DEFAULT NULL,
+  `unreducible_used_cap` int(11) DEFAULT NULL,
+  `compression_ratio` decimal(5,2) DEFAULT NULL,
+  `snap_effective_used` int(11) DEFAULT NULL,
+  `snap_capacity` int(11) DEFAULT NULL,
+  `snap_physical_used` int(11) DEFAULT NULL,
+  `snap_used_capacity` int(11) DEFAULT NULL,
+  `snap_unreducible_used_cap` int(11) DEFAULT NULL,
+  `compression_snapshot_ratio` decimal(5,2) DEFAULT NULL,
+  `insert_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `storagetotal`
+--
+
+INSERT INTO `storagetotal` (`stotal_id`, `sphys_id`, `provisioned_capacity`, `subscribed_capacity`, `effective_used`, `effective_used_pct`, `allocated_capacity`, `allocated_capacity_pct`, `physical_used`, `used_capacity`, `unreducible_used_cap`, `compression_ratio`, `snap_effective_used`, `snap_capacity`, `snap_physical_used`, `snap_used_capacity`, `snap_unreducible_used_cap`, `compression_snapshot_ratio`, `insert_date`) VALUES
+(1, 1, 210, 155, 133, 84.50, 105, 94.50, 82, 92, 52, 1.45, 32, 42, 62, 72, 22, 1.35, '2025-01-01 09:05:00'),
+(2, 2, 225, 165, 137, 85.75, 112, 96.75, 87, 97, 57, 1.55, 37, 47, 67, 77, 27, 1.45, '2025-01-02 09:10:00'),
+(3, 3, 218, 162, 142, 86.00, 108, 96.00, 89, 99, 54, 1.60, 38, 48, 68, 78, 28, 1.50, '2025-01-03 09:15:00'),
+(4, 4, 235, 175, 148, 88.25, 120, 97.25, 93, 103, 62, 1.65, 45, 55, 75, 85, 35, 1.55, '2025-01-04 09:20:00'),
+(5, 5, 245, 185, 153, 89.75, 125, 98.75, 98, 108, 65, 1.70, 50, 60, 80, 90, 40, 1.60, '2025-01-05 09:25:00'),
+(6, 6, 260, 195, 158, 90.50, 132, 99.50, 102, 112, 70, 1.75, 55, 65, 85, 95, 45, 1.65, '2025-01-06 09:30:00'),
+(7, 7, 255, 205, 165, 91.25, 135, 100.25, 105, 115, 73, 1.80, 58, 68, 88, 98, 48, 1.70, '2025-01-07 09:35:00'),
+(8, 8, 275, 220, 172, 92.50, 142, 102.50, 110, 120, 75, 1.85, 63, 73, 93, 103, 53, 1.75, '2025-01-08 09:40:00'),
+(9, 9, 288, 230, 177, 93.25, 148, 103.75, 115, 125, 82, 1.90, 67, 77, 97, 107, 57, 1.80, '2025-01-09 09:45:00'),
+(10, 10, 295, 240, 180, 94.00, 150, 104.00, 120, 130, 85, 1.95, 70, 80, 100, 110, 60, 1.85, '2025-01-10 09:50:00'),
+(11, 11, 305, 250, 185, 95.00, 155, 105.00, 125, 135, 90, 2.00, 75, 85, 105, 115, 65, 1.90, '2025-01-11 09:55:00'),
+(12, 12, 315, 260, 188, 95.50, 158, 105.50, 128, 138, 92, 2.05, 78, 88, 108, 118, 68, 1.95, '2025-01-12 10:00:00'),
+(13, 13, 322, 275, 195, 96.75, 160, 106.75, 130, 140, 95, 2.10, 80, 90, 110, 120, 70, 2.00, '2025-01-14 10:05:00'),
+(14, 14, 340, 280, 200, 97.00, 165, 108.00, 135, 145, 98, 2.20, 83, 93, 113, 123, 73, 2.10, '2025-01-15 10:10:00'),
+(15, 15, 348, 290, 205, 98.25, 170, 109.25, 140, 150, 100, 2.30, 88, 98, 118, 128, 78, 2.20, '2025-01-16 10:15:00'),
+(16, 16, 355, 305, 210, 99.50, 175, 110.50, 145, 155, 105, 2.40, 93, 103, 123, 133, 83, 2.30, '2025-01-17 10:20:00'),
+(17, 17, 365, 315, 215, 100.25, 180, 111.25, 150, 160, 108, 2.50, 95, 105, 125, 135, 85, 2.40, '2025-01-18 10:25:00'),
+(18, 18, 375, 320, 220, 101.00, 185, 112.00, 155, 165, 110, 2.60, 98, 108, 128, 138, 88, 2.50, '2025-01-19 10:30:00'),
+(19, 19, 388, 335, 225, 102.25, 190, 113.25, 160, 170, 115, 2.70, 103, 113, 133, 143, 93, 2.60, '2025-01-20 10:35:00'),
+(20, 20, 395, 340, 230, 103.50, 195, 114.50, 165, 175, 118, 2.80, 108, 118, 138, 148, 98, 2.70, '2025-01-21 10:40:00'),
+(21, 21, 405, 355, 235, 104.75, 200, 115.75, 170, 180, 120, 2.90, 113, 123, 143, 153, 103, 2.80, '2025-01-22 10:45:00'),
+(22, 22, 418, 365, 240, 105.50, 205, 116.50, 175, 185, 125, 3.00, 115, 125, 145, 155, 105, 2.90, '2025-01-23 10:50:00'),
+(23, 23, 425, 370, 245, 106.00, 210, 117.00, 180, 190, 128, 3.10, 118, 128, 148, 158, 108, 3.00, '2025-01-24 10:55:00'),
+(24, 24, 435, 380, 250, 107.25, 215, 118.25, 185, 195, 130, 3.20, 120, 130, 150, 160, 110, 3.10, '2025-01-25 11:00:00'),
+(25, 25, 445, 390, 255, 108.50, 220, 119.50, 190, 200, 135, 3.30, 123, 133, 153, 163, 113, 3.20, '2025-01-26 11:05:00'),
+(26, 26, 450, 400, 260, 109.00, 225, 120.00, 195, 205, 140, 3.40, 125, 135, 155, 165, 115, 3.30, '2025-01-27 11:10:00');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `user`
+--
+
+CREATE TABLE `user` (
+  `userId` int(6) UNSIGNED NOT NULL,
+  `userName` varchar(32) NOT NULL,
+  `pWord` varchar(32) NOT NULL,
+  `userFirstName` varchar(64) DEFAULT NULL,
+  `userLastName` varchar(64) DEFAULT NULL,
+  `userContEmail` varchar(128) NOT NULL,
+  `userContPhone` varchar(32) DEFAULT NULL,
+  `userContSite` varchar(64) DEFAULT NULL,
+  `userThumbnail` varchar(255) DEFAULT 'user',
+  `userDate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `isDelete` int(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `user`
+--
+
+INSERT INTO `user` (`userId`, `userName`, `pWord`, `userFirstName`, `userLastName`, `userContEmail`, `userContPhone`, `userContSite`, `userThumbnail`, `userDate`, `isDelete`) VALUES
+(1, 'root', '63a9f0ea7bb98050796b649e85481845', 'Root', '', 'admin@cap_mngmt.hu/', '0036201234567', 'Budapest', 'cogs', '2025-02-25 13:23:41', 0);
+
+--
+-- Indexek a kiírt táblákhoz
+--
+
+--
+-- A tábla indexei `group`
+--
+ALTER TABLE `group`
+  ADD PRIMARY KEY (`groupId`),
+  ADD UNIQUE KEY `groupGroupIdUnique` (`groupId`),
+  ADD UNIQUE KEY `groupGroupNameUnique` (`groupName`);
+
+--
+-- A tábla indexei `group_member`
+--
+ALTER TABLE `group_member`
+  ADD PRIMARY KEY (`groupMemberId`),
+  ADD KEY `groupMemberGroupCascade` (`groupId`),
+  ADD KEY `groupMemberUserCascade` (`userId`);
+
+--
+-- A tábla indexei `huntgroup`
+--
+ALTER TABLE `huntgroup`
+  ADD PRIMARY KEY (`huntgroupId`);
+
+--
+-- A tábla indexei `huntgroup_member`
+--
+ALTER TABLE `huntgroup_member`
+  ADD PRIMARY KEY (`huntgroupMemberId`),
+  ADD KEY `huntgroupMemberGroupCascade` (`huntgroupId`),
+  ADD KEY `huntgroupMemberUserCascade` (`userId`);
+
+--
+-- A tábla indexei `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`logId`),
+  ADD KEY `logUserCascade` (`userId`);
+
+--
+-- A tábla indexei `storagegroup`
+--
+ALTER TABLE `storagegroup`
+  ADD PRIMARY KEY (`sgroup_id`),
+  ADD KEY `storageGroupCascade` (`sphys_id`);
+
+--
+-- A tábla indexei `storageid`
+--
+ALTER TABLE `storageid`
+  ADD PRIMARY KEY (`storage_id`);
+
+--
+-- A tábla indexei `storagephys`
+--
+ALTER TABLE `storagephys`
+  ADD PRIMARY KEY (`sphys_id`),
+  ADD KEY `storagePhysCascade` (`storage_id`);
+
+--
+-- A tábla indexei `storagetotal`
+--
+ALTER TABLE `storagetotal`
+  ADD PRIMARY KEY (`stotal_id`),
+  ADD KEY `storageTotalCascade` (`sphys_id`);
+
+--
+-- A tábla indexei `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`userId`),
+  ADD UNIQUE KEY `userName` (`userName`),
+  ADD UNIQUE KEY `userContEmail` (`userContEmail`),
+  ADD UNIQUE KEY `userUserIdUnique` (`userId`),
+  ADD UNIQUE KEY `userUserNameUnique` (`userName`),
+  ADD UNIQUE KEY `userUserContEmailUnique` (`userContEmail`);
+
+--
+-- A kiírt táblák AUTO_INCREMENT értéke
+--
+
+--
+-- AUTO_INCREMENT a táblához `group`
+--
+ALTER TABLE `group`
+  MODIFY `groupId` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT a táblához `group_member`
+--
+ALTER TABLE `group_member`
+  MODIFY `groupMemberId` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT a táblához `huntgroup`
+--
+ALTER TABLE `huntgroup`
+  MODIFY `huntgroupId` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT a táblához `huntgroup_member`
+--
+ALTER TABLE `huntgroup_member`
+  MODIFY `huntgroupMemberId` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT a táblához `log`
+--
+ALTER TABLE `log`
+  MODIFY `logId` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `storagegroup`
+--
+ALTER TABLE `storagegroup`
+  MODIFY `sgroup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+
+--
+-- AUTO_INCREMENT a táblához `storageid`
+--
+ALTER TABLE `storageid`
+  MODIFY `storage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT a táblához `storagephys`
+--
+ALTER TABLE `storagephys`
+  MODIFY `sphys_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT a táblához `storagetotal`
+--
+ALTER TABLE `storagetotal`
+  MODIFY `stotal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT a táblához `user`
+--
+ALTER TABLE `user`
+  MODIFY `userId` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Megkötések a kiírt táblákhoz
+--
+
+--
+-- Megkötések a táblához `group_member`
+--
+ALTER TABLE `group_member`
+  ADD CONSTRAINT `groupMemberGroupCascade` FOREIGN KEY (`groupId`) REFERENCES `group` (`groupId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `groupMemberUserCascade` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE;
+
+--
+-- Megkötések a táblához `huntgroup_member`
+--
+ALTER TABLE `huntgroup_member`
+  ADD CONSTRAINT `huntgroupMemberGroupCascade` FOREIGN KEY (`huntgroupId`) REFERENCES `huntgroup` (`huntgroupId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `huntgroupMemberUserCascade` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE;
+
+--
+-- Megkötések a táblához `log`
+--
+ALTER TABLE `log`
+  ADD CONSTRAINT `logUserCascade` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE;
+
+--
+-- Megkötések a táblához `storagegroup`
+--
+ALTER TABLE `storagegroup`
+  ADD CONSTRAINT `storageGroupCascade` FOREIGN KEY (`sphys_id`) REFERENCES `storagephys` (`sphys_id`) ON DELETE CASCADE;
+
+--
+-- Megkötések a táblához `storagephys`
+--
+ALTER TABLE `storagephys`
+  ADD CONSTRAINT `storagePhysCascade` FOREIGN KEY (`storage_id`) REFERENCES `storageid` (`storage_id`) ON DELETE CASCADE;
+
+--
+-- Megkötések a táblához `storagetotal`
+--
+ALTER TABLE `storagetotal`
+  ADD CONSTRAINT `storageTotalCascade` FOREIGN KEY (`sphys_id`) REFERENCES `storagephys` (`sphys_id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

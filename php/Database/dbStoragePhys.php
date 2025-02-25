@@ -10,9 +10,9 @@ use Toolkit\{
     ,Valid
 };
 
-class dbSG_Info extends Table implements iDatabase
+class dbStoragePhys extends Table implements iDatabase
 {
-    const CLASS_ID = 10;
+    const CLASS_ID = 11;
 
     private static $classQueries = array();
 

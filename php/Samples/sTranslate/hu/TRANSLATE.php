@@ -179,19 +179,29 @@ interface TRANSLATE
         )
         ,"Capacity" => array(
             "navbar" => "Kapacitás"
-            ,"fa" => "pencil-square"
+            ,"fa" => "hdd-o"
             ,"title" => "Kapacitás menedzsment"
             ,"help" => ""
             ,"card" => ""
         )
-        ,"Capacity/SRP" => array(
-            "navbar" => "SRP"
-            ,"fa" => "user"
-            ,"title" => "SRP-k megtekintése"
+        ,"Capacity/Storage" => array(
+            "navbar" => "Tárolók"
+            ,"fa" => "hdd-o"
+            ,"title" => "Tárolók megtekintése"
             ,"help" => ""
-            ,"card" => ""
+            ,"card" => "Tárolók megtekintésért kattintson a kártyára"
             ,"action" => array(
-                "View" => "SRP Megtekintése"
+                "View" => "Tárolók Megtekintése"
+            )
+        )
+        ,"Capacity/Group" => array(
+            "navbar" => "Tároló Csoportok"
+            ,"fa" => "hdd-o"
+            ,"title" => "Tároló Csoportok megtekintése"
+            ,"help" => ""
+            ,"card" => "Tároló Csoportok megtekintésért kattintson a kártyára"
+            ,"action" => array(
+                "View" => "Tároló Csoportok Megtekintése"
             )
         )
     );

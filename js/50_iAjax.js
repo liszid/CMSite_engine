@@ -33,6 +33,8 @@ const iAjax = (iAjax = Object) => class extends iAjax {
             this.evntChart();
             // Possible Evo-Calendar initialization
             this.evntCalendar();
+            // Possible collapsible initialization
+            this.initializeCollapsibles();
         } else if (xhttp.status === 404) {
             xhttp.open("GET", window.errorSite, true);
             xhttp.send();

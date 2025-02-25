@@ -103,7 +103,7 @@ class sFrame
                 <div class="d-none d-md-block col-11 pt-2">
                     %s
                 </div>
-                <div class="console-log col-sm-12 mx-4 col-md-9 mr-md-0 ml-md-0 bg-%s">
+                <div class="console-log col-sm-12 mx-4 col-md-11 mr-md-0 ml-md-0 bg-%s">
                     <div class="log-content">
                         <br />
                         <div class="col-12 mb-4 pb-4 bg-%s text-%s">

@@ -495,3 +495,98 @@ ul li.arrow:before{
     left: 0%;
   }
 }
+
+.chart-container-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.chartContainer {
+    width: 45%; /* Két diagram egy sorban */
+    height: 250px;
+    margin: 10px 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.elevenStyle {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  padding: 1em;
+  margin: 1em auto;
+  /* border: 3px solid rgba(0, 0, 0, 0.08); */
+}
+
+.elevenStyle h1 {
+  font-size:26px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  /* width:160px; */
+  text-align:center;
+  margin:auto;
+  white-space:nowrap;
+  padding-bottom:13px;
+}
+.elevenStyle h1:before {
+    background-color: #ffff31;
+    content: '';
+    display: block;
+    height: 3px;
+    width: 75px;
+    margin-bottom: 5px;
+}
+.elevenStyle h1:after {
+    background-color: #ffff31;
+    content: '';
+    display: block;
+  	position:absolute; right:0; bottom:0;
+    height: 3px;
+    width: 75px;
+    margin-bottom: 0.25em;
+}
+
+.specheader{
+	width:100%;
+	height:auto;
+	color:black;
+	font-variant: all-petite-caps;
+	border-style: solid;
+	border-bottom-left-radius: 25px; 
+	border-top-right-radius: 25px; 
+	border-color: #0c0c0c;
+	border-width: 0 5PX 5px 0;
+	background-color:white;
+	margin-top:15px;
+}
+
+.collapsible-content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.canvasjs-chart-credit {
+	display:none;
+}
+
+.card-box p {
+    color: hsl(229, 6%, 66%);
+}
+
+.card-box {
+    border-radius: 5px;
+    box-shadow: 0px 30px 40px -20px hsl(0deg 0% 0.15%);
+    padding: 30px;
+    margin: 20px;
+    background: #000000;
+    border-top: 3px solid hsl(58.59deg 79.74% 43.45%);
+}
+
+.row1-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

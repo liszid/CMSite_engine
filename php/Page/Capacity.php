@@ -25,8 +25,9 @@ if (
     $returnArray = array();
 /** @var array $urlPaths Routing assistant variable*/
     $urlPaths = array(
-        "Root"              => array("path" => "Capacity",             "role" => "canLogin")
-        ,"Capacity"         => array("path" => "Capacity/Capacity",    "role" => "canLogin")
+        "Root"      => array("path" => "Capacity",          "role" => "canLogin")
+        ,"Storage"  => array("path" => "Capacity/Storage",  "role" => "canLogin")
+        ,"Group"    => array("path" => "Capacity/Group",    "role" => "canLogin")
     );
 /** @var array $nonModal Indicates which actions should be shown as is*/
     $nonModal = array(
@@ -48,7 +49,7 @@ if (
             && Valid::vString(Check::isPost('z'))
         ) {
             $returnArray['path'] = $urlPaths[Check::isPost('y')]['path'].'/'.Check::isPost('z');
-            $returnArray['content'] = sInformations::Action($_POST);
+            $returnArray['content'] = sCapacity::Action($_POST);
         }
 /**
  * Printable section
@@ -72,10 +73,16 @@ if (
         isset($_POST['y'])
         || isset($_POST['b'])
     ) {
-        $postUrl = Check::isEither(array('post' => array('y', 'b'), 'fallBack' => 'Knowledge'));
+        $postUrl = Check::isEither(array('post' => array('y', 'b'), 'fallBack' => 'Capacity'));
         $returnArray['path'] = $urlPaths[$postUrl]['path'];
 
-        $returnArray['content'] = ((int)$sessionUsr[$urlPaths[$postUrl]['role']] > 0 ) ? sInformations::ClassPage($returnArray) : '';
+        $content = match ($postUrl) {
+            'Storage' => ((int)$sessionUsr[$urlPaths[$postUrl]['role']] > 0) ? sCapacity::StoragePage($returnArray) : '',
+            'Group' => ((int)$sessionUsr[$urlPaths[$postUrl]['role']] > 0) ? sCapacity::GroupPage($returnArray) : '',
+            default => '',
+        };
+        
+        $returnArray['content'] = $content;
         
         echo (
             ( isset($returnArray['content']))
@@ -87,21 +94,16 @@ if (
  */
     } else {
         $returnArray['path'] = $urlPaths['Root']['path'];
-        $returnArray['content'] = '<div class="card-columns m-2">';
-
+        $returnArray['content'] = '<div class="row1-container m-2">';
+        
         foreach ($urlPaths as $key => $value) {
-            if (strcmp(array_key_first($urlPaths), $key)) {
-                if (
-                    isset($value['role'])
-                    && (int)$sessionUsr[$value['role']] > 0
-                ) {
-                    $returnArray['content'] .= sCard::Translated($value['path'], 'Linked');
-                }
+            if (strcmp(array_key_first($urlPaths), $key) && isset($value['role']) && (int)$sessionUsr[$value['role']] > 0) {
+                $returnArray['content'] .= sCard::Translated($value['path'], 'Linked');
             }
         }
-
         $returnArray['content'] .= '</div>';
-
+        
+        
         echo sFrame::Page($returnArray);
     }
 } else {

@@ -158,7 +158,10 @@ const iAjaxParams = (iAjaxParams = Object) => class extends iAjaxParams
                     ,"tableAccessAccess"
                     ,"tableAdminLogs"
                     ,"tableHomeUsers"
-                    ,"tableCapMngmtSRP"
+                    ,"tableCapMngmtStorage"
+                    ,"tableCapMngmtStoragePhys"
+                    ,"tableCapMngmtStorageTotal"
+                    ,"tableCapMngmtStorageGroup"
                 ];
             }
         });

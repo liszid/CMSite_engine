@@ -94,26 +94,14 @@ class sCard
     private static function Card(string $string): string
     {
         $cardColor = self::getResolvedStyle('card_body_color') ?? sTranslate::ROLE[$string]['color'];
-        $respective = sTranslate::ROLE[$string]['respective'] ?? null;
-
-        if (isset(sTranslate::ROLE[$string]) && isset(sTranslate::TRANSLATE[$respective])) {
-            return self::Blank([
-                'color' => $cardColor,
-                'header' => sTranslate::TRANSLATE[$respective]['title'],
-                'text' => sTranslate::TRANSLATE[$respective]['card']
-            ]);
-        }
+        $respective = $string;
 
         if (isset(sTranslate::TRANSLATE[$string])) {
-            $key = array_search($string, array_column(sTranslate::ROLE, 'respective'), true);
-            if ($key !== false) {
-                $keyColor = sTranslate::ROLE[array_keys(sTranslate::ROLE)[$key]]['color'] ?? $cardColor;
-                return self::Blank([
-                    'color' => $keyColor,
-                    'header' => sTranslate::TRANSLATE[$string]['title'],
-                    'text' => sTranslate::TRANSLATE[$string]['card']
-                ]);
-            }
+            return self::Blank([
+                'color' => 'cyan',
+                'header' => sTranslate::TRANSLATE[$string]['title'],
+                'text' => sTranslate::TRANSLATE[$string]['card']
+            ]);
         }
 
         return '';
@@ -128,7 +116,7 @@ class sCard
      */
     private static function Linked(string $string): string
     {
-        $respective = sTranslate::ROLE[$string]['respective'] ?? $string;
+        $respective = $string;
         $link = sprintf('<a data-link="%s">%s</a>', $respective, self::Card($string));
         return (isset(sTranslate::ROLE[$string]) && isset(sTranslate::TRANSLATE[$respective])) || isset(sTranslate::TRANSLATE[$string]) ? $link : '';
     }
@@ -144,26 +132,22 @@ class sCard
     {
         $cardColor = self::getResolvedStyle('card_body_color') ?? $array['color'];
         $cardContentColor = self::getResolvedStyle('card_content_color') ?? 'white';
-        $cardHeaderColor = self::getResolvedStyle('card_header_color') ?? 'white';
-
+        
         $elements = [
-            'header' => isset($array['header']) ? sprintf('<div class="card-header bg-%s text-%s border-%s">%s</div>', $cardColor, $cardHeaderColor, $cardHeaderColor, $array['header']) : '',
-            'title' => isset($array['title']) ? sprintf('<h5 class="card-title">%s</h5>', $array['title']) : '',
+            'title' => isset($array['title']) ? sprintf('<h2>%s</h2>', $array['title']) : '',
             'text' => isset($array['text']) ? sprintf('<p class="card-text">%s</p>', $array['text']) : '',
             'button' => isset($array['button']) ? sprintf('<center>%s</center>', $array['button']) : ''
         ];
+        
+ 
 
         return sprintf(
-            '<div class="card bg-%s %s" %s>
-                <div class="card-body text-%s">
+            '<div class="card-box text-%s">
                     %s
                     %s
                     %s
                 </div>
-            </div>',
-            $cardColor,
-            $array['class'] ?? '',
-            isset($array['bool']) ? 'style="max-width: 18rem;"' : '',
+            ',
             $cardContentColor,
             $elements['title'],
             $elements['text'],

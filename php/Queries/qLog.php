@@ -68,3 +68,4 @@ class qLog
 		return "";
 	}
 }
+?>
