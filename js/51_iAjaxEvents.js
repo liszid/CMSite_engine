@@ -289,84 +289,112 @@ evntCopyDisabled() {
     }
 */
     evntChart() {
-        function convertToDate(timestamp) {
-            return new Date(timestamp * 1000);
-        }
-        
-        let containers = document.querySelectorAll('.chartContainer');
+    function convertToDate(timestamp) {
+        return new Date(timestamp * 1000);
+    }
 
-        CanvasJS.addColorSet("greenShades", [
-            "#ffff31",
-            "#efcc00",
-            "#fff8dc",
-            "#90EE90"
-        ]);
+    let containers = document.querySelectorAll('.chartContainer');
 
-        containers.forEach(function(container) {
-            let data = JSON.parse(container.textContent);
-            let chartType = container.getAttribute('data-chart-type');
-            let chartLabel = container.getAttribute('data-label');
-            
-            data.forEach(function(series) {
-                series.dataPoints.forEach(function(point) {
-                    point.x = convertToDate(point.x);
-                });
-                series.dataPoints.sort(function(a, b) {
-                    return a.x - b.x;
-                });
+    CanvasJS.addColorSet("greenShades", [
+        "#ffff31",
+        "#efcc00",
+        "#fff8dc",
+        "#90EE90"
+    ]);
+
+    containers.forEach(function(container) {
+        let data = JSON.parse(container.textContent);
+        let chartType = container.getAttribute('data-chart-type');
+        let chartLabel = container.getAttribute('data-label');
+
+        data.forEach(function(series) {
+            series.dataPoints.forEach(function(point) {
+                point.x = convertToDate(point.x);
             });
-            
-            let chartOptions = {
-                theme: "dark1",
-                colorSet: "greenShades",
-                animationEnabled: true,
-                title: {
-                    text: chartLabel
-                },
-                axisX: {
-                    valueFormatString: "YYYY-MM-DD HH:mm:ss" 
-                },
-                axisY: {
-                    title: "Values",
-                    suffix: ""
-                },
-                legend:{
-                    cursor: "pointer",
-                    fontSize: 16,
-                    itemclick: toggleDataSeries
-                },
-                toolTip:{
-                    shared: true
-                },
-                data: []
-            };
-
-            if (chartType === 'multi') {
-                data.forEach(series => {
-                    chartOptions.data.push({
-                        name: series.name,
-                        type: series.type,
-                        showInLegend: true,
-                        dataPoints: series.dataPoints
-                    });
-                });
-            } else {
-                console.error("Unsupported chart type: " + chartType);
-            }
-
-            let chart = new CanvasJS.Chart(container, chartOptions);
-            chart.render();
+            series.dataPoints.sort(function(a, b) {
+                return a.x - b.x;
+            });
         });
 
-        function toggleDataSeries(e) {
-            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                e.dataSeries.visible = false;
-            } else {
-                e.dataSeries.visible = true;
-            }
-            e.chart.render();
+        let chartOptions = {
+            theme: "dark1",
+            colorSet: "greenShades",
+            animationEnabled: true,
+            title: {
+                text: chartLabel
+            },
+            axisX: {
+                valueFormatString: "YYYY-MM-DD HH:mm:ss"
+            },
+            axisY: {
+                title: "Values",
+                suffix: ""
+            },
+            legend: {
+                cursor: "pointer",
+                fontSize: 16,
+                itemclick: toggleDataSeries
+            },
+            toolTip: {
+                shared: true
+            },
+            data: []
+        };
+
+        if (chartType === 'multi') {
+            data.forEach(series => {
+                chartOptions.data.push({
+                    name: series.name,
+                    type: series.type,
+                    showInLegend: true,
+                    dataPoints: series.dataPoints
+                });
+            });
+        } else if (chartType === 'line') {
+            data.forEach(series => {
+                chartOptions.data.push({
+                    type: 'line',
+                    name: series.name,
+                    showInLegend: true,
+                    dataPoints: series.dataPoints
+                });
+            });
+        } else if (chartType === 'column') {
+            data.forEach(series => {
+                chartOptions.data.push({
+                    type: 'column',
+                    name: series.name,
+                    showInLegend: true,
+                    dataPoints: series.dataPoints
+                });
+            });
+        } else if (chartType === 'area') {
+            data.forEach(series => {
+                chartOptions.data.push({
+                    type: 'area',
+                    name: series.name,
+                    showInLegend: true,
+                    dataPoints: series.dataPoints
+                });
+            });
+        } else {
+            console.error("Unsupported chart type: " + chartType);
         }
+
+        let chart = new CanvasJS.Chart(container, chartOptions);
+        chart.render();
+    });
+
+    function toggleDataSeries(e) {
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            e.dataSeries.visible = false;
+        } else {
+            e.dataSeries.visible = true;
+        }
+        e.chart.render();
     }
+}
+
 
 /**
  * Sets events on Form elements, dynamic workaround

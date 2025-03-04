@@ -151,6 +151,124 @@ interface CREATE
                 insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 CONSTRAINT storageGroupCascade FOREIGN KEY (sphys_id) REFERENCES `StoragePhys` (sphys_id) ON DELETE CASCADE
             );"
+         
+        ,20 => "
+            CREATE TABLE ComputerInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                timestamp DATETIME NOT NULL,
+                computer_name VARCHAR(255),
+                manufacturer VARCHAR(255),
+                model VARCHAR(255),
+                total_physical_memory BIGINT,
+                cpu_load DECIMAL(5,2),
+                memory_load DECIMAL(5,2),
+                disk_load DECIMAL(5,2),
+                os_caption VARCHAR(255),
+                os_version VARCHAR(255),
+                os_build_number VARCHAR(255)
+            );"
+        ,21 => "
+                CREATE TABLE ProcessorInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                name VARCHAR(255),
+                manufacturer VARCHAR(255),
+                max_clock_speed INT,
+                current_clock_speed INT,
+                number_of_cores INT,
+                number_of_logical_processors INT,
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,22 => "
+                CREATE TABLE MemoryModuleInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                capacity BIGINT,
+                speed INT,
+                manufacturer VARCHAR(255),
+                serial_number VARCHAR(255),
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,23 => "
+            CREATE TABLE DiskDriveInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                model VARCHAR(255),
+                size BIGINT,
+                free_space BIGINT,
+                used_space BIGINT,
+                fragmentation_level DECIMAL(5,2),
+                block_size INT,
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,24 => "
+            CREATE TABLE LogicalDiskInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                name VARCHAR(255),
+                free_space BIGINT,
+                size BIGINT,
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,25 => "
+            CREATE TABLE NetworkAdapterInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                name VARCHAR(255),
+                mac_address VARCHAR(255),
+                speed BIGINT,
+                received_bytes BIGINT,
+                sent_bytes BIGINT,
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,26 => "
+            CREATE TABLE NetworkConnectionInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                description VARCHAR(255),
+                ip_address VARCHAR(255),
+                mac_address VARCHAR(255),
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,27 => "
+            CREATE TABLE BIOSInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                manufacturer VARCHAR(255),
+                version VARCHAR(255),
+                release_date DATETIME,
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,28 => "
+            CREATE TABLE VolumeInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                drive_letter VARCHAR(5),
+                file_system VARCHAR(255),
+                size_remaining BIGINT,
+                size BIGINT,
+                percent_fragmentation DECIMAL(5,2),
+                allocation_unit_size INT,
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,29 => "
+            CREATE TABLE MotherboardInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                manufacturer VARCHAR(255),
+                product VARCHAR(255),
+                serial_number VARCHAR(255),
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+        ,30 => "
+            CREATE TABLE ThermalZoneInfo (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                computer_info_id INT,
+                name VARCHAR(255),
+                current_temperature DECIMAL(5,2),
+                FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
+            );"
+         
         ,90 => "
             CREATE TABLE IF NOT EXISTS `Log`(
                 logId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,

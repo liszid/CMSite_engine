@@ -196,5 +196,22 @@ interface TRANSLATE
                 "View" => "View Storage Groups"
             )
         )
+        ,"Performance" => array(
+            "navbar" => "Performance"
+            ,"fa" => "hdd-o"
+            ,"title" => "Local Performance management"
+            ,"help" => ""
+            ,"card" => ""
+        )
+        ,"Performance/Laptop" => array(
+            "navbar" => "Laptop Performance"
+            ,"fa" => "hdd-o"
+            ,"title" => "Laptop Performance management"
+            ,"help" => ""
+            ,"card" => "Check laptop performance statistics and informantions"
+            ,"action" => array(
+                "View" => "View Performance"
+            )
+        )
     );
 }

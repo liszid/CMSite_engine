@@ -50,6 +50,13 @@ const iAjaxParams = (iAjaxParams = Object) => class extends iAjaxParams
                 return location.protocol + '//' + location.host+"/__noLoad/Ajax.php";
             }
         });
+        
+        Object.defineProperty( this, 'performanceLoadFile',
+        {
+            get( ) {
+                return location.protocol + '//' + location.host+"/php/Automated/AutoXML.php";
+            }
+        });
 /**
  * Sets the time interval of Ajax queries
  *

@@ -1,55 +1,30 @@
-const iAjax = (iAjax = Object) => class extends iAjax {
-    constructor() {
-        super();
-    }
+const iAjax = (iAjax = Object) => class extends iAjax { 
+    
+    constructor() { super(); }
 
-    /**
-     * Sets the inner HTML of ajax call
-     *
-     * @param xhttp object
-     * @param id string
-     * @author Liszi Dániel
-     */
     setInnerHTML(xhttp, id = "body") {
         const z = document.getElementById(id);
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             const stringInnerContent = xhttp.responseText;
             document.getElementById(id).innerHTML = stringInnerContent;
-            // Navbar collapsing
             $('.navbar-collapse').collapse('hide');
-            // Possible CKEditor initialization
             this.evntCKEditor();
-            // Possible SelectPicker initialization
             this.evntSelectPicker();
-            // Possible DataTable initialization
             this.evntDataTable();
-            // Possible Input copy initialization
             this.evntCopyDisabled();
-            // Possible form element initialization
             this.evntForm(z.getElementsByTagName('input'));
             this.evntForm(z.getElementsByTagName('button'));
             this.evntHrefs(z.getElementsByTagName('a'));
-            // Possible Chart initialization
             this.evntChart();
-            // Possible Evo-Calendar initialization
             this.evntCalendar();
-            // Possible collapsible initialization
             this.initializeCollapsibles();
+            this.periodicCheckAndUpdate();
         } else if (xhttp.status === 404) {
             xhttp.open("GET", window.errorSite, true);
             xhttp.send();
         }
     }
 
-    /**
-     * Initiates Ajax query
-     *
-     * @param param string
-     * @param id string
-     * @param type string
-     * @return bool
-     * @author Liszi Dániel
-     */
     ajaxCall(param, id, type) {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => this.setInnerHTML(xhttp, id);
@@ -64,14 +39,6 @@ const iAjax = (iAjax = Object) => class extends iAjax {
         return false;
     }
 
-    /**
-     * Ajax call goes through this
-     *
-     * @param param string
-     * @param id string
-     * @param type string
-     * @author Liszi Dániel
-     */
     initElmnt(param = "x=Home", id = "body", type = "POST") {
         this.ajaxCall(param, id, type);
         if (id === 'modalDialog') {
@@ -79,11 +46,6 @@ const iAjax = (iAjax = Object) => class extends iAjax {
         }
     }
 
-    /**
-     * Loads content from either canonical or get format
-     *
-     * @author Liszi Dániel
-     */
     loadContent() {
         const urlParams = new URLSearchParams(window.location.search);
         let urlCanonical = window.location.pathname.split("/").filter(Boolean);
@@ -98,4 +60,18 @@ const iAjax = (iAjax = Object) => class extends iAjax {
             this.initElmnt("d=Home");
         }
     }
-};
+
+    // Új függvény az adatbeolvasó PHP script periodikus futtatására
+    periodicCheckAndUpdate() {
+        setInterval(() => {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState === 4 && xhttp.status === 200) {
+                    console.log("PHP script sikeresen lefutott és frissítette az adatokat");
+                }
+            };
+            xhttp.open("GET", this.performanceLoadFile, true);
+            xhttp.send();
+        }, 300000); // 300 000 ms = 5 perc
+    }
+}

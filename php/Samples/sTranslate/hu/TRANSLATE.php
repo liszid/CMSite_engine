@@ -204,5 +204,23 @@ interface TRANSLATE
                 "View" => "Tároló Csoportok Megtekintése"
             )
         )
+        
+        ,"Performance" => array(
+            "navbar" => "Teljesítmény"
+            ,"fa" => "hdd-o"
+            ,"title" => "Lokális teljesítmény menedzsment"
+            ,"help" => ""
+            ,"card" => ""
+        )
+        ,"Performance/Laptop" => array(
+            "navbar" => "Laptop teljesítmény"
+            ,"fa" => "hdd-o"
+            ,"title" => "Lokális laptop teljesítménye"
+            ,"help" => ""
+            ,"card" => "Laptop értékeinek ellenőrzése, felügyelete"
+            ,"action" => array(
+                "View" => "Teljesítmény megtekintése"
+            )
+        )
     );
 }
