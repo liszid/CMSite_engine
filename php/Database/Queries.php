@@ -22,11 +22,21 @@ class Queries extends Database
             ,2 => 'Group_Member'
             ,3 => 'Huntgroup'
             ,4 => 'Huntgroup_Member'
-            ,10 => 'Symmetrix'
-            ,11 => 'SRP'
-            ,12 => 'SG_Info'
-            ,13 => 'SG_View'
-            ,14 => 'SG_Total'
+            ,10 => 'StorageId'
+            ,11 => 'StoragePhys'
+            ,12 => 'StorageTotal'
+            ,13 => 'StorageGroup'
+            ,20 => 'ComputerInfo'
+            ,21 => 'ProcessorInfo'
+            ,22 => 'MemoryModuleInfo'
+            ,23 => 'DiskDriveInfo'
+            ,24 => 'LogicalDiskInfo'
+            ,25 => 'NetworkAdapterInfo'
+            ,26 => 'NetworkConnectionInfo'
+            ,27 => 'BIOSInfo'
+            ,28 => 'VolumeInfo'
+            ,29 => 'MotherboardInfo'
+            ,30 => 'ThermalZoneInfo'
             ,90 => 'Log'
             ,98 => 'Tools'
             ,99 => 'Combined'
@@ -156,3 +166,4 @@ class Queries extends Database
         }
     }
 }
+?>

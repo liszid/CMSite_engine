@@ -98,3 +98,4 @@ switch($lang) {
         }
         break;
 }
+?>

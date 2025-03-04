@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Data;
 
-use Database\dbSG_View;
+use Database\dbStorageId;
 
 use Toolkit\{
     Log
@@ -12,42 +12,42 @@ use Toolkit\{
     ,Valid
 };
 
-class dSG_View implements iData
+class dStorageId implements iData
 {
-    private static $dbSG_View;
+    private static $dbStorageId;
 
     public function __construct()
     {
-        self::$dbSG_View = new dbSG_View();
+        self::$dbStorageId = new dbStorageId();
     }
 
     public static function Insert(array $array = array()): bool
     {
-        return self::$dbSG_View->Insert($array);
+        return self::$dbStorageId->Insert($array);
     }
 
     public static function Select(array $array = array(), string $type = ''): array
     {
-        return self::$dbSG_View->Select($array, $type);
+        return self::$dbStorageId->Select($array, $type);
     }
 
     public static function Update(array $array = array(), string $type = ''): bool
     {
-        return self::$dbSG_View->Update($array, $type);
+        return self::$dbStorageId->Update($array, $type);
     }
 
     public static function Delete(array $array = array(), string $type = ''): bool
     {
-        return self::$dbSG_View->Delete($array, $type);
+        return self::$dbStorageId->Delete($array, $type);
     }
 
     public static function Class_Id(): int
     {
-        return self::$dbSG_View->Class_Id();
+        return self::$dbStorageId->Class_Id();
     }
 
     public static function Check( ): bool
     {
-        return (self::$dbSG_View->Check());
+        return (self::$dbStorageId->Check());
     }
 }

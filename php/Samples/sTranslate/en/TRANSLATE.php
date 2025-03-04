@@ -169,5 +169,49 @@ interface TRANSLATE
             ,"help" => "To edit your profile, click the 'Profile' button in the menu bar and then the 'Edit' button on the 'Profile' page"
             ,"card" => "To edit your profile, click the 'Profile' button in the menu bar and then the 'Edit' button on the 'Profile' page"
         )
+        ,"Capacity" => array(
+            "navbar" => "Kapacitás"
+            ,"fa" => "hdd-o"
+            ,"title" => "Capacity management"
+            ,"help" => ""
+            ,"card" => ""
+        )
+        ,"Capacity/Storage" => array(
+            "navbar" => "Storage"
+            ,"fa" => "hdd-o"
+            ,"title" => "View Storage"
+            ,"help" => ""
+            ,"card" => "To view Storages, click on the card"
+            ,"action" => array(
+                "View" => "View Storage"
+            )
+        )
+        ,"Capacity/Group" => array(
+            "navbar" => "Storage Group"
+            ,"fa" => "hdd-o"
+            ,"title" => "View Storage Groups"
+            ,"help" => ""
+            ,"card" => "To view Storage Groups, click on the card"
+            ,"action" => array(
+                "View" => "View Storage Groups"
+            )
+        )
+        ,"Performance" => array(
+            "navbar" => "Performance"
+            ,"fa" => "hdd-o"
+            ,"title" => "Local Performance management"
+            ,"help" => ""
+            ,"card" => ""
+        )
+        ,"Performance/Laptop" => array(
+            "navbar" => "Laptop Performance"
+            ,"fa" => "hdd-o"
+            ,"title" => "Laptop Performance management"
+            ,"help" => ""
+            ,"card" => "Check laptop performance statistics and informantions"
+            ,"action" => array(
+                "View" => "View Performance"
+            )
+        )
     );
 }

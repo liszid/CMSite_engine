@@ -16,8 +16,9 @@ use Toolkit\{
  */
 
 class sTables implements
-    sTables\ADMIN,
-    sTables\USERS
+    sTables\ADMIN
+    ,sTables\USERS
+    ,sTables\STORAGE
 {
     /** @var const ACTIONS Array of actions */
     const ACTIONS = ['Edit', 'View', 'Delete', 'Reset', 'Upload'];
@@ -49,7 +50,7 @@ class sTables implements
     private static function Generate(array $array, array $data): string
     {
         $selectedKeys = [];
-        $returnString = '<table id="' . $data['tableId'] . '" class="table table-striped display responsive" style="width:100%">
+        $returnString = '<table id="' . $data['tableId'] . '" class="table table-striped display responsive tableBeautify bg-'.$GLOBALS['Site']['Style']['Text']['Header'].'" style="width:100%">
             <thead><tr>';
 
         foreach ($data['data'] as $key => $value) {

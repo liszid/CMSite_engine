@@ -48,7 +48,7 @@ if (isset($sessionUsr['userId']) && (int)$sessionUsr['canAdministrative'] > 0) {
         echo isset($returnArray['content']) ? sFrame::Page($returnArray) : sRedirect::Home();
     } else {
         $returnArray['path'] = $urlPaths['Root']['path'];
-        $returnArray['content'] = '<div class="card-columns m-2">';
+        $returnArray['content'] = '<div class="row1-container m-2">';
         
         foreach ($urlPaths as $key => $value) {
             if (strcmp(array_key_first($urlPaths), $key) && isset($value['role']) && (int)$sessionUsr[$value['role']] > 0) {

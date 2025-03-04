@@ -14,7 +14,7 @@ use Samples\{
     ,sRedirect
 };
 
-use Page\Classes\sCapacity;
+use Page\Classes\sPerformance;
 
 
 if (
@@ -25,9 +25,8 @@ if (
     $returnArray = array();
 /** @var array $urlPaths Routing assistant variable*/
     $urlPaths = array(
-        "Root"      => array("path" => "Capacity",          "role" => "canLogin")
-        ,"Storage"  => array("path" => "Capacity/Storage",  "role" => "canLogin")
-        ,"Group"    => array("path" => "Capacity/Group",    "role" => "canLogin")
+        "Root"      => array("path" => "Performance",          "role" => "canLogin")
+        ,"Laptop"  => array("path" => "Performance/Laptop",  "role" => "canLogin")
     );
 /** @var array $nonModal Indicates which actions should be shown as is*/
     $nonModal = array(
@@ -73,13 +72,12 @@ if (
         isset($_POST['y'])
         || isset($_POST['b'])
     ) {
-        $postUrl = Check::isEither(array('post' => array('y', 'b'), 'fallBack' => 'Capacity'));
+        $postUrl = Check::isEither(array('post' => array('y', 'b'), 'fallBack' => 'Performance'));
         $returnArray['path'] = $urlPaths[$postUrl]['path'];
 
         $content = match ($postUrl) {
-            'Storage' => ((int)$sessionUsr[$urlPaths[$postUrl]['role']] > 0) ? sCapacity::StoragePage($returnArray) : '',
-            'Group' => ((int)$sessionUsr[$urlPaths[$postUrl]['role']] > 0) ? sCapacity::GroupPage($returnArray) : '',
-            default => '',
+            'Laptop' => ((int)$sessionUsr[$urlPaths[$postUrl]['role']] > 0) ? sPerformance::LaptopPage($returnArray) : ''
+            , default => '',
         };
         
         $returnArray['content'] = $content;

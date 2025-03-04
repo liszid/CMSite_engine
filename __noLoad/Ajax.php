@@ -44,3 +44,4 @@ if (Valid::vString($formPage)) {
 		}
 	}
 }
+?>

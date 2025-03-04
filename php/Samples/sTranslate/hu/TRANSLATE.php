@@ -177,5 +177,50 @@ interface TRANSLATE
             ,"help" => "Profilja szerkesztéséhez kattintson a menüsávban a 'Profil' gombra és a 'Profil' oldalon a 'Szerkesztés' gombra"
             ,"card" => "Profilja szerkesztéséhez kattintson a menüsávban a 'Profil' gombra és a 'Profil' oldalon a 'Szerkesztés' gombra"
         )
+        ,"Capacity" => array(
+            "navbar" => "Kapacitás"
+            ,"fa" => "hdd-o"
+            ,"title" => "Kapacitás menedzsment"
+            ,"help" => ""
+            ,"card" => ""
+        )
+        ,"Capacity/Storage" => array(
+            "navbar" => "Tárolók"
+            ,"fa" => "hdd-o"
+            ,"title" => "Tárolók megtekintése"
+            ,"help" => ""
+            ,"card" => "Tárolók megtekintésért kattintson a kártyára"
+            ,"action" => array(
+                "View" => "Tárolók Megtekintése"
+            )
+        )
+        ,"Capacity/Group" => array(
+            "navbar" => "Tároló Csoportok"
+            ,"fa" => "hdd-o"
+            ,"title" => "Tároló Csoportok megtekintése"
+            ,"help" => ""
+            ,"card" => "Tároló Csoportok megtekintésért kattintson a kártyára"
+            ,"action" => array(
+                "View" => "Tároló Csoportok Megtekintése"
+            )
+        )
+        
+        ,"Performance" => array(
+            "navbar" => "Teljesítmény"
+            ,"fa" => "hdd-o"
+            ,"title" => "Lokális teljesítmény menedzsment"
+            ,"help" => ""
+            ,"card" => ""
+        )
+        ,"Performance/Laptop" => array(
+            "navbar" => "Laptop teljesítmény"
+            ,"fa" => "hdd-o"
+            ,"title" => "Lokális laptop teljesítménye"
+            ,"help" => ""
+            ,"card" => "Laptop értékeinek ellenőrzése, felügyelete"
+            ,"action" => array(
+                "View" => "Teljesítmény megtekintése"
+            )
+        )
     );
 }

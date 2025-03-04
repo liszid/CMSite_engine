@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Queries;
 
-use Toolkit\
-{
+use Toolkit\{
     Log
     ,Check
     ,Valid
 };
 
-class qTools
+class qStoragePhys 
 {
-	public static function Get(): array
+    public static function Get(): array
     {
 		return array(
 			'Insert' => self::Insert()
@@ -30,9 +29,20 @@ class qTools
 	
 	private static function Select()
 	{
-		return '';
+		return array(
+            'All' => '
+				SELECT si.sym_id, si.srp_name, sp.*
+				FROM StoragePhys sp
+				JOIN StorageId si ON sp.storage_id = si.storage_id;'
+            , 'byId' => '
+                SELECT si.sym_id, si.srp_name, sp.*
+				FROM StoragePhys sp
+				JOIN StorageId si ON sp.storage_id = si.storage_id
+				WHERE sp.sphys_id=:sphys_id/**/;'
+        );
 	}
 	
+    
 	private static function Update()
 	{
 		return '';
@@ -42,5 +52,6 @@ class qTools
 	{
 		return '';
 	}
+
 }
 ?>

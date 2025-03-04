@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Queries;
 
-use Toolkit\
-{
+use Toolkit\{
     Log
     ,Check
     ,Valid
 };
 
-class qTools
+class qStorageId 
 {
-	public static function Get(): array
+    public static function Get(): array
     {
 		return array(
 			'Insert' => self::Insert()
@@ -30,7 +29,13 @@ class qTools
 	
 	private static function Select()
 	{
-		return '';
+		return array(
+            'All' => '
+				SELECT * FROM StorageId;'
+            , 'byId' => '
+                SELECT p.* FROM StorageId p 
+                WHERE p.storage_id=:storage_id/**/;'
+        );
 	}
 	
 	private static function Update()
@@ -42,5 +47,6 @@ class qTools
 	{
 		return '';
 	}
+
 }
 ?>

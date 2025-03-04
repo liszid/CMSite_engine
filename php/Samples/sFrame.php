@@ -21,7 +21,10 @@ class sFrame
             'bgColor' => 'Site.Style.Site.titleBgColor',
             'bgColorResolved' => 'Site.Style.BGColor',
             'textColor' => 'Site.Style.Text.Body',
-            'headerTextColor' => 'Site.Style.Text.Header'
+            'headerTextColor' => 'Site.Style.Text.Header',
+            'card_color' => 'Site.Style.BGColor.Card',
+            'card_content_color' => 'Site.Style.Text.Card.Content',
+            'card_header_color' => 'Site.Style.Text.Card.Header',
         ];
 
         foreach ($styles as $key => $globalPath) {
@@ -100,17 +103,19 @@ class sFrame
                 <div class="d-none d-md-block col-11 pt-2">
                     %s
                 </div>
-                <div class="console-log col-sm-12 mx-4 col-md-9 mr-md-0 ml-md-0">
+                <div class="console-log col-sm-12 mx-4 col-md-11 mr-md-0 ml-md-0 bg-%s">
                     <div class="log-content">
                         <br />
-                        <div class="col-12 mb-4 pb-4 text-%s">
+                        <div class="col-12 mb-4 pb-4 bg-%s text-%s">
                             %s
                         </div>
                     </div>
                 </div>
             </div>',
             sBreadcrumbs::Prompt($array['path']),
-            $textColor,
+            self::$resolvedStyles['card_color'],
+            self::$resolvedStyles['card_color'],
+            self::$resolvedStyles['card_content_color'],
             $array['content']
         );
     }

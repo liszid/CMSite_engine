@@ -10,9 +10,9 @@ use Toolkit\{
     ,Valid
 };
 
-class dbGroup extends Table implements iDatabase
+class dbStorageGroup extends Table implements iDatabase
 {
-    const CLASS_ID = 1;
+    const CLASS_ID = 13;
 
     private static $classQueries = array();
 
@@ -23,18 +23,7 @@ class dbGroup extends Table implements iDatabase
 
     public static function Insert(array $array = array()): bool
     {
-        if (! empty($array) && Valid::vString(self::$classQueries['Insert'])) {
-            return (
-                self::qRun(
-                    array(
-                        'query' => self::$classQueries['Insert']
-                        ,'vData' => $array
-                    )
-                )->rowCount() > 0
-            );
-        } else {
-            return false;
-        }
+        return false;
     }
 
     public static function Select(array $array = array(), string $type = ''): array
@@ -60,35 +49,13 @@ class dbGroup extends Table implements iDatabase
     }
 
     public static function Update(array $array = array(), string $type = ''): bool
-    {
-        if (! empty($array) && Valid::vString(self::$classQueries['Update'])) {
-            return (
-                self::qRun(
-                    array(
-                        'query' => self::$classQueries['Update']
-                        ,'vData' => $array
-                    )
-                )->rowCount() > 0
-            );
-        } else {
-            return false;
-        }
+    {        
+        return false;
     }
 
     public static function Delete(array $array = array(), string $type = ''): bool
     {
-        if (! empty($array) && Valid::vString(self::$classQueries['Delete'])) {
-            return (
-                self::qRun(
-                    array(
-                        'query' => self::$classQueries['Delete']
-                        ,'vData' => $array
-                    )
-                )->rowCount() > 0
-            );
-        } else {
-            return false;
-        }
+        return false;
     }
 
     public static function Class_Id(): int
@@ -102,3 +69,4 @@ class dbGroup extends Table implements iDatabase
     }
 
 }
+?>

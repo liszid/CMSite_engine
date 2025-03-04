@@ -1,79 +1,194 @@
 <?php
-declare(strict_types=1);
-namespace Automated;
 
-class AutoXML {
-    
-    public function __construct() {
-        $xmlRead = '';
-        $dirPath='../Import/';
-        $array2Import = scandir($dirPath);
-        foreach($array2Import as $file) {
-            $filePath = $dirPath . '/' . $file;
-            if (is_file($filePath)) {
-                $xmlRead = file_get_contents($filePath);
-                
-            }
+$GLOBALS["Database"] = [
+    "user" => "plfmnag",
+    "pass" => "plfmnag",
+    "host" => "localhost",
+    "port" => 3306,
+    "db" => "cap_mngmt",
+    "type" => "mysql",
+];
+$directory = "C:\\Development\\XAMPP\\htdocs\\public_html\\capmng\\import\\";
+$files = glob($directory . "ComputerInfo_*.xml");
+
+foreach ($files as $filepath) {
+    $filename = basename($filepath);
+    if (strpos($filename, "ComputerInfo_") === 0) {
+        list($prefix, $timestamp) = explode("_", $filename, 2);
+        $timestamp = substr($timestamp, 0, -4); // Távolítsa el a ".xml" részt a végéről
+        $xml = simplexml_load_file($filepath);
+        $conn = new mysqli(
+            $GLOBALS["Database"]["host"],
+            $GLOBALS["Database"]["user"],
+            $GLOBALS["Database"]["pass"],
+            $GLOBALS["Database"]["db"],
+            $GLOBALS["Database"]["port"]
+        );
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         }
-    }
-    
-    public function parse($xml) {
-        $xmlObject = simplexml_load_string($xml);
-        return $this->convertToArray($xmlObject);
-    }
-    
-    private function convertToArray($xmlObject) {
-        $array = [];
-
-        foreach ($xmlObject as $key => $value) {
-            if ($value->count() > 0) {
-                $array[$key] = $this->convertToArray($value);
-            } else {
-                $array[$key] = (string) $value;
-            }
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         }
-
-        return $array;
-    }
-
-    public function transform($array) {
-        $result = [];
-        $result['Symmetrix'] = [
-            'Symm_Info' => $array['Symmetrix']['Symm_Info'],
-            'SRP' => []
-        ];
-
-        foreach ($array['Symmetrix']['SRP'] as $srp) {
-            $srpInfo = $srp['SRP_Info'];
-            $srpArray = [
-                'name' => $srpInfo['name'],
-                'physical_capacity_gigabytes' => $srpInfo['physical_capacity_gigabytes'],
-                'usable_capacity_gigabytes' => $srpInfo['usable_capacity_gigabytes'],
-                'compression_state' => $srpInfo['compression_state'],
-                'compression_ratio' => $srpInfo['compression_ratio'],
-                'data_reduction_ratio' => $srpInfo['data_reduction_ratio'],
-                'srdf_dse_allocated_gigabytes' => $srpInfo['srdf_dse_allocated_gigabytes'],
-                'snapshot_effective_capacity_gigabytes' => $srpInfo['snapshot_effective_capacity_gigabytes'],
-                'snapshots_allocated_gigabytes' => $srpInfo['snapshots_allocated_gigabytes'],
-                'total_subscribed_pct' => $srpInfo['total_subscribed_pct'],
-                'input_date' => $srpInfo['input_date'],
-                'SG_Info' => [],
-                'Total_SG' => $srpInfo['Total_SG']
-            ];
-
-            foreach ($srpInfo['SG_Info'] as $sg) {
-                $srpArray['SG_Info'][] = $sg;
-            }
-
-            $result['Symmetrix']['SRP'][] = $srpArray;
+        $stmt = $conn->prepare("INSERT INTO ComputerInfo (
+                                timestamp, computer_name, manufacturer, model, total_physical_memory, 
+                                cpu_load, memory_load, disk_load, os_caption, os_version, os_build_number
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param(
+            "ssssiddssss",
+            $timestamp,
+            $xml->ComputerSystem->Name,
+            $xml->ComputerSystem->Manufacturer,
+            $xml->ComputerSystem->Model,
+            $xml->ComputerSystem->TotalPhysicalMemory,
+            $xml->Performance->CpuLoad,
+            $xml->Performance->MemoryLoad,
+            $xml->Performance->DiskLoad,
+            $xml->OperatingSystem->Caption,
+            $xml->OperatingSystem->Version,
+            $xml->OperatingSystem->BuildNumber
+        );
+        $stmt->execute();
+        $computer_info_id = $stmt->insert_id; // Az újonnan létrehozott ComputerInfo rekord azonosítója
+        $stmt = $conn->prepare(
+            "INSERT INTO ProcessorInfo (computer_info_id, name, manufacturer, max_clock_speed, current_clock_speed, number_of_cores, number_of_logical_processors) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
+        foreach ($xml->Processors->Processor as $processor) {
+            $stmt->bind_param(
+                "issiiii",
+                $computer_info_id,
+                $processor->Name,
+                $processor->Manufacturer,
+                $processor->MaxClockSpeed,
+                $processor->CurrentClockSpeed,
+                $processor->NumberOfCores,
+                $processor->NumberOfLogicalProcessors
+            );
+            $stmt->execute();
         }
-
-        return $result;
+        $stmt = $conn->prepare(
+            "INSERT INTO MemoryModuleInfo (computer_info_id, capacity, speed, manufacturer, serial_number) VALUES (?, ?, ?, ?, ?)"
+        );
+        foreach ($xml->MemoryModules->MemoryModule as $memory) {
+            $stmt->bind_param(
+                "iiiss",
+                $computer_info_id,
+                $memory->Capacity,
+                $memory->Speed,
+                $memory->Manufacturer,
+                $memory->SerialNumber
+            );
+            $stmt->execute();
+        }
+        $stmt = $conn->prepare(
+            "INSERT INTO DiskDriveInfo (computer_info_id, model, size, free_space, used_space, fragmentation_level, block_size) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
+        foreach ($xml->DiskDrives->DiskDrive as $disk) {
+            $stmt->bind_param(
+                "isiiiii",
+                $computer_info_id,
+                $disk->Model,
+                $disk->Size,
+                $disk->FreeSpace,
+                $disk->UsedSpace,
+                $disk->FragmentationLevel,
+                $disk->BlockSize
+            );
+            $stmt->execute();
+        }
+        $stmt = $conn->prepare(
+            "INSERT INTO LogicalDiskInfo (computer_info_id, name, free_space, size) VALUES (?, ?, ?, ?)"
+        );
+        foreach ($xml->LogicalDisks->LogicalDisk as $disk) {
+            $stmt->bind_param("isii", $computer_info_id, $disk->Name, $disk->FreeSpace, $disk->Size);
+            $stmt->execute();
+        }
+        $stmt = $conn->prepare(
+            "INSERT INTO NetworkAdapterInfo (computer_info_id, name, mac_address, speed, received_bytes, sent_bytes) VALUES (?, ?, ?, ?, ?, ?)"
+        );
+        foreach ($xml->NetworkAdapters->NetworkAdapter as $adapter) {
+            $stmt->bind_param(
+                "issiii",
+                $computer_info_id,
+                $adapter->Name,
+                $adapter->MACAddress,
+                $adapter->Speed,
+                $adapter->ReceivedBytes,
+                $adapter->SentBytes
+            );
+            $stmt->execute();
+        }
+        $stmt = $conn->prepare(
+            "INSERT INTO NetworkConnectionInfo (computer_info_id, description, ip_address, mac_address) VALUES (?, ?, ?, ?)"
+        );
+        foreach ($xml->NetworkConnections->NetworkConnection as $connection) {
+            $stmt->bind_param(
+                "isss",
+                $computer_info_id,
+                $connection->Description,
+                $connection->IPAddress,
+                $connection->MACAddress
+            );
+            $stmt->execute();
+        }
+        $stmt = $conn->prepare(
+            "INSERT INTO BIOSInfo (computer_info_id, manufacturer, version, release_date) VALUES (?, ?, ?, ?)"
+        );
+        $stmt->bind_param(
+            "isss",
+            $computer_info_id,
+            $xml->BIOS->Manufacturer,
+            $xml->BIOS->Version,
+            $xml->BIOS->ReleaseDate
+        );
+        $stmt->execute();
+        $stmt = $conn->prepare(
+            "INSERT INTO VolumeInfo (computer_info_id, drive_letter, file_system, size_remaining, size, percent_fragmentation, allocation_unit_size) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
+        foreach ($xml->Volumes->Volume as $volume) {
+            $stmt->bind_param(
+                "isiiiii",
+                $computer_info_id,
+                $volume->DriveLetter,
+                $volume->FileSystem,
+                $volume->SizeRemaining,
+                $volume->Size,
+                $volume->PercentFragmentation,
+                $volume->AllocationUnitSize
+            );
+            $stmt->execute();
+        }
+        $stmt = $conn->prepare(
+            "INSERT INTO MotherboardInfo (computer_info_id, manufacturer, product, serial_number) VALUES (?, ?, ?, ?)"
+        );
+        $stmt->bind_param(
+            "isss",
+            $computer_info_id,
+            $xml->Motherboard->Manufacturer,
+            $xml->Motherboard->Product,
+            $xml->Motherboard->SerialNumber
+        );
+        $stmt->execute();
+        $stmt = $conn->prepare(
+            "INSERT INTO ThermalZoneInfo (computer_info_id, name, current_temperature) VALUES (?, ?, ?)"
+        );
+        foreach ($xml->ThermalZones->ThermalZone as $zone) {
+            $stmt->bind_param("iss", $computer_info_id, $zone->Name, $zone->CurrentTemperature);
+            $stmt->execute();
+        }
+        $stmt->close();
+        $conn->close();
+        
+        if (file_exists($filepath)) {
+            unlink($filepath);
+            echo "A fájl törölve lett: $filepath";
+        } else {
+            echo "A fájl nem létezik: $filepath";
+        }
+        
+        echo "Adatok sikeresen beillesztve az adatbázisba.";
+    } else {
+        echo "Az XML fájl nem létezik: $filepath";
     }
 }
-
-// Használat
-$xml = '...'; // Az XML tartalma
-$xmlToArray = new XMLToArray();
-$array = $xmlToArray->parse($xml);
-$transformedArray = $xmlToArray->transform($array);
+?>
