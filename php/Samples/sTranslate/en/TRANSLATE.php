@@ -45,7 +45,7 @@ interface TRANSLATE
             )
         )
         ,"Administrative/Groups" => array(
-            "navbar" => "Groups"
+            "navbar" => "Authorities"
             ,"fa" => "users"
             ,"title" => "Group Management"
             ,"help" => "To manage groups, click on the 'Admin' button in the menu bar and select the 'Groups' option"
@@ -56,21 +56,7 @@ interface TRANSLATE
                 ,'addButton' => true
                 ,'addNonModal' => false
                 ,'title' => ''
-                ,'content' => '
-                    <b>Adjustable permissions, privileges</b> <br />
-                    <br />
-                    <b>Administrative permission</b> - Users can view and edit all entries<br />
-                    <b>User management</b> - Creating users, placing them in groups, resetting passwords<br />
-                    <b>Manage user privileges</b> - Create and manage privilege levels<br />
-                    <b>Manage user groups</b> - Create and manage user groups<br />
-                    <b>Manage administrative tools</b> - Access to special administrative functions<br />
-                    <b>View the interface of registered users</b> - View public data of registered users<br />
-                    <b>Edit profile</b> - Can the user edit their own profile<br />
-                    <b>Login</b> - Active state of the user, if prohibited, the user is inactive<br />
-                    <br />
-                    <b>View data:</b> <a class="btn btn-warning btn-sm"><i class="fa fa-th-list" aria-hidden="true"></i></a><br />
-                    <b>Edit group privileges: </b><a class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a> <br />
-                    <b>Delete group: </b><a class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>'
+                ,'content' => ''
             )
             ,"action" => array(
                 "Add" => "Add Group"
@@ -91,14 +77,7 @@ interface TRANSLATE
                 ,'addButton' => true
                 ,'addNonModal' => false
                 ,'title' => ''
-                ,'content' => '
-                    This interface is used to create groups and assign memberships.<br />
-                    When editing, you can modify the Group name, description, and members.<br />
-                    When assigning group members, the CTRL/SHIFT keys help to select multiple users.<br />
-                    <br />
-                    <b>View Group Information:</b> <a class="btn btn-warning btn-sm"><i class="fa fa-th-list" aria-hidden="true"></i></a><br />
-                    <b>Edit Group:</b> <a class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a><br />
-                    <b>Delete:</b> <a class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a><br />'
+                ,'content' => ''
             )
             ,"action" => array(
                 "Add" => "Add Group"
@@ -204,9 +183,9 @@ interface TRANSLATE
             ,"card" => ""
         )
         ,"Performance/Laptop" => array(
-            "navbar" => "Laptop Performance"
+            "navbar" => "Performance"
             ,"fa" => "hdd-o"
-            ,"title" => "Laptop Performance management"
+            ,"title" => "Performance management"
             ,"help" => ""
             ,"card" => "Check laptop performance statistics and informantions"
             ,"action" => array(
@@ -215,3 +194,4 @@ interface TRANSLATE
         )
     );
 }
+?>

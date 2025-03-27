@@ -6,7 +6,7 @@ namespace Samples;
 
 use Toolkit\{Log, Check, Valid};
 
-$lang = 'hu';
+$lang = 'en';
 
 /**
  * @update 2024.12.11

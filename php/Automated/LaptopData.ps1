@@ -258,6 +258,7 @@ Try {
     # XML fájl mentése
     $xmlContent | Out-File -FilePath $filePath -Encoding utf8
     Write-Host "Successfully saved XML file at $filePath"
+    Write-Host "ExitCode001"
 } Catch {
     Write-Host "Error while creating or saving XML file: $_"
 }

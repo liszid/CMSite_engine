@@ -72,6 +72,6 @@ const iAjax = (iAjax = Object) => class extends iAjax {
             };
             xhttp.open("GET", this.performanceLoadFile, true);
             xhttp.send();
-        }, 300000); // 300 000 ms = 5 perc
+        }, 30000); // 300 000 ms = 5 perc
     }
 }

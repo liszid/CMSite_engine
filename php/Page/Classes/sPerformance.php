@@ -71,7 +71,7 @@ class sPerformance
         $NetworkConnectionInfo_All = self::$dCombined->Select(array('userId' => $GLOBALS['sessionId']), 'NetworkConnectionInfo_All');
         $BIOSInfo_All = self::$dCombined->Select(array('userId' => $GLOBALS['sessionId']), 'BIOSInfo_All');
         $VolumeInfo_All = self::$dCombined->Select(array('userId' => $GLOBALS['sessionId']), 'VolumeInfo_All');
-
+        
         // Adatok rendezése computer_name alapján
         $laptopData = array();
 
@@ -130,13 +130,14 @@ class sPerformance
             $memoryCapacityData = array();
 
             // Perpill üres, frissíteni kell a PS1-et
+            /*
             foreach ($data['computer_info'] as $record) {
                 $timestamp = strtotime($record['timestamp']);
                 $cpuLoadData[] = array('x' => $timestamp, 'y' => isset($record['cpu_load']) ? $record['cpu_load'] : 0);
                 $memoryLoadData[] = array('x' => $timestamp, 'y' => isset($record['memory_load']) ? $record['memory_load'] : 0);
                 $diskLoadData[] = array('x' => $timestamp, 'y' => isset($record['disk_load']) ? $record['disk_load'] : 0);
             }
-
+            */
             foreach ($data['memory_modules'] as $record) {
                 $timestamp = strtotime($record['timestamp']);
                 $memoryCapacityData[] = array('x' => $timestamp, 'y' => isset($record['capacity']) ? $record['capacity'] : 0);
@@ -182,10 +183,10 @@ class sPerformance
                 $logicalDiskData['size'][] = array('x' => $timestamp, 'y' => isset($record['size']) ? $record['size'] : 0);
             }
 
-            $returnString .= "<h3>Laptop Information for Computer: $computer_name</h3>";
+            $returnString .= "<h3>Laptop Information for Computer: $computer_name</h3><br />";
             $returnString .= "<div class='chart-container-wrapper'>";
 
-            $returnString .= "<table border='1'>";
+            $returnString .= "<table id='laptopPerfData' border='1' style='width: 45%; margin: 10px 0; padding: 10px; box-sizing: border-box;'>";
             $returnString .= "<tr><th>Computer Name</th><td>" . (isset($data['computer_info'][0]['computer_name']) ? $data['computer_info'][0]['computer_name'] : 'N/A') . "</td></tr>";
             $returnString .= "<tr><th>Manufacturer</th><td>" . (isset($data['computer_info'][0]['manufacturer']) ? $data['computer_info'][0]['manufacturer'] : 'N/A') . "</td></tr>";
             $returnString .= "<tr><th>Model</th><td>" . (isset($data['computer_info'][0]['model']) ? $data['computer_info'][0]['model'] : 'N/A') . "</td></tr>";
@@ -200,13 +201,13 @@ class sPerformance
 
             // Diagramok létrehozása
             // CPU, Memory, Disk Load - kész
-/*
+            /*
             $returnString .= "<div class='chartContainer' data-chart-type='multi' data-label='CPU, Memory, Disk Load' id='loadData$computer_name'>" . json_encode(array(
                 array('name' => 'CPU Load', 'type' => 'line', 'dataPoints' => $cpuLoadData),
                 array('name' => 'Memory Load', 'type' => 'line', 'dataPoints' => $memoryLoadData),
                 array('name' => 'Disk Load', 'type' => 'line', 'dataPoints' => $diskLoadData)
             )) . "</div>";
-*/
+            */
             // Memory Module Capacity - kész
             $returnString .= "<div class='chartContainer' data-chart-type='line' data-label='Memory Module Capacity' id='memoryCapacity$computer_name'>" . json_encode(array(
                 array('name' => 'Memory Module Capacity', 'type' => 'line', 'dataPoints' => $memoryCapacityData)
@@ -246,7 +247,7 @@ class sPerformance
            
             $returnString .= "</div>";
         }
-
+        
         return $returnString;
     }
 }

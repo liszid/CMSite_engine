@@ -590,3 +590,38 @@ ul li.arrow:before{
 	justify-content: center;
 	align-items: center;
 }
+
+#laptopPerfData td {
+	padding: 0px 15px;
+	text-align: left;
+	vertical-align:middle;
+	font-weight: 300;
+	font-size: 12px;
+	color: #fff;
+	border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+#laptopPerfData th{
+  padding: 0px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+#mainNavBar{
+	z-index: 1000;
+    width: 100%;
+    position: fixed;
+}
+
+#collapsibleNavbar{
+	z-index: 900;
+    position: fixed;
+	
+}
+
+.console-log {
+	margin-left: 76px !important;
+}

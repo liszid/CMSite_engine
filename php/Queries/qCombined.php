@@ -67,77 +67,110 @@ class qCombined {
 				select
 					ci.*
 				from
-					ComputerInfo ci;"
+					ComputerInfo ci
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'ProcessorInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join ProcessorInfo p ON ci.id = p.computer_info_id;"
+					inner join ProcessorInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'MemoryModulInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join MemoryModuleInfo p ON ci.id = p.computer_info_id;"
+					inner join MemoryModuleInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'DiskDriveInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join DiskDriveInfo p ON ci.id = p.computer_info_id;"
+					inner join DiskDriveInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'LogicalDiskInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join LogicalDiskInfo p ON ci.id = p.computer_info_id;"
+					inner join LogicalDiskInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'NetworkAdapterInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join NetworkAdapterInfo p ON ci.id = p.computer_info_id;"
+					inner join NetworkAdapterInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'NetworkConnectionInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join NetworkConnectionInfo p ON ci.id = p.computer_info_id;"
+					inner join NetworkConnectionInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'BIOSInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join BIOSInfo p ON ci.id = p.computer_info_id;"
+					inner join BIOSInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'VolumeInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join VolumeInfo p ON ci.id = p.computer_info_id;"
+					inner join VolumeInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'MotherboardInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join MotherboardInfo p ON ci.id = p.computer_info_id;"
+					inner join MotherboardInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			,'ThermalZoneInfo_All' => "
 				select
 					p.*
 					, ci.timestamp
 				from
 					ComputerInfo ci
-					inner join ThermalZoneInfo p ON ci.id = p.computer_info_id;"
+					inner join ThermalZoneInfo p ON ci.id = p.computer_info_id
+				order by
+					ci.timestamp desc
+				limit 60;"
 			, 'Performance_Full' => "
 				SELECT 
 					ci.id AS computer_info_id,
