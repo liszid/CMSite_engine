@@ -1,11 +1,5 @@
-/*  -----------------------------------------------------
-*   JavaScript Part
-*/
-
-class Compile extends iAjax(iAjaxEvnts(iAjaxParams(iAjaxFunctions(iMD5Hash()))))
-{
-    constructor()
-    {
+class Compile extends iAjax(iAjaxEvnts(iAjaxParams(iAjaxFunctions(iMD5Hash())))) {
+    constructor() {
         super();
         this.evntHrefs();
         this.loadContent();
@@ -13,7 +7,3 @@ class Compile extends iAjax(iAjaxEvnts(iAjaxParams(iAjaxFunctions(iMD5Hash()))))
 }
 
 const Instance = new Compile();
-
-/*  -----------------------------------------------------
-*   JQuery Part
-*/

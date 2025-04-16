@@ -6,11 +6,6 @@ namespace Samples;
 
 use Toolkit\{Log, Check, Valid};
 
-/**
- * @update 2024.12.11
- * @author Liszi Dániel
- */
-
 class sFrame
 {
     private static array $resolvedStyles = [];
@@ -18,13 +13,13 @@ class sFrame
     private static function mapStylesToGlobals(): void
     {
         $styles = [
-            'bgColor' => 'Site.Style.Site.titleBgColor',
-            'bgColorResolved' => 'Site.Style.BGColor',
-            'textColor' => 'Site.Style.Text.Body',
-            'headerTextColor' => 'Site.Style.Text.Header',
-            'card_color' => 'Site.Style.BGColor.Card',
-            'card_content_color' => 'Site.Style.Text.Card.Content',
-            'card_header_color' => 'Site.Style.Text.Card.Header',
+            "bgColor" => "Site.Style.Site.titleBgColor",
+            "bgColorResolved" => "Site.Style.BGColor",
+            "textColor" => "Site.Style.Text.Body",
+            "headerTextColor" => "Site.Style.Text.Header",
+            "card_color" => "Site.Style.BGColor.Card",
+            "card_content_color" => "Site.Style.Text.Card.Content",
+            "card_header_color" => "Site.Style.Text.Card.Header",
         ];
 
         foreach ($styles as $key => $globalPath) {
@@ -34,7 +29,7 @@ class sFrame
 
     private static function resolveGlobalPath(string $path)
     {
-        $parts = explode('.', $path);
+        $parts = explode(".", $path);
         $value = $GLOBALS;
         foreach ($parts as $part) {
             if (isset($value[$part])) {
@@ -46,21 +41,18 @@ class sFrame
         return $value;
     }
 
-    /**
-     * Default Modal display function used on Pages
-     *
-     * @param array $array
-     * @return string
-     */
     public static function Modal(array $array = []): string
     {
         if (empty($array)) {
-            return '';
+            return "";
         }
 
-        $printButton = isset($array['print']) && $array['print']
-            ? sprintf('<button class="btn btn-sm btn-warning mr-2" onclick="Instance.printElement(document.getElementById(\'printThis\'))"><i class="fa fa-print" aria-hidden="true"></i></button> ')
-            : '';
+        $printButton =
+            isset($array["print"]) && $array["print"]
+                ? sprintf(
+                    '<button class="btn btn-sm btn-warning mr-2" onclick="Instance.printElement(document.getElementById(\'printThis\'))"><i class="fa fa-print" aria-hidden="true"></i></button> '
+                )
+                : "";
 
         return sprintf(
             '<div class="modal-content">
@@ -77,26 +69,19 @@ class sFrame
                 </div>
             </div>',
             $printButton,
-            sTranslate::Title($array['path'], 5),
-            $array['content']
+            sTranslate::Title($array["path"], 5),
+            $array["content"]
         );
     }
-
-    /**
-     * Default Page display function
-     *
-     * @param array $array
-     * @return string
-     */
     public static function Page(array $array = []): string
     {
         if (empty($array)) {
-            return '';
+            return "";
         }
 
         self::mapStylesToGlobals();
-        $bgColor = self::$resolvedStyles['bgColorResolved'][self::$resolvedStyles['bgColor']];
-        $textColor = self::$resolvedStyles['textColor'];
+        $bgColor = self::$resolvedStyles["bgColorResolved"][self::$resolvedStyles["bgColor"]];
+        $textColor = self::$resolvedStyles["textColor"];
 
         return sprintf(
             '<div class="mx-md-3 row pt-1 justify-content-center">
@@ -112,11 +97,12 @@ class sFrame
                     </div>
                 </div>
             </div>',
-            sBreadcrumbs::Prompt($array['path']),
-            self::$resolvedStyles['card_color'],
-            self::$resolvedStyles['card_color'],
-            self::$resolvedStyles['card_content_color'],
-            $array['content']
+            sBreadcrumbs::Prompt($array["path"]),
+            self::$resolvedStyles["card_color"],
+            self::$resolvedStyles["card_color"],
+            self::$resolvedStyles["card_content_color"],
+            $array["content"]
         );
     }
 }
+?>

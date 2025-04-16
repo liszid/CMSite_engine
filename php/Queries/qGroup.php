@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace Queries;
 
-use Toolkit\
-{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class qGroup
 {
 	public static function Get(): array
-    {
-		return array(
-			'Insert' => self::Insert()
-			,'Select' => self::Select()
-			,'Update' => self::Update()
-			,'Delete' => self::Delete()
-		);
+	{
+		return [
+			"Insert" => self::Insert(),
+			"Select" => self::Select(),
+			"Update" => self::Update(),
+			"Delete" => self::Delete(),
+		];
 	}
-	
+
 	private static function Insert()
 	{
 		return "
@@ -35,28 +30,28 @@ class qGroup
 			);
 		";
 	}
-	
+
 	private static function Select()
 	{
-		return array(
-			'All' => "
+		return [
+			"All" => "
 				SELECT
 					*
-				FROM `Group`"
-			,'byGroupId' => "
+				FROM `Group`",
+			"byGroupId" => "
 				SELECT
 					*
 				FROM `Group`
-				WHERE groupId=:groupId/**/"
-			,'forMemberEdit' => "
+				WHERE groupId=:groupId/**/",
+			"forMemberEdit" => "
 				SELECT
 					groupId
 					,groupName
 					,groupDesc
-				FROM `Group`"
-		);
+				FROM `Group`",
+		];
 	}
-	
+
 	private static function Update()
 	{
 		return "
@@ -74,9 +69,10 @@ class qGroup
 			WHERE
 				groupId=:groupId/**/";
 	}
-	
+
 	private static function Delete()
 	{
 		return "DELETE FROM `Group` WHERE groupId=:groupId/**/";
 	}
 }
+?>

@@ -6,7 +6,7 @@ namespace Queries\qDatabase\mysql;
 
 interface CREATE
 {
-     const CREATE = array(
+    const CREATE = [
         0 => "
             CREATE TABLE IF NOT EXISTS `User`(
                 userId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -24,8 +24,8 @@ interface CREATE
                 CONSTRAINT userUserIdUnique UNIQUE (userId),
                 CONSTRAINT userUserNameUnique UNIQUE (userName),
                 CONSTRAINT userUserContEmailUnique UNIQUE (userContEmail)
-            );"
-        ,1 => "
+            );",
+        1 => "
             CREATE TABLE IF NOT EXISTS `Group`(
                 groupId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
                 groupName VARCHAR(32) NOT NULL,
@@ -42,8 +42,8 @@ interface CREATE
                 CONSTRAINT primaryKeyGroup PRIMARY KEY (groupId),
                 CONSTRAINT groupGroupIdUnique UNIQUE (groupId),
                 CONSTRAINT groupGroupNameUnique UNIQUE (groupName)
-            );"
-        ,2 => "
+            );",
+        2 => "
             CREATE TABLE IF NOT EXISTS `Group_Member`(
                 groupMemberId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
                 userId INT(6) UNSIGNED NOT NULL,
@@ -52,16 +52,16 @@ interface CREATE
                 CONSTRAINT primaryKeyGroup_Member PRIMARY KEY (groupMemberId),
                 CONSTRAINT groupMemberGroupCascade FOREIGN KEY (groupId) REFERENCES `Group` (groupId) ON DELETE CASCADE,
                 CONSTRAINT groupMemberUserCascade FOREIGN KEY (userId) REFERENCES `User` (userId) ON DELETE CASCADE
-            );"
-        ,3 => "
+            );",
+        3 => "
             CREATE TABLE IF NOT EXISTS `Huntgroup`(
                 huntgroupId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
                 huntgroupName VARCHAR(32) NOT NULL,
                 huntgroupDesc VARCHAR(256) NOT NULL,
                 isDelete INT(6) UNSIGNED DEFAULT 1,
                 CONSTRAINT primaryKeyHuntroup PRIMARY KEY (huntgroupId)
-            );"
-        ,4 => "
+            );",
+        4 => "
             CREATE TABLE IF NOT EXISTS `Huntgroup_Member`(
                 huntgroupMemberId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
                 userId INT(6) UNSIGNED NOT NULL,
@@ -70,15 +70,15 @@ interface CREATE
                 CONSTRAINT primaryKeyHuntgroup_Member PRIMARY KEY (huntgroupMemberId),
                 CONSTRAINT huntgroupMemberGroupCascade FOREIGN KEY (huntgroupId) REFERENCES `Huntgroup` (huntgroupId) ON DELETE CASCADE,
                 CONSTRAINT huntgroupMemberUserCascade FOREIGN KEY (userId) REFERENCES `User` (userId) ON DELETE CASCADE
-            );"			
-        ,10 =>"
+            );",
+        10 => "
             CREATE TABLE `StorageId` (
                 storage_id INT AUTO_INCREMENT PRIMARY KEY,
                 sym_id VARCHAR(255),
                 srp_name VARCHAR(255),
                 insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );"
-        ,11 => "
+            );",
+        11 => "
             CREATE TABLE `StoragePhys` (
                 sphys_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 storage_id INT NOT NULL,
@@ -93,8 +93,8 @@ interface CREATE
                 total_subscribed_pct DECIMAL(5,2),
                 insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 CONSTRAINT storagePhysCascade FOREIGN KEY (storage_id) REFERENCES `StorageId` (storage_id) ON DELETE CASCADE
-            );"
-        ,12 => "
+            );",
+        12 => "
             CREATE TABLE `StorageTotal` (
                 stotal_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 sphys_id INT NOT NULL,
@@ -116,8 +116,8 @@ interface CREATE
                 compression_snapshot_ratio DECIMAL(5,2),
                 insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 CONSTRAINT storageTotalCascade FOREIGN KEY (sphys_id) REFERENCES `StoragePhys` (sphys_id) ON DELETE CASCADE
-            );"
-        ,13 => "
+            );",
+        13 => "
             CREATE TABLE `StorageGroup` (
                 sgroup_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 sphys_id INT NOT NULL,
@@ -150,9 +150,9 @@ interface CREATE
                 compression_snapshot_ratio DECIMAL(5,2),
                 insert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 CONSTRAINT storageGroupCascade FOREIGN KEY (sphys_id) REFERENCES `StoragePhys` (sphys_id) ON DELETE CASCADE
-            );"
-         
-        ,20 => "
+            );",
+
+        20 => "
             CREATE TABLE ComputerInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 timestamp DATETIME NOT NULL,
@@ -166,8 +166,8 @@ interface CREATE
                 os_caption VARCHAR(255),
                 os_version VARCHAR(255),
                 os_build_number VARCHAR(255)
-            );"
-        ,21 => "
+            );",
+        21 => "
                 CREATE TABLE ProcessorInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -178,8 +178,8 @@ interface CREATE
                 number_of_cores INT,
                 number_of_logical_processors INT,
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,22 => "
+            );",
+        22 => "
                 CREATE TABLE MemoryModuleInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -188,8 +188,8 @@ interface CREATE
                 manufacturer VARCHAR(255),
                 serial_number VARCHAR(255),
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,23 => "
+            );",
+        23 => "
             CREATE TABLE DiskDriveInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -200,8 +200,8 @@ interface CREATE
                 fragmentation_level DECIMAL(5,2),
                 block_size INT,
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,24 => "
+            );",
+        24 => "
             CREATE TABLE LogicalDiskInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -209,8 +209,8 @@ interface CREATE
                 free_space BIGINT,
                 size BIGINT,
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,25 => "
+            );",
+        25 => "
             CREATE TABLE NetworkAdapterInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -220,8 +220,8 @@ interface CREATE
                 received_bytes BIGINT,
                 sent_bytes BIGINT,
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,26 => "
+            );",
+        26 => "
             CREATE TABLE NetworkConnectionInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -229,8 +229,8 @@ interface CREATE
                 ip_address VARCHAR(255),
                 mac_address VARCHAR(255),
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,27 => "
+            );",
+        27 => "
             CREATE TABLE BIOSInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -238,8 +238,8 @@ interface CREATE
                 version VARCHAR(255),
                 release_date DATETIME,
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,28 => "
+            );",
+        28 => "
             CREATE TABLE VolumeInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -250,8 +250,8 @@ interface CREATE
                 percent_fragmentation DECIMAL(5,2),
                 allocation_unit_size INT,
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,29 => "
+            );",
+        29 => "
             CREATE TABLE MotherboardInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
@@ -259,17 +259,17 @@ interface CREATE
                 product VARCHAR(255),
                 serial_number VARCHAR(255),
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-        ,30 => "
+            );",
+        30 => "
             CREATE TABLE ThermalZoneInfo (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 computer_info_id INT,
                 name VARCHAR(255),
                 current_temperature DECIMAL(5,2),
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
-            );"
-         
-        ,90 => "
+            );",
+
+        90 => "
             CREATE TABLE IF NOT EXISTS `Log`(
                 logId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
                 logType VARCHAR(64) NULL,
@@ -282,8 +282,7 @@ interface CREATE
                 isDelete INT(1) DEFAULT 1,
                 CONSTRAINT primaryKeyLog PRIMARY KEY (logId),
                 CONSTRAINT logUserCascade FOREIGN KEY (userId) REFERENCES `User` (userId) ON DELETE CASCADE
-            );"
-     );
+            );",
+    ];
 }
-
 ?>

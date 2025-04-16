@@ -6,11 +6,7 @@ namespace Data;
 
 use Database\dbStorageId;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class dStorageId implements iData
 {
@@ -21,22 +17,22 @@ class dStorageId implements iData
         self::$dbStorageId = new dbStorageId();
     }
 
-    public static function Insert(array $array = array()): bool
+    public static function Insert(array $array = []): bool
     {
         return self::$dbStorageId->Insert($array);
     }
 
-    public static function Select(array $array = array(), string $type = ''): array
+    public static function Select(array $array = [], string $type = ""): array
     {
         return self::$dbStorageId->Select($array, $type);
     }
 
-    public static function Update(array $array = array(), string $type = ''): bool
+    public static function Update(array $array = [], string $type = ""): bool
     {
         return self::$dbStorageId->Update($array, $type);
     }
 
-    public static function Delete(array $array = array(), string $type = ''): bool
+    public static function Delete(array $array = [], string $type = ""): bool
     {
         return self::$dbStorageId->Delete($array, $type);
     }
@@ -46,8 +42,9 @@ class dStorageId implements iData
         return self::$dbStorageId->Class_Id();
     }
 
-    public static function Check( ): bool
+    public static function Check(): bool
     {
-        return (self::$dbStorageId->Check());
+        return self::$dbStorageId->Check();
     }
 }
+?>

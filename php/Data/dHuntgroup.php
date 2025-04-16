@@ -6,11 +6,7 @@ namespace Data;
 
 use Database\dbHuntgroup;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class dHuntgroup implements iData
 {
@@ -23,56 +19,59 @@ class dHuntgroup implements iData
         self::$dHuntgroup_Member = new dHuntgroup_Member();
     }
 
-    public static function Insert(array $array = array()): bool
+    public static function Insert(array $array = []): bool
     {
         return self::$dbHuntgroup->Insert($array);
     }
 
-    public static function Select(array $array = array(), string $type = ''): array
+    public static function Select(array $array = [], string $type = ""): array
     {
         return self::$dbHuntgroup->Select($array, $type);
     }
 
-    public static function Update(array $array = array(), string $type = ''): bool
+    public static function Update(array $array = [], string $type = ""): bool
     {
-        if(isset($array['userCheckbox']) && ! empty($array['userCheckbox'])) {
-            $userIdArray = explode(',', $array['userCheckbox']);
-            $memberIdArray = self::$dHuntgroup_Member->Select($array, 'byHuntgroupId');
+        if (isset($array["userCheckbox"]) && !empty($array["userCheckbox"])) {
+            $userIdArray = explode(",", $array["userCheckbox"]);
+            $memberIdArray = self::$dHuntgroup_Member->Select($array, "byHuntgroupId");
 
             if (empty($memberIdArray)) {
                 foreach ($userIdArray as $UId) {
-                    if (! empty($UId)) {
-                        self::$dHuntgroup_Member->Insert( array( "huntgroupId" => $array['huntgroupId'], "userId" => $UId));
+                    if (!empty($UId)) {
+                        self::$dHuntgroup_Member->Insert(["huntgroupId" => $array["huntgroupId"], "userId" => $UId]);
                     }
                 }
             } elseif ($memberIdArray) {
-                $newArray = array();
-                $oldArray = array();
+                $newArray = [];
+                $oldArray = [];
 
                 foreach ($userIdArray as $i) {
-                    if (! empty($i)) {
+                    if (!empty($i)) {
                         $newArray[] = $i;
                     }
                 }
 
                 foreach ($memberIdArray as $i) {
-                    $oldArray[] = $i['userId'];
+                    $oldArray[] = $i["userId"];
                 }
 
-                $oldDiff = (($var =array_diff($oldArray, $newArray)) !== array())? $var : false;
-                $newDiff = (($var =array_diff($newArray, $oldArray)) !== array())? $var : false;
-
+                $oldDiff = ($var = array_diff($oldArray, $newArray)) !== [] ? $var : false;
+                $newDiff = ($var = array_diff($newArray, $oldArray)) !== [] ? $var : false;
 
                 if ($oldDiff) {
                     foreach ($oldDiff as $i) {
-                        if (! self::$dHuntgroup_Member->Delete(array('huntgroupId' => $array['huntgroupId'], 'userId' => $i))) {
+                        if (
+                            !self::$dHuntgroup_Member->Delete(["huntgroupId" => $array["huntgroupId"], "userId" => $i])
+                        ) {
                             return false;
                         }
                     }
                 }
                 if ($newDiff) {
                     foreach ($newDiff as $i) {
-                        if (! self::$dHuntgroup_Member->Insert(array('huntgroupId' => $array['huntgroupId'], 'userId' => $i))) {
+                        if (
+                            !self::$dHuntgroup_Member->Insert(["huntgroupId" => $array["huntgroupId"], "userId" => $i])
+                        ) {
                             return false;
                         }
                     }
@@ -82,18 +81,21 @@ class dHuntgroup implements iData
             }
         }
 
-        return (self::$dbHuntgroup->Update($array, $type) || true);
+        return self::$dbHuntgroup->Update($array, $type) || true;
     }
 
-    public static function Delete(array $array = array(), string $type = ''): bool
+    public static function Delete(array $array = [], string $type = ""): bool
     {
-        $Huntgroup = self::Select($array, 'byHuntgroupId')[0];
-        if(! empty($Huntgroup)) {
-            if ($Huntgroup['isDelete']) {
+        $Huntgroup = self::Select($array, "byHuntgroupId")[0];
+        if (!empty($Huntgroup)) {
+            if ($Huntgroup["isDelete"]) {
                 $dHuntgroup_Member = new dHuntgroup_Member();
-                $Members = $dHuntgroup_Member->Select($array, 'byHuntgroupId');
+                $Members = $dHuntgroup_Member->Select($array, "byHuntgroupId");
                 foreach ($Members as $i) {
-                    $dHuntgroup_Member->Update(array('userId' => $i['userId'], 'huntgroupId' => $array['huntgroupId']), 'byUserId');
+                    $dHuntgroup_Member->Update(
+                        ["userId" => $i["userId"], "huntgroupId" => $array["huntgroupId"]],
+                        "byUserId"
+                    );
                 }
                 return self::$dbHuntgroup->Delete($array, $type);
             } else {
@@ -109,8 +111,9 @@ class dHuntgroup implements iData
         return self::$dbHuntgroup->Class_Id();
     }
 
-    public static function Check( ): bool
+    public static function Check(): bool
     {
-        return (self::$dbHuntgroup->Check());
+        return self::$dbHuntgroup->Check();
     }
 }
+?>

@@ -4,89 +4,70 @@ declare(strict_types=1);
 
 namespace Database;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class dbHuntgroup_Member extends Table implements iDatabase
 {
     const CLASS_ID = 4;
 
-    private static $classQueries = array();
+    private static $classQueries = [];
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         self::$classQueries = self::qGet(self::CLASS_ID);
     }
 
-    public static function Insert(array $array = array()): bool
+    public static function Insert(array $array = []): bool
     {
-//         Log::Export($array);
-        if (! empty($array) && Valid::vString(self::$classQueries['Insert'])) {
-            return (
-                self::qRun(
-                    array(
-                        'query' => self::$classQueries['Insert']
-                        ,'vData' => $array
-                    )
-                )->rowCount() > 0
-            );
+        //         Log::Export($array);
+        if (!empty($array) && Valid::vString(self::$classQueries["Insert"])) {
+            return self::qRun([
+                "query" => self::$classQueries["Insert"],
+                "vData" => $array,
+            ])->rowCount() > 0;
         } else {
             return false;
         }
     }
 
-    public static function Select(array $array = array(), string $type = ''): array
+    public static function Select(array $array = [], string $type = ""): array
     {
-        if (Valid::vString(self::$classQueries['Select'][$type])) {
+        if (Valid::vString(self::$classQueries["Select"][$type])) {
             if (
-                (
-                    $tempVar = self::qRun(
-                        array(
-                            'query' => self::$classQueries['Select'][$type]
-                            ,'vData' => $array
-                        )
-                    )
-                )->rowCount() > 0
+                ($tempVar = self::qRun([
+                    "query" => self::$classQueries["Select"][$type],
+                    "vData" => $array,
+                ]))->rowCount() > 0
             ) {
                 return $tempVar->fetchAll();
             } else {
-                return array();
+                return [];
             }
         } else {
-            return array();
+            return [];
         }
     }
 
-    public static function Update(array $array = array(), string $type = ''): bool
+    public static function Update(array $array = [], string $type = ""): bool
     {
-        if (! empty($array) && Valid::vString(self::$classQueries['Update'][$type])) {
-            return (
-                self::qRun(
-                    array(
-                        'query' => self::$classQueries['Update'][$type]
-                        ,'vData' => $array
-                    )
-                )->rowCount() > 0
-            );
+        if (!empty($array) && Valid::vString(self::$classQueries["Update"][$type])) {
+            return self::qRun([
+                "query" => self::$classQueries["Update"][$type],
+                "vData" => $array,
+            ])->rowCount() > 0;
         } else {
             return false;
         }
     }
 
-    public static function Delete(array $array = array(), string $type = ''): bool
+    public static function Delete(array $array = [], string $type = ""): bool
     {
-        if (! empty($array) && Valid::vString(self::$classQueries['Delete'])) {
-            return (
-                self::qRun(
-                    array(
-                        'query' => self::$classQueries['Delete']
-                        ,'vData' => $array
-                    )
-                )->rowCount() > 0
-            );
+        if (!empty($array) && Valid::vString(self::$classQueries["Delete"])) {
+            return self::qRun([
+                "query" => self::$classQueries["Delete"],
+                "vData" => $array,
+            ])->rowCount() > 0;
         } else {
             return false;
         }
@@ -97,9 +78,9 @@ class dbHuntgroup_Member extends Table implements iDatabase
         return self::CLASS_ID;
     }
 
-    public static function Check( ): bool
+    public static function Check(): bool
     {
-        return (! self::qCheck(self::CLASS_ID));
+        return !self::qCheck(self::CLASS_ID);
     }
-
 }
+?>

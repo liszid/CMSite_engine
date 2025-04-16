@@ -6,11 +6,7 @@ namespace Data;
 
 use Database\dbHuntgroup_Member;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class dHuntgroup_Member implements iData
 {
@@ -21,39 +17,30 @@ class dHuntgroup_Member implements iData
         self::$dbHuntgroup_Member = new dbHuntgroup_Member();
     }
 
-    public static function Insert(array $array = array()): bool
+    public static function Insert(array $array = []): bool
     {
-        if (
-            isset($array['userId'])
-            && isset($array['huntgroupId'])
-        ) {
+        if (isset($array["userId"]) && isset($array["huntgroupId"])) {
             return self::$dbHuntgroup_Member->Insert($array);
         } else {
             return false;
         }
     }
 
-    public static function Select(array $array = array(), string $type = ''): array
+    public static function Select(array $array = [], string $type = ""): array
     {
         return self::$dbHuntgroup_Member->Select($array, $type);
     }
 
-    public static function Update(array $array = array(), string $type = ''): bool
+    public static function Update(array $array = [], string $type = ""): bool
     {
-        if (
-            isset($array['huntgroupId'])
-            && (
-                isset($array['userId'])
-                || isset($array['huntgroupMemberId'])
-            )
-        ) {
+        if (isset($array["huntgroupId"]) && (isset($array["userId"]) || isset($array["huntgroupMemberId"]))) {
             return self::$dbHuntgroup_Member->Update($array, $type);
         } else {
             return false;
         }
     }
 
-    public static function Delete(array $array = array(), string $type = ''): bool
+    public static function Delete(array $array = [], string $type = ""): bool
     {
         return self::$dbHuntgroup_Member->Delete($array, $type);
     }
@@ -63,8 +50,9 @@ class dHuntgroup_Member implements iData
         return self::$dbHuntgroup_Member->Class_Id();
     }
 
-    public static function Check( ): bool
+    public static function Check(): bool
     {
-        return (self::$dbHuntgroup_Member->Check());
+        return self::$dbHuntgroup_Member->Check();
     }
 }
+?>

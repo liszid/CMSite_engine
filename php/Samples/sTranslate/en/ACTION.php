@@ -6,12 +6,13 @@ namespace Samples\sTranslate\en;
 
 interface ACTION
 {
-     const ACTION = array(
-         'Success' => array(
-             'content' => 'Successfull!'
-         ),
-         'Fail' => array(
-             'content' => 'Unsuccessfull!'
-         )
-     );
+    const ACTION = [
+        "Success" => [
+            "content" => "Successfull!",
+        ],
+        "Fail" => [
+            "content" => "Unsuccessfull!",
+        ],
+    ];
 }
+?>

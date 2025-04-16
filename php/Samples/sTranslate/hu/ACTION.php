@@ -6,17 +6,18 @@ namespace Samples\sTranslate\hu;
 
 interface ACTION
 {
-     const ACTION = array(
-         'Success' => array(
-             'content' => 'Sikeres!'
-         )
-         ,'Fail' => array(
-             'content' => 'Sikertelen!'
-         )
-         ,'Tables' =>array(
-             'edit' => 'Szerkesztés'
-             ,'view' => 'Megtekintés'
-             ,'delete' => 'Törlés'
-         )
-     );
+    const ACTION = [
+        "Success" => [
+            "content" => "Sikeres!",
+        ],
+        "Fail" => [
+            "content" => "Sikertelen!",
+        ],
+        "Tables" => [
+            "edit" => "Szerkesztés",
+            "view" => "Megtekintés",
+            "delete" => "Törlés",
+        ],
+    ];
 }
+?>

@@ -4,24 +4,15 @@ declare(strict_types=1);
 
 namespace Samples;
 
-use Toolkit\{
-    Log,
-    Check,
-    Valid
-};
-
-/**
- * @update 2024.12.11
- * @author Liszi Dániel 
- * */
+use Toolkit\{Log, Check, Valid};
 
 class sCard
 {
     private const STYLES = [
-        'card_color' => 'Site.Style.BGColor.Card',
-        'card_content_color' => 'Site.Style.Text.Card.Content',
-        'card_header_color' => 'Site.Style.Text.Card.Header',
-        'card_body_color' => 'Site.Style.Text.Body',
+        "card_color" => "Site.Style.BGColor.Card",
+        "card_content_color" => "Site.Style.Text.Card.Content",
+        "card_header_color" => "Site.Style.Text.Card.Header",
+        "card_body_color" => "Site.Style.Text.Body",
     ];
 
     private static $resolvedStyles = [];
@@ -31,13 +22,10 @@ class sCard
         self::mapStylesToGlobals();
     }
 
-    /**
-     * Maps self::STYLES array to corresponding GLOBALS values.
-     */
     private static function mapStylesToGlobals(): void
     {
         foreach (self::STYLES as $key => $globalPath) {
-            $globalKeys = explode('.', $globalPath);
+            $globalKeys = explode(".", $globalPath);
             $value = $GLOBALS;
 
             foreach ($globalKeys as $globalKey) {
@@ -51,95 +39,60 @@ class sCard
         }
     }
 
-    /**
-     * Returns the resolved style for the given key.
-     *
-     * @param string $key
-     * @return mixed
-     * @author Liszi Dániel
-     */
     private static function getResolvedStyle(string $key)
     {
         if (empty(self::$resolvedStyles)) {
             self::mapStylesToGlobals();
         }
-        
+
         return self::$resolvedStyles[$key] ?? null;
     }
 
-    /**
-     * Returns the set type of Card using sTranslate
-     *
-     * @param string $string
-     * @param string $type
-     * @return string
-     * @author Liszi Dániel
-     */
-    public static function Translated(string $string = '', string $type = ''): string
+    public static function Translated(string $string = "", string $type = ""): string
     {
-        return match($type) {
-            'Card' => self::Card($string),
-            'Linked' => self::Linked($string),
-            default => '',
+        return match ($type) {
+            "Card" => self::Card($string),
+            "Linked" => self::Linked($string),
+            default => "",
         };
     }
 
-    /**
-     * Returns Card array for the corresponding Role
-     *
-     * @param string $string
-     * @return string
-     * @author Liszi Dániel
-     */
     private static function Card(string $string): string
     {
-        $cardColor = self::getResolvedStyle('card_body_color') ?? sTranslate::ROLE[$string]['color'];
+        $cardColor = self::getResolvedStyle("card_body_color") ?? sTranslate::ROLE[$string]["color"];
         $respective = $string;
 
         if (isset(sTranslate::TRANSLATE[$string])) {
             return self::Blank([
-                'color' => 'cyan',
-                'header' => sTranslate::TRANSLATE[$string]['title'],
-                'text' => sTranslate::TRANSLATE[$string]['card']
+                "color" => "cyan",
+                "header" => sTranslate::TRANSLATE[$string]["title"],
+                "text" => sTranslate::TRANSLATE[$string]["card"],
             ]);
         }
 
-        return '';
+        return "";
     }
 
-    /**
-     * Returns a Blank Card with a Link to its respective menu
-     *
-     * @param string $string
-     * @return string
-     * @author Liszi Dániel
-     */
     private static function Linked(string $string): string
     {
         $respective = $string;
         $link = sprintf('<a data-link="%s">%s</a>', $respective, self::Card($string));
-        return (isset(sTranslate::ROLE[$string]) && isset(sTranslate::TRANSLATE[$respective])) || isset(sTranslate::TRANSLATE[$string]) ? $link : '';
+        return (isset(sTranslate::ROLE[$string]) && isset(sTranslate::TRANSLATE[$respective])) ||
+            isset(sTranslate::TRANSLATE[$string])
+            ? $link
+            : "";
     }
 
-    /**
-     * Used to display Blank card
-     *
-     * @param array $array
-     * @return string
-     * @author Liszi Dániel
-     */
     public static function Blank(array $array = []): string
     {
-        $cardColor = self::getResolvedStyle('card_body_color') ?? $array['color'];
-        $cardContentColor = self::getResolvedStyle('card_content_color') ?? 'white';
-        
+        $cardColor = self::getResolvedStyle("card_body_color") ?? $array["color"];
+        $cardContentColor = self::getResolvedStyle("card_content_color") ?? "white";
+
         $elements = [
-            'title' => isset($array['title']) ? sprintf('<h2>%s</h2>', $array['title']) : '',
-            'text' => isset($array['text']) ? sprintf('<p class="card-text">%s</p>', $array['text']) : '',
-            'button' => isset($array['button']) ? sprintf('<center>%s</center>', $array['button']) : ''
+            "title" => isset($array["title"]) ? sprintf("<h2>%s</h2>", $array["title"]) : "",
+            "text" => isset($array["text"]) ? sprintf('<p class="card-text">%s</p>', $array["text"]) : "",
+            "button" => isset($array["button"]) ? sprintf("<center>%s</center>", $array["button"]) : "",
         ];
-        
- 
 
         return sprintf(
             '<div class="card-box text-%s">
@@ -149,30 +102,25 @@ class sCard
                 </div>
             ',
             $cardContentColor,
-            $elements['title'],
-            $elements['text'],
-            $elements['button']
+            $elements["title"],
+            $elements["text"],
+            $elements["button"]
         );
     }
 
-    /**
-     * Used to display Colorized card
-     *
-     * @param array $array
-     * @return string
-     * @author Liszi Dániel
-     */
     public static function Fill(array $array = []): string
     {
-        $cardColor = self::getResolvedStyle('card_body_color') ?? $array['color'];
-        $cardContentColor = self::getResolvedStyle('card_content_color') ?? 'white';
-        $cardHeaderColor = self::getResolvedStyle('card_header_color') ?? 'white';
+        $cardColor = self::getResolvedStyle("card_body_color") ?? $array["color"];
+        $cardContentColor = self::getResolvedStyle("card_content_color") ?? "white";
+        $cardHeaderColor = self::getResolvedStyle("card_header_color") ?? "white";
 
         $elements = [
-            'header' => isset($array['header']) ? sprintf('<div class="card-header text-%s">%s</div>', $cardHeaderColor, $array['header']) : '',
-            'title' => isset($array['title']) ? sprintf('<h5 class="card-title">%s</h5>', $array['title']) : '',
-            'text' => isset($array['text']) ? sprintf('<p class="card-text">%s</p>', $array['text']) : '',
-            'button' => isset($array['button']) ? $array['button'] : ''
+            "header" => isset($array["header"])
+                ? sprintf('<div class="card-header text-%s">%s</div>', $cardHeaderColor, $array["header"])
+                : "",
+            "title" => isset($array["title"]) ? sprintf('<h5 class="card-title">%s</h5>', $array["title"]) : "",
+            "text" => isset($array["text"]) ? sprintf('<p class="card-text">%s</p>', $array["text"]) : "",
+            "button" => isset($array["button"]) ? $array["button"] : "",
         ];
 
         return sprintf(
@@ -185,31 +133,25 @@ class sCard
             </div>',
             $cardHeaderColor,
             $cardColor,
-            isset($array['bool']) ? 'style="max-width: 18rem;"' : '',
+            isset($array["bool"]) ? 'style="max-width: 18rem;"' : "",
             $cardContentColor,
-            $elements['title'],
-            $elements['text'],
-            $elements['button']
+            $elements["title"],
+            $elements["text"],
+            $elements["button"]
         );
     }
 
-        /**
-     * Used to display a Collapsible section
-     *
-     * @param array $array
-     * @return string
-     * @author Liszi Dániel
-     */
     public static function Collapsible(array $array = []): string
     {
-        $accordionId = 'accordion-' . md5((string)rand());
-        $headingId = 'heading-' . md5((string)rand());
-        $collapseId = 'collapse-' . md5((string)rand());
-        $contHeader = $array['header'] ?? '';
-        $contText = $array['content'] ?? '';
-        $contAddButton = isset($array['path']) && isset($array['addButton']) && $array['addButton']
-            ? sForm::Add(['path' => $array['path'], 'addNonModal' => $array['addNonModal'], 'fa' => 'plus-circle'])
-            : '';
+        $accordionId = "accordion-" . md5((string) rand());
+        $headingId = "heading-" . md5((string) rand());
+        $collapseId = "collapse-" . md5((string) rand());
+        $contHeader = $array["header"] ?? "";
+        $contText = $array["content"] ?? "";
+        $contAddButton =
+            isset($array["path"]) && isset($array["addButton"]) && $array["addButton"]
+                ? sForm::Add(["path" => $array["path"], "addNonModal" => $array["addNonModal"], "fa" => "plus-circle"])
+                : "";
 
         if (Valid::vArray($array)) {
             return sprintf(
@@ -231,9 +173,9 @@ class sCard
                     </div>
                 </div>',
                 $accordionId,
-                self::getResolvedStyle('card_body_color'),
+                self::getResolvedStyle("card_body_color"),
                 $headingId,
-                self::getResolvedStyle('card_content_color'),
+                self::getResolvedStyle("card_content_color"),
                 $collapseId,
                 $collapseId,
                 $contHeader,
@@ -241,11 +183,12 @@ class sCard
                 $collapseId,
                 $headingId,
                 $accordionId,
-                self::getResolvedStyle('card_content_color'),
+                self::getResolvedStyle("card_content_color"),
                 $contText
             );
         }
 
-        return '';
+        return "";
     }
 }
+?>

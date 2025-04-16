@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace Queries;
 
-use Toolkit\
-{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class qUser
 {
 	public static function Get(): array
-    {
-		return array(
-			'Insert' => self::Insert()
-			,'Select' => self::Select()
-			,'Update' => self::Update()
-			,'Delete' => self::Delete()
-		);
+	{
+		return [
+			"Insert" => self::Insert(),
+			"Select" => self::Select(),
+			"Update" => self::Update(),
+			"Delete" => self::Delete(),
+		];
 	}
-	
+
 	private static function Insert()
 	{
 		return "
@@ -37,11 +32,11 @@ class qUser
 			);
 		";
 	}
-	
+
 	private static function Select()
 	{
-		return array(
-			'All' => "
+		return [
+			"All" => "
 				SELECT
 					`User`.userId
 					,`User`.userName
@@ -52,22 +47,8 @@ class qUser
 					,`User`.userContSite
 					,`User`.userThumbnail
 					,`User`.isDelete
-				FROM `User`"
-			,'byUserName' => "
-				SELECT
-					`User`.userId
-					,`User`.userId
-					,`User`.userName
-					,`User`.userFirstName
-					,`User`.userLastName
-					,`User`.userContEmail
-					,`User`.userContPhone
-					,`User`.userContSite
-					,`User`.userThumbnail
-					,`User`.isDelete
-				FROM `User`
-				WHERE userName=:userName/**/"
-			,'byUserId' => "
+				FROM `User`",
+			"byUserName" => "
 				SELECT
 					`User`.userId
 					,`User`.userId
@@ -80,8 +61,8 @@ class qUser
 					,`User`.userThumbnail
 					,`User`.isDelete
 				FROM `User`
-				WHERE userId=:userId/**/"
-			,'byContEmail' => "
+				WHERE userName=:userName/**/",
+			"byUserId" => "
 				SELECT
 					`User`.userId
 					,`User`.userId
@@ -94,25 +75,39 @@ class qUser
 					,`User`.userThumbnail
 					,`User`.isDelete
 				FROM `User`
-				WHERE userContEmail=:userContEmail/**/"
-			,'Login' => "
+				WHERE userId=:userId/**/",
+			"byContEmail" => "
+				SELECT
+					`User`.userId
+					,`User`.userId
+					,`User`.userName
+					,`User`.userFirstName
+					,`User`.userLastName
+					,`User`.userContEmail
+					,`User`.userContPhone
+					,`User`.userContSite
+					,`User`.userThumbnail
+					,`User`.isDelete
+				FROM `User`
+				WHERE userContEmail=:userContEmail/**/",
+			"Login" => "
 				SELECT
 					userId
 				FROM `User`
 				WHERE
 					userName=:userName/**/
-					AND pWord=:pWord/**/"
-			,'Password' => "
+					AND pWord=:pWord/**/",
+			"Password" => "
 				SELECT
 					pWord
 				FROM `User`
-				WHERE userId=:userId/**/"
-		);
+				WHERE userId=:userId/**/",
+		];
 	}
-	
+
 	private static function Update()
 	{
-		return array(
+		return [
 			"Edit" => "
 				UPDATE
 					`User`
@@ -123,26 +118,27 @@ class qUser
 					,userContPhone=:userContPhone/**/
 					,userThumbnail=:userThumbnail/**/
 				WHERE
-					userId=:userId/**/"
-			,"Password" => "
+					userId=:userId/**/",
+			"Password" => "
 				UPDATE
 					`User`
 				SET
 					pWord=:pWord/**/
 				WHERE
-					userId=:userId/**/"
-			,"Reset" => "
+					userId=:userId/**/",
+			"Reset" => "
 				UPDATE
 					`User`
 				SET
 					pWord=MD5(userName)
 				WHERE
-					userId=:userId/**/"
-		);
+					userId=:userId/**/",
+		];
 	}
-	
+
 	private static function Delete()
 	{
 		return "DELETE FROM `User` WHERE userId=:userId/**/";
 	}
 }
+?>

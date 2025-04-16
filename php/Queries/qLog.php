@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace Queries;
 
-use Toolkit\
-{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class qLog
 {
 	public static function Get(): array
-    {
-		return array(
-			'Insert' => self::Insert()
-			,'Select' => self::Select()
-			,'Update' => self::Update()
-			,'Delete' => self::Delete()
-		);
+	{
+		return [
+			"Insert" => self::Insert(),
+			"Select" => self::Select(),
+			"Update" => self::Update(),
+			"Delete" => self::Delete(),
+		];
 	}
 
 	private static function Insert()
@@ -46,16 +41,16 @@ class qLog
 
 	private static function Select()
 	{
-		return array(
-			'All' => "
+		return [
+			"All" => "
 				SELECT
 					`Log`.*
 					,`User`.userName
 				FROM `Log`
 				INNER JOIN `User` USING (userId)
 				ORDER BY `Log`.logId DESC
-				LIMIT 100"
-		);
+				LIMIT 100",
+		];
 	}
 
 	private static function Update()

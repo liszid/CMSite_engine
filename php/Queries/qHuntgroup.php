@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace Queries;
 
-use Toolkit\
-{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class qHuntgroup
 {
 	public static function Get(): array
-    {
-		return array(
-			'Insert' => self::Insert()
-			,'Select' => self::Select()
-			,'Update' => self::Update()
-			,'Delete' => self::Delete()
-		);
+	{
+		return [
+			"Insert" => self::Insert(),
+			"Select" => self::Select(),
+			"Update" => self::Update(),
+			"Delete" => self::Delete(),
+		];
 	}
-	
+
 	private static function Insert()
 	{
 		return "
@@ -37,37 +32,37 @@ class qHuntgroup
 			);
 		";
 	}
-	
+
 	private static function Select()
 	{
-		return array(
-			'All' => "
+		return [
+			"All" => "
 				SELECT
 					*
 				FROM `Huntgroup`
 				WHERE huntgroupName NOT LIKE '#%'
-				ORDER BY huntgroupName ASC"
-			,'byHuntgroupId' => "
+				ORDER BY huntgroupName ASC",
+			"byHuntgroupId" => "
 				SELECT
 					*
 				FROM `Huntgroup`
-				WHERE huntgroupId=:huntgroupId/**/"
-			,'forMemberEdit' => "
+				WHERE huntgroupId=:huntgroupId/**/",
+			"forMemberEdit" => "
 				SELECT
 					huntgroupId
 					,huntgroupName
 					,huntgroupDesc
 				FROM `Huntgroup`
-				ORDER BY huntgroupName ASC"
-			,'byHuntgroupName_Last' => "
+				ORDER BY huntgroupName ASC",
+			"byHuntgroupName_Last" => "
 				SELECT
 					huntgroupId
 				FROM `Huntgroup`
 				WHERE huntgroupName=:huntgroupName/**/
-				ORDER BY huntgroupId DESC LIMIT 1"
-		);
+				ORDER BY huntgroupId DESC LIMIT 1",
+		];
 	}
-	
+
 	private static function Update()
 	{
 		return "
@@ -79,9 +74,10 @@ class qHuntgroup
 			WHERE
 				huntgroupId=:huntgroupId/**/";
 	}
-	
+
 	private static function Delete()
 	{
 		return "DELETE FROM `Huntgroup` WHERE huntgroupId=:huntgroupId/**/";
 	}
 }
+?>

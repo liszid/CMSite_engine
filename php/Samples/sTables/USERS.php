@@ -6,16 +6,17 @@ namespace Samples\sTables;
 
 interface USERS
 {
-    const HOME_USERS = array(
+    const HOME_USERS = [
         "tableId" => "tableHomeUsers",
         "tableRoot" => "Users",
-        "data" => array(
-            "userId" => array("text" => "Id", "tooltip" => "")
-            ,"userThumbnail" => array("text" => "Ikon", "tooltip" => "")
-            ,"userLastName" => array("text" => "Vezetéknév", "tooltip" => "")
-            ,"userFirstName" => array("text" => "Keresztnév", "tooltip" => "")
-            ,"userContEmail" => array("text" => "E-mail", "tooltip" => "")
-        ),
-        "button" => array()
-    );
+        "data" => [
+            "userId" => ["text" => "Id", "tooltip" => ""],
+            "userThumbnail" => ["text" => "Ikon", "tooltip" => ""],
+            "userLastName" => ["text" => "Vezetéknév", "tooltip" => ""],
+            "userFirstName" => ["text" => "Keresztnév", "tooltip" => ""],
+            "userContEmail" => ["text" => "E-mail", "tooltip" => ""],
+        ],
+        "button" => [],
+    ];
 }
+?>

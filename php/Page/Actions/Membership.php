@@ -4,44 +4,49 @@ declare(strict_types=1);
 
 namespace Page\Actions;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
-use Samples\{
-    sForm
-    ,sTranslate
-};
+use Samples\{sForm, sTranslate};
 
 class Membership extends \Page\Classes\sAdministrative
 {
-/*
-* Return Membership Editing form
-* @param $array array
-* @return string
-* @author Liszi Dániel
-* @since 2020.11.04
-*/
     public static function Edit(array $array): string
     {
         self::setDGroup();
         self::setDGroup_Member();
 
-        if (! isset($array['Save'])) {
-            $selectTag = array();
+        if (!isset($array["Save"])) {
+            $selectTag = [];
 
-            foreach(self::$dGroup->Select(array(), 'forMemberEdit') as $i) {
-                $selectTag[] = array('id' => $i['groupId'], 'name' => $i['groupName']);
+            foreach (self::$dGroup->Select([], "forMemberEdit") as $i) {
+                $selectTag[] = ["id" => $i["groupId"], "name" => $i["groupName"]];
             }
 
             return '
                 <form method="post" class="form-group col-12 p-0 m-0" autocomplete="on">
                     <div class="form-group col p-0">
                         <div class="col-12 row">
-                            '.sForm::Input(array('origo' => 'admMemsEdit', 'data' => 'groupMemberId', 'desc' => 'Csoport tag Id', 'value' => $array['dp'], 'type' => 'hidden')).'
-                            '.sForm::Input(array('origo' => 'admMemsEdit', 'data' => 'groupId', 'desc' => 'Csoport Id', 'value' => (self::$dGroup_Member->Select(array('groupMemberId' => $array['dp']), 'byGroupMemberId'))[0]['groupId'], 'select' => $selectTag, 'type' => 'select')).'
+                            ' .
+                sForm::Input([
+                    "origo" => "admMemsEdit",
+                    "data" => "groupMemberId",
+                    "desc" => "Csoport tag Id",
+                    "value" => $array["dp"],
+                    "type" => "hidden",
+                ]) .
+                '
+                            ' .
+                sForm::Input([
+                    "origo" => "admMemsEdit",
+                    "data" => "groupId",
+                    "desc" => "Csoport Id",
+                    "value" => self::$dGroup_Member->Select(["groupMemberId" => $array["dp"]], "byGroupMemberId")[0][
+                        "groupId"
+                    ],
+                    "select" => $selectTag,
+                    "type" => "select",
+                ]) .
+                '
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,13 +56,14 @@ class Membership extends \Page\Classes\sAdministrative
                     </div>
                 </form>';
         } else {
-            return
-                '<h4>'.(
-                    (self::$dGroup_Member->Update($array, 'byGroupMemberId'))
-                        ? sTranslate::ACTION['Success']['content']
-                        : sTranslate::ACTION['Fail']['content']
-                ).'</h4>'.sForm::Spinner(array('x' => 'Administrative', 'y' => 'Membership'));
+            return "<h4>" .
+                (self::$dGroup_Member->Update($array, "byGroupMemberId")
+                    ? sTranslate::ACTION["Success"]["content"]
+                    : sTranslate::ACTION["Fail"]["content"]) .
+                "</h4>" .
+                sForm::Spinner(["x" => "Administrative", "y" => "Membership"]);
         }
-        return 'Edit, dp: '.$array['dp'];
+        return "Edit, dp: " . $array["dp"];
     }
 }
+?>

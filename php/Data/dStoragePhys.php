@@ -6,11 +6,7 @@ namespace Data;
 
 use Database\dbStoragePhys;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class dStoragePhys implements iData
 {
@@ -21,22 +17,22 @@ class dStoragePhys implements iData
         self::$dbStoragePhys = new dbStoragePhys();
     }
 
-    public static function Insert(array $array = array()): bool
+    public static function Insert(array $array = []): bool
     {
         return self::$dbStoragePhys->Insert($array);
     }
 
-    public static function Select(array $array = array(), string $type = ''): array
+    public static function Select(array $array = [], string $type = ""): array
     {
         return self::$dbStoragePhys->Select($array, $type);
     }
 
-    public static function Update(array $array = array(), string $type = ''): bool
+    public static function Update(array $array = [], string $type = ""): bool
     {
         return self::$dbStoragePhys->Update($array, $type);
     }
 
-    public static function Delete(array $array = array(), string $type = ''): bool
+    public static function Delete(array $array = [], string $type = ""): bool
     {
         return self::$dbStoragePhys->Delete($array, $type);
     }
@@ -46,8 +42,9 @@ class dStoragePhys implements iData
         return self::$dbStoragePhys->Class_Id();
     }
 
-    public static function Check( ): bool
+    public static function Check(): bool
     {
-        return (self::$dbStoragePhys->Check());
+        return self::$dbStoragePhys->Check();
     }
 }
+?>

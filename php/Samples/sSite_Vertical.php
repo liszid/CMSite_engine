@@ -7,24 +7,19 @@ namespace Samples;
 use Toolkit\{Log, Check, Valid};
 use Load\Loader as Load;
 
-/**
- * @update 2024.12.11
- * @author Liszi Dániel 
- * */
-
 class sSite_Vertical
 {
     private const STYLES = [
-        'navbar_side_bg_color' => 'Site.Style.BGColor.Navbar_Side',
-        'navbar_side_text_color' => 'Site.Style.Text.Navbar',
-        'navbar_top_bg_color' => 'Site.Style.BGColor.Navbar_Top',
-        'navbar_top_text_color' => 'Site.Style.Text.Navbar',
-        'navbar_top_brand_color' => 'Site.Style.BGColor.Brand',
-        'body_bg_color' => 'Site.Style.BGColor.Body',
-        'footer_bg_color' => 'Site.Style.BGColor.Footer',
-        'footer_text_color' => 'Site.Style.Text.Footer',
-        'static_js_path' => 'Static.JS.path',
-        'site_title' => 'Site.Content.Title',
+        "navbar_side_bg_color" => "Site.Style.BGColor.Navbar_Side",
+        "navbar_side_text_color" => "Site.Style.Text.Navbar",
+        "navbar_top_bg_color" => "Site.Style.BGColor.Navbar_Top",
+        "navbar_top_text_color" => "Site.Style.Text.Navbar",
+        "navbar_top_brand_color" => "Site.Style.BGColor.Brand",
+        "body_bg_color" => "Site.Style.BGColor.Body",
+        "footer_bg_color" => "Site.Style.BGColor.Footer",
+        "footer_text_color" => "Site.Style.Text.Footer",
+        "static_js_path" => "Static.JS.path",
+        "site_title" => "Site.Content.Title",
     ];
 
     private static $resolvedStyles = [];
@@ -35,13 +30,10 @@ class sSite_Vertical
         echo self::Build($array);
     }
 
-    /**
-     * Maps self::STYLES array to corresponding GLOBALS values.
-     */
     private static function mapStylesToGlobals(): void
     {
         foreach (self::STYLES as $key => $globalPath) {
-            $globalKeys = explode('.', $globalPath);
+            $globalKeys = explode(".", $globalPath);
             $value = $GLOBALS;
             foreach ($globalKeys as $globalKey) {
                 if (isset($value[$globalKey])) {
@@ -54,30 +46,19 @@ class sSite_Vertical
         }
     }
 
-    /**
-     * Returns the resolved style for the given key.
-     *
-     * @param string $key
-     * @return mixed
-     */
     private static function getResolvedStyle(string $key)
     {
         if (empty(self::$resolvedStyles)) {
             self::mapStylesToGlobals();
         }
-        
+
         return self::$resolvedStyles[$key] ?? null;
     }
 
-    /**
-     * Returns the Navigation bar of the HTML
-     *
-     * @return string
-     */
     private static function Navbar_Side(array $array): string
     {
         if (empty($array)) {
-            return '';
+            return "";
         }
 
         return sprintf(
@@ -90,27 +71,17 @@ class sSite_Vertical
                     </div>
                 </nav>
             </div>',
-            self::getResolvedStyle('navbar_side_bg_color'),
-            self::getResolvedStyle('navbar_side_text_color'),
+            self::getResolvedStyle("navbar_side_bg_color"),
+            self::getResolvedStyle("navbar_side_text_color"),
             self::Navbar_Items($array)
         );
     }
 
-    /**
-     * Sets the left part of the Navigation Bar
-     *
-     * @return string
-     */
     private static function Navbar_Items(array $array): string
     {
-        return array_reduce($array, fn($carry, $item) => $carry . self::Navbar_Generate($item), '');
+        return array_reduce($array, fn($carry, $item) => $carry . self::Navbar_Generate($item), "");
     }
 
-    /**
-     * Sets the right side of the Navigation Bar
-     *
-     * @return string
-     */
     private static function Navbar_Top(array $array): string
     {
         return sprintf(
@@ -127,38 +98,43 @@ class sSite_Vertical
                     </div>
                 </div>
             </nav>',
-            self::getResolvedStyle('navbar_top_brand_color'),
-            self::getResolvedStyle('navbar_top_bg_color'),
-            self::getResolvedStyle('navbar_top_text_color'),
-            self::getResolvedStyle('navbar_top_text_color'),
-            self::getResolvedStyle('site_title'),
-            self::Navbar_Generate($array['navbarRight'])
+            self::getResolvedStyle("navbar_top_brand_color"),
+            self::getResolvedStyle("navbar_top_bg_color"),
+            self::getResolvedStyle("navbar_top_text_color"),
+            self::getResolvedStyle("navbar_top_text_color"),
+            self::getResolvedStyle("site_title"),
+            self::Navbar_Generate($array["navbarRight"])
         );
     }
 
-    /**
-     * Used for displaying items at the navigation bar
-     *
-     * @param array $array
-     *
-     * @return string
-     */
     private static function Navbar_Generate(array $array = []): string
     {
-        $dataToggle = '';
-        $dataItems = '';
+        $dataToggle = "";
+        $dataItems = "";
 
-        if ($array['dataToggle'] === true) {
-            $dataToggle .= sprintf('data-link="%s" data-toggle="modal" data-target="#modalBox"', $array['dataLink']);
-        } elseif ($array['dataToggle'] === 'dropdown') {
-            $dataToggle .= 'href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"';
-            $dataItems .= sprintf('<ul class="dropdown-menu" aria-labelledby="nav-%s">', $array['dataLink']);
-            
-            $dataItems .= implode('', array_map(fn($i) => sprintf('<li><a class="dropdown-item" data-link="%s/%s">%s</a></li>', $array['dataLink'], $i, sTranslate::Prompt($array['dataLink'].'/'.$i)), $array['dataItems']));
+        if ($array["dataToggle"] === true) {
+            $dataToggle .= sprintf('data-link="%s" data-toggle="modal" data-target="#modalBox"', $array["dataLink"]);
+        } elseif ($array["dataToggle"] === "dropdown") {
+            $dataToggle .=
+                'href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"';
+            $dataItems .= sprintf('<ul class="dropdown-menu" aria-labelledby="nav-%s">', $array["dataLink"]);
 
-            $dataItems .= '</ul>';
+            $dataItems .= implode(
+                "",
+                array_map(
+                    fn($i) => sprintf(
+                        '<li><a class="dropdown-item" data-link="%s/%s">%s</a></li>',
+                        $array["dataLink"],
+                        $i,
+                        sTranslate::Prompt($array["dataLink"] . "/" . $i)
+                    ),
+                    $array["dataItems"]
+                )
+            );
+
+            $dataItems .= "</ul>";
         } else {
-            $dataToggle .= sprintf('data-link="%s"', $array['dataLink']);
+            $dataToggle .= sprintf('data-link="%s"', $array["dataLink"]);
         }
 
         return sprintf(
@@ -168,22 +144,17 @@ class sSite_Vertical
                     <span %s>%s</span>
                 </a>%s
             </li>',
-            $array['liClass'],
-            $array['aClass'],
-            $array['dataLink'],
+            $array["liClass"],
+            $array["aClass"],
+            $array["dataLink"],
             $dataToggle,
-            $array['faClass'],
-            ((isset($array['hidden']) && $array['hidden'] > 0)?'class="hideThis"' : '' ),
-            $array['Desc'],
+            $array["faClass"],
+            isset($array["hidden"]) && $array["hidden"] > 0 ? 'class="hideThis"' : "",
+            $array["Desc"],
             $dataItems
         );
     }
 
-    /**
-     * Builds the site
-     *
-     * @return string
-     */
     public static function Build(array $array): string
     {
         return sprintf(
@@ -213,14 +184,15 @@ class sSite_Vertical
                     </div>
                 </body>
             </html>',
-            $array['header'],
+            $array["header"],
             self::Navbar_Top($array),
-            self::getResolvedStyle('body_bg_color'),
-            !empty($array['navbarLeft']) ? self::Navbar_Side($array['navbarLeft']) : '',
-            self::getResolvedStyle('footer_bg_color'),
-            self::getResolvedStyle('footer_text_color'),
-            $array['footer'],
-            Load::JS(self::getResolvedStyle('static_js_path'))
+            self::getResolvedStyle("body_bg_color"),
+            !empty($array["navbarLeft"]) ? self::Navbar_Side($array["navbarLeft"]) : "",
+            self::getResolvedStyle("footer_bg_color"),
+            self::getResolvedStyle("footer_text_color"),
+            $array["footer"],
+            Load::JS(self::getResolvedStyle("static_js_path"))
         );
     }
 }
+?>

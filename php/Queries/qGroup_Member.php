@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace Queries;
 
-use Toolkit\
-{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class qGroup_Member
 {
 	public static function Get(): array
-    {
-		return array(
-			'Insert' => self::Insert()
-			,'Select' => self::Select()
-			,'Update' => self::Update()
-			,'Delete' => self::Delete()
-		);
+	{
+		return [
+			"Insert" => self::Insert(),
+			"Select" => self::Select(),
+			"Update" => self::Update(),
+			"Delete" => self::Delete(),
+		];
 	}
-	
+
 	private static function Insert()
 	{
 		return "
@@ -35,35 +30,35 @@ class qGroup_Member
 			);
 		";
 	}
-	
+
 	private static function Select()
 	{
-		return array(
-			'All' => "
+		return [
+			"All" => "
 				SELECT
 					*
-				FROM `Group_Member`"
-			,'byUserId' => "
-				SELECT
-					*
-				FROM `Group_Member`
-				WHERE userId=:userId/**/"
-			,'byGroupId' => "
+				FROM `Group_Member`",
+			"byUserId" => "
 				SELECT
 					*
 				FROM `Group_Member`
-				WHERE groupId=:groupId/**/"
-			,'byGroupMemberId' => "
+				WHERE userId=:userId/**/",
+			"byGroupId" => "
 				SELECT
 					*
 				FROM `Group_Member`
-				WHERE groupMemberId=:groupMemberId "
-		);
+				WHERE groupId=:groupId/**/",
+			"byGroupMemberId" => "
+				SELECT
+					*
+				FROM `Group_Member`
+				WHERE groupMemberId=:groupMemberId ",
+		];
 	}
-	
+
 	private static function Update()
 	{
-		return array(
+		return [
 			"byUserId" => "
 				UPDATE
 					`Group_Member`
@@ -76,12 +71,13 @@ class qGroup_Member
 					`Group_Member`
 				SET
 					groupId=:groupId/**/
-				WHERE groupMemberId=:groupMemberId/**/"
-		);
+				WHERE groupMemberId=:groupMemberId/**/",
+		];
 	}
-	
+
 	private static function Delete()
 	{
 		return "DELETE FROM `Group_Member` WHERE userId=:userId/**/";
 	}
 }
+?>

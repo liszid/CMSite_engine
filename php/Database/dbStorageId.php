@@ -4,56 +4,49 @@ declare(strict_types=1);
 
 namespace Database;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class dbStorageId extends Table implements iDatabase
 {
     const CLASS_ID = 10;
 
-    private static $classQueries = array();
+    private static $classQueries = [];
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         self::$classQueries = self::qGet(self::CLASS_ID);
     }
 
-    public static function Insert(array $array = array()): bool
+    public static function Insert(array $array = []): bool
     {
         return false;
     }
 
-    public static function Select(array $array = array(), string $type = ''): array
+    public static function Select(array $array = [], string $type = ""): array
     {
-        if (Valid::vString(self::$classQueries['Select'][$type])) {
-    	    if (
-                (
-                    $tempVar = self::qRun(
-                        array(
-                            'query' => self::$classQueries['Select'][$type]
-                            ,'vData' => $array
-                        )
-                    )
-                )->rowCount() > 0
+        if (Valid::vString(self::$classQueries["Select"][$type])) {
+            if (
+                ($tempVar = self::qRun([
+                    "query" => self::$classQueries["Select"][$type],
+                    "vData" => $array,
+                ]))->rowCount() > 0
             ) {
                 return $tempVar->fetchAll();
-    	    } else {
-                return array();
-    	    }
+            } else {
+                return [];
+            }
         } else {
-    	    return array();
+            return [];
         }
     }
 
-    public static function Update(array $array = array(), string $type = ''): bool
-    {        
+    public static function Update(array $array = [], string $type = ""): bool
+    {
         return false;
     }
 
-    public static function Delete(array $array = array(), string $type = ''): bool
+    public static function Delete(array $array = [], string $type = ""): bool
     {
         return false;
     }
@@ -63,9 +56,9 @@ class dbStorageId extends Table implements iDatabase
         return self::CLASS_ID;
     }
 
-    public static function Check( ): bool
+    public static function Check(): bool
     {
-        return (! self::qCheck(self::CLASS_ID));
+        return !self::qCheck(self::CLASS_ID);
     }
-
 }
+?>

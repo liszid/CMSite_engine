@@ -2,108 +2,68 @@
 
 declare(strict_types=1);
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
-
-use Samples\{
-    sCard
-    ,sFrame
-    ,sRedirect
-};
-
+use Toolkit\{Log, Check, Valid};
+use Samples\{sCard, sFrame, sRedirect};
 use Page\Classes\sPerformance;
 
+if (isset($sessionUsr["userId"]) && (int) $sessionUsr["canLogin"] > 0) {
+    $returnArray = [];
+    $urlPaths = [
+        "Root" => ["path" => "Performance", "role" => "canLogin"],
+        "Laptop" => ["path" => "Performance/Laptop", "role" => "canLogin"],
+    ];
+    $nonModal = ["Filter"];
+    $printView = ["View"];
 
-if (
-    isset($sessionUsr['userId'])
-    && (int)$sessionUsr['canLogin'] > 0
-) {
-/** @var array $returnArray It stores the content to be displayed */
-    $returnArray = array();
-/** @var array $urlPaths Routing assistant variable*/
-    $urlPaths = array(
-        "Root"      => array("path" => "Performance",          "role" => "canLogin")
-        ,"Laptop"  => array("path" => "Performance/Laptop",  "role" => "canLogin")
-    );
-/** @var array $nonModal Indicates which actions should be shown as is*/
-    $nonModal = array(
-        'Filter'
-    );
-/** @var array $printView Sets actions to get print view*/
-    $printView = array(
-        'View'
-    );
-/**
- * Post action handling and form prompt section
- */
-    if (
-        isset($_POST['y'])
-        && isset($_POST['z'])
-    ) {
-        if(
-            Valid::vString(Check::isPost('y'))
-            && Valid::vString(Check::isPost('z'))
-        ) {
-            $returnArray['path'] = $urlPaths[Check::isPost('y')]['path'].'/'.Check::isPost('z');
-            $returnArray['content'] = sCapacity::Action($_POST);
+    if (isset($_POST["y"]) && isset($_POST["z"])) {
+        if (Valid::vString(Check::isPost("y")) && Valid::vString(Check::isPost("z"))) {
+            $returnArray["path"] = $urlPaths[Check::isPost("y")]["path"] . "/" . Check::isPost("z");
+            $returnArray["content"] = sCapacity::Action($_POST);
         }
-/**
- * Printable section
- */
-        if (Valid::vString($returnArray['content'])) {
-            if (in_array(Check::isPost('z'), $nonModal)) {
-                echo $returnArray['content'];
+        if (Valid::vString($returnArray["content"])) {
+            if (in_array(Check::isPost("z"), $nonModal)) {
+                echo $returnArray["content"];
             } else {
-                if (in_array(Check::isPost('z'), $printView)) {
-                    $returnArray['print'] = true;
+                if (in_array(Check::isPost("z"), $printView)) {
+                    $returnArray["print"] = true;
                 }
                 echo sFrame::Modal($returnArray);
             }
         } else {
             echo sRedirect::Home();
         }
-/**
- * Page loading section
- */
-    } elseif (
-        isset($_POST['y'])
-        || isset($_POST['b'])
-    ) {
-        $postUrl = Check::isEither(array('post' => array('y', 'b'), 'fallBack' => 'Performance'));
-        $returnArray['path'] = $urlPaths[$postUrl]['path'];
+    } elseif (isset($_POST["y"]) || isset($_POST["b"])) {
+        $postUrl = Check::isEither(["post" => ["y", "b"], "fallBack" => "Performance"]);
+        $returnArray["path"] = $urlPaths[$postUrl]["path"];
 
         $content = match ($postUrl) {
-            'Laptop' => ((int)$sessionUsr[$urlPaths[$postUrl]['role']] > 0) ? sPerformance::LaptopPage($returnArray) : ''
-            , default => '',
+            "Laptop" => (int) $sessionUsr[$urlPaths[$postUrl]["role"]] > 0
+                ? sPerformance::LaptopPage($returnArray)
+                : "",
+            default => "",
         };
-        
-        $returnArray['content'] = $content;
-        
-        echo (
-            ( isset($returnArray['content']))
-            ? sFrame::Page($returnArray)
-            : sRedirect::Home()
-        );
-/**
- * Collective page with Cards
- */
+
+        $returnArray["content"] = $content;
+
+        echo isset($returnArray["content"]) ? sFrame::Page($returnArray) : sRedirect::Home();
     } else {
-        $returnArray['path'] = $urlPaths['Root']['path'];
-        $returnArray['content'] = '<div class="row1-container m-2">';
-        
+        $returnArray["path"] = $urlPaths["Root"]["path"];
+        $returnArray["content"] = '<div class="row1-container m-2">';
+
         foreach ($urlPaths as $key => $value) {
-            if (strcmp(array_key_first($urlPaths), $key) && isset($value['role']) && (int)$sessionUsr[$value['role']] > 0) {
-                $returnArray['content'] .= sCard::Translated($value['path'], 'Linked');
+            if (
+                strcmp(array_key_first($urlPaths), $key) &&
+                isset($value["role"]) &&
+                (int) $sessionUsr[$value["role"]] > 0
+            ) {
+                $returnArray["content"] .= sCard::Translated($value["path"], "Linked");
             }
         }
-        $returnArray['content'] .= '</div>';
-        
-        
+        $returnArray["content"] .= "</div>";
+
         echo sFrame::Page($returnArray);
     }
 } else {
     echo sRedirect::Home();
 }
+?>

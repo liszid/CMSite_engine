@@ -66,3 +66,4 @@ interface iDatabase
  */
     public static function Check( ): bool;
 }
+?>

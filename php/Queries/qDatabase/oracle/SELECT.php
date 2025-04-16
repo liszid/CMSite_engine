@@ -6,12 +6,11 @@ namespace Queries\qDatabase\oracle;
 
 interface SELECT
 {
-     const SELECT = array(
-			 'Database' => "
+	const SELECT = [
+		"Database" => "
 			 		SELECT USERNAME FROM ALL_USERS WHERE USERNAME = 'cap_mngmt'",
-			 'Table' => "
-                    SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = :sqlDB/**/ AND TABLE_NAME = :tableName/**/"
-     );
+		"Table" => "
+                    SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = :sqlDB/**/ AND TABLE_NAME = :tableName/**/",
+	];
 }
-
 ?>

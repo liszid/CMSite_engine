@@ -10,7 +10,7 @@ use Toolkit\{
     ,Valid
 };
 
-use Database\dbUser;
+use Database\Routing;
 
 class dUser implements iData
 {
@@ -18,7 +18,7 @@ class dUser implements iData
 
     public function __construct()
     {
-        self::$dbUser = new dbUser();
+        self::$dbUser = new Routing(0);
     }
 
     public static function Insert(array $array = array()): bool
@@ -106,3 +106,5 @@ class dUser implements iData
         return (self::$dbUser->Check());
     }
 }
+
+?>

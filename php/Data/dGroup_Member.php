@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace Data;
 
-use Database\dbGroup_Member;
+use Database\Routing;
 
-use Toolkit\{
-    Log
-    ,Check
-    ,Valid
-};
+use Toolkit\{Log, Check, Valid};
 
 class dGroup_Member implements iData
 {
@@ -18,42 +14,33 @@ class dGroup_Member implements iData
 
     public function __construct()
     {
-        self::$dbGroup_Member = new dbGroup_Member();
+        self::$dbGroup_Member = new Routing(2);
     }
 
-    public static function Insert(array $array = array()): bool
+    public static function Insert(array $array = []): bool
     {
-        if (
-            isset($array['userId'])
-            && isset($array['groupId'])
-        ) {
+        if (isset($array["userId"]) && isset($array["groupId"])) {
             return self::$dbGroup_Member->Insert($array);
         } else {
             return false;
         }
     }
 
-    public static function Select(array $array = array(), string $type = ''): array
+    public static function Select(array $array = [], string $type = ""): array
     {
         return self::$dbGroup_Member->Select($array, $type);
     }
 
-    public static function Update(array $array = array(), string $type = ''): bool
+    public static function Update(array $array = [], string $type = ""): bool
     {
-        if (
-            isset($array['groupId'])
-            && (
-                isset($array['userId'])
-                || isset($array['groupMemberId'])
-            )
-        ) {
+        if (isset($array["groupId"]) && (isset($array["userId"]) || isset($array["groupMemberId"]))) {
             return self::$dbGroup_Member->Update($array, $type);
         } else {
             return false;
         }
     }
 
-    public static function Delete(array $array = array(), string $type = ''): bool
+    public static function Delete(array $array = [], string $type = ""): bool
     {
         return self::$dbGroup_Member->Delete($array, $type);
     }
@@ -63,8 +50,9 @@ class dGroup_Member implements iData
         return self::$dbGroup_Member->Class_Id();
     }
 
-    public static function Check( ): bool
+    public static function Check(): bool
     {
-        return (self::$dbGroup_Member->Check());
+        return self::$dbGroup_Member->Check();
     }
 }
+?>

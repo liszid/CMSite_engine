@@ -1,22 +1,26 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 namespace Queries;
-use Toolkit\ {
-	Log, Check, Valid
-};
-class qCombined {
+use Toolkit\{Log, Check, Valid};
+class qCombined
+{
 	public static function Get(): array
 	{
-		return array('Insert' => self::Insert(), 'Select' => self::Select(), 'Update' => self::Update(), 'Delete' => self::Delete());
+		return [
+			"Insert" => self::Insert(),
+			"Select" => self::Select(),
+			"Update" => self::Update(),
+			"Delete" => self::Delete(),
+		];
 	}
 	private static function Insert()
 	{
-			return "";
+		return "";
 	}
 	private static function Select()
 	{
-		return array(
-			'User_Full' => "
+		return [
+			"User_Full" => "
 				SELECT
 				    `User`.userId
 				    ,`User`.userId
@@ -32,8 +36,8 @@ class qCombined {
 				FROM `User`
 				INNER JOIN `Group_Member` USING (userId)
 				INNER JOIN `Group` USING (groupId)
-				WHERE `User`.userId=:userId/**/"
-			, 'Member_Full' => "
+				WHERE `User`.userId=:userId/**/",
+			"Member_Full" => "
 				SELECT
 				    `User`.userId
 				    ,`Group_Member`.groupMemberId
@@ -43,8 +47,8 @@ class qCombined {
 				    ,`User`.isDelete
 				FROM `User`
 				INNER JOIN `Group_Member` USING (userId)
-				INNER JOIN `Group` USING (groupId)"
-			,'Huntgroup_Members' => "
+				INNER JOIN `Group` USING (groupId)",
+			"Huntgroup_Members" => "
 				SELECT
 				    `Huntgroup_Member`.huntgroupMemberId
 				    ,`Huntgroup`.huntgroupName
@@ -55,23 +59,23 @@ class qCombined {
 				FROM `User`
 				INNER JOIN `Huntgroup_Member` USING (userId)
 				INNER JOIN `Huntgroup` USING (huntgroupId)
-				WHERE `Huntgroup`.huntgroupId=:huntgroupId/**/"
-			, 'User_Huntgroups' => "
+				WHERE `Huntgroup`.huntgroupId=:huntgroupId/**/",
+			"User_Huntgroups" => "
 				SELECT
 				    `Huntgroup`.huntgroupName
 				FROM `Huntgroup_Member`
 				INNER JOIN `Huntgroup` USING (huntgroupId)
 				WHERE `Huntgroup_Member`.userId=:userId/**/
-				ORDER BY `Huntgroup`.huntgroupName ASC"
-			,'ComputerInfo_All' => "
+				ORDER BY `Huntgroup`.huntgroupName ASC",
+			"ComputerInfo_All" => "
 				select
 					ci.*
 				from
 					ComputerInfo ci
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'ProcessorInfo_All' => "
+				limit 60;",
+			"ProcessorInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -80,8 +84,8 @@ class qCombined {
 					inner join ProcessorInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'MemoryModulInfo_All' => "
+				limit 60;",
+			"MemoryModulInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -90,8 +94,8 @@ class qCombined {
 					inner join MemoryModuleInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'DiskDriveInfo_All' => "
+				limit 60;",
+			"DiskDriveInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -100,8 +104,8 @@ class qCombined {
 					inner join DiskDriveInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'LogicalDiskInfo_All' => "
+				limit 60;",
+			"LogicalDiskInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -110,8 +114,8 @@ class qCombined {
 					inner join LogicalDiskInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'NetworkAdapterInfo_All' => "
+				limit 60;",
+			"NetworkAdapterInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -120,8 +124,8 @@ class qCombined {
 					inner join NetworkAdapterInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'NetworkConnectionInfo_All' => "
+				limit 60;",
+			"NetworkConnectionInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -130,8 +134,8 @@ class qCombined {
 					inner join NetworkConnectionInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'BIOSInfo_All' => "
+				limit 60;",
+			"BIOSInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -140,8 +144,8 @@ class qCombined {
 					inner join BIOSInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'VolumeInfo_All' => "
+				limit 60;",
+			"VolumeInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -150,8 +154,8 @@ class qCombined {
 					inner join VolumeInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'MotherboardInfo_All' => "
+				limit 60;",
+			"MotherboardInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -160,8 +164,8 @@ class qCombined {
 					inner join MotherboardInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			,'ThermalZoneInfo_All' => "
+				limit 60;",
+			"ThermalZoneInfo_All" => "
 				select
 					p.*
 					, ci.timestamp
@@ -170,8 +174,8 @@ class qCombined {
 					inner join ThermalZoneInfo p ON ci.id = p.computer_info_id
 				order by
 					ci.timestamp desc
-				limit 60;"
-			, 'Performance_Full' => "
+				limit 60;",
+			"Performance_Full" => "
 				SELECT 
 					ci.id AS computer_info_id,
 					ci.timestamp,
@@ -300,15 +304,16 @@ class qCombined {
 				LEFT JOIN VolumeInfo v ON ci.id = v.computer_info_id
 				LEFT JOIN MotherboardInfo mo ON ci.id = mo.computer_info_id
 				LEFT JOIN ThermalZoneInfo tz ON ci.id = tz.computer_info_id
-				GROUP BY ci.id;"
-			
-		);
+				GROUP BY ci.id;",
+		];
 	}
-	private static function Update() {
+	private static function Update()
+	{
 		return "";
 	}
-	private static function Delete() {
+	private static function Delete()
+	{
 		return "";
 	}
 }
-	
+?>

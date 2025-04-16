@@ -19,13 +19,6 @@ class Table extends Queries
         parent::__construct();
     }
 
-/**
- * Initial check on database, creates tables and default data
- *
- * @return true
- *
- * @author Liszi Dániel
- */
     public static function initTable(): bool
     {
         if (! isset($_SESSION['Database'])) {
