@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Data;
 
-use Database\dbStorageGroup;
+use Database\Routing;
 
 use Toolkit\{Log, Check, Valid};
 
@@ -14,7 +14,7 @@ class dStorageGroup implements iData
 
     public function __construct()
     {
-        self::$dbStorageGroup = new dbStorageGroup();
+        self::$dbStorageGroup = new Routing(13);
     }
 
     public static function Insert(array $array = []): bool

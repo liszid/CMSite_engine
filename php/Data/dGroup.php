@@ -11,7 +11,11 @@ use Toolkit\{Log, Check, Valid};
 class dGroup implements iData
 {
     private static $dbGroup;
-
+    /**
+     * [[Description]]
+     * @private
+     * @author Daniel Liszi
+     */
     public function __construct()
     {
         self::$dbGroup = new Routing(1);

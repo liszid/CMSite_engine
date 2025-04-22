@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Data;
 
-use Database\dbStorageTotal;
+use Database\Routing;
 
 use Toolkit\{
     Log
@@ -18,7 +18,7 @@ class dStorageTotal implements iData
 
     public function __construct()
     {
-        self::$dbStorageTotal = new dbStorageTotal();
+        self::$dbStorageTotal = new Routing(12);
     }
 
     public static function Insert(array $array = array()): bool

@@ -33,18 +33,28 @@ class Queries extends Database
         28 => "VolumeInfo",
         29 => "MotherboardInfo",
         30 => "ThermalZoneInfo",
-        90 => "Log",
-        98 => "Tools",
         99 => "Combined",
     ];
-
+    
+    /**
+     * [[Description]]
+     * @private
+     * @author Daniel Liszi
+     */
     public function __construct()
     {
         parent::__construct();
 
         self::$tableQueries = \Queries\qDatabase::Get();
     }
-
+    
+    /**
+     * Generates array with queries related to Table
+     * @param integer requires Id of the class, which is related to TABLENAMES
+     * @return array all queries for DB tables
+     * @author Daniel Liszi
+     * @createDate 2020.11.04
+     */
     public function qGet(int $classId): array
     {
         $returnArray = [];
@@ -116,8 +126,7 @@ class Queries extends Database
         }
         return $returnArray;
     }
- 
-    
+
     public static function qRun(array $array): object
     {
         try {

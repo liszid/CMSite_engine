@@ -1,4 +1,12 @@
 <?php
+/**
+ * Executes powershell script, then inserts data from XML into SQL DB
+ * @author Daniel Liszi
+ * @createDate 03/04/2025
+ * @lastmodifiedBy Daniel Liszi
+ * @lastmodifiedDate 04/22/2025
+ * @private
+ */
 $ps1File = 'LaptopData.ps1';
 $command = "powershell.exe -ExecutionPolicy Bypass -File \"$ps1File\"";
 $output = shell_exec($command);

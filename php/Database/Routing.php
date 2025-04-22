@@ -15,10 +15,23 @@ class Routing extends Table
     const DB_ACT = [
         0 => ["Insert", "Select", "Update", "Delete"], //User
         1 => ["Insert", "Select", "Update", "Delete"], //Group == Authorities
-        2 => ["Insert", "Select", "Update", "Delete"], //Group Member
+        2 => ["Insert", "Select", "Update", "Delete"], //Group Member == Authority assignment
+        4 => ["Insert", "Select", "Update", "Delete"], //Huntgroup Member == Group member
+        10 => ["Select"], //Storage ID
+        11 => ["Select"], //Storage Phys
+        12 => ["Select"], //Storage Total
+        13 => ["Select"], //Storage Group
         99 => ["Select"], //Combined
     ];
-
+    /**
+     * Enables access to ID connected DB Tables by routing the requests
+     * @private
+     * @author Daniel Liszi
+     * @param integer int $id database table ID
+     * @createDate 04/16/2025
+     * @lastmodifiedBy Daniel Liszi
+     * @lastmodifiedDate 04/22/2025
+     */
     public function __construct(int $id)
     {
         parent::__construct();

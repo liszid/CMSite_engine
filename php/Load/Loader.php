@@ -119,3 +119,4 @@ class Loader
         return $returnString;
     }
 }
+?>

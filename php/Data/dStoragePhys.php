@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Data;
 
-use Database\dbStoragePhys;
+use Database\Routing;
 
 use Toolkit\{Log, Check, Valid};
 
@@ -14,7 +14,7 @@ class dStoragePhys implements iData
 
     public function __construct()
     {
-        self::$dbStoragePhys = new dbStoragePhys();
+        self::$dbStoragePhys = new Routing(11);
     }
 
     public static function Insert(array $array = []): bool
