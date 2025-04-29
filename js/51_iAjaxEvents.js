@@ -202,7 +202,7 @@ const iAjaxEvnts = (iAjaxEvnts = Object) =>
             if ($("#calendar").length !== 0) {
                 $("#calendar").evoCalendar({
                     theme: "Default",
-                    language: "hu",
+                    language: "en",
                     format: "mm/dd/yyyy",
                     todayHighlight: false,
                     firstDayOfWeek: 1,
@@ -212,7 +212,6 @@ const iAjaxEvnts = (iAjaxEvnts = Object) =>
                     sidebarToggler: false
                 });
                 var data = JSON.parse(jQuery("#json").text());
-                console.log(data);
                 $("#calendar").evoCalendar("addCalendarEvent", data);
             }
 

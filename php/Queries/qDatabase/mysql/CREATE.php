@@ -71,6 +71,19 @@ interface CREATE
                 CONSTRAINT huntgroupMemberGroupCascade FOREIGN KEY (huntgroupId) REFERENCES `Huntgroup` (huntgroupId) ON DELETE CASCADE,
                 CONSTRAINT huntgroupMemberUserCascade FOREIGN KEY (userId) REFERENCES `User` (userId) ON DELETE CASCADE
             );",
+        5 => "
+            CREATE TABLE IF NOT EXISTS `Calendar`(
+                eventId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
+                userId INT(6) UNSIGNED NOT NULL,
+                eventTitle VARCHAR(128) NOT NULL,
+                eventDescription VARCHAR(128) NULL,
+                eventStartDate DATETIME NOT NULL,
+                eventEndDate DATETIME NOT NULL,
+                eventColor VARCHAR(32) NULL DEFAULT '#198754',
+                eventEveryYear BOOLEAN NOT NULL DEFAULT FALSE,
+                CONSTRAINT primaryKeyCalendar PRIMARY KEY (eventId),
+                CONSTRAINT calendarUserCascade FOREIGN KEY (userId) REFERENCES `User` (userId) ON DELETE CASCADE
+            );",
         10 => "
             CREATE TABLE `StorageId` (
                 storage_id INT AUTO_INCREMENT PRIMARY KEY,

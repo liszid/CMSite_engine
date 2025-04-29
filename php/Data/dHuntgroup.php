@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Data;
 
-use Database\dbHuntgroup;
+use Database\Routing;
 
 use Toolkit\{Log, Check, Valid};
 
@@ -15,8 +15,8 @@ class dHuntgroup implements iData
 
     public function __construct()
     {
-        self::$dbHuntgroup = new dbHuntgroup();
-        self::$dHuntgroup_Member = new dHuntgroup_Member();
+        self::$dbHuntgroup = new Routing(3);
+        self::$dHuntgroup_Member = new dHuntgroup_Member(4);
     }
 
     public static function Insert(array $array = []): bool

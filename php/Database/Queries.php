@@ -18,6 +18,7 @@ class Queries extends Database
         2 => "Group_Member",
         3 => "Huntgroup",
         4 => "Huntgroup_Member",
+        5 => 'Calendar',
         10 => "StorageId",
         11 => "StoragePhys",
         12 => "StorageTotal",
@@ -33,6 +34,9 @@ class Queries extends Database
         28 => "VolumeInfo",
         29 => "MotherboardInfo",
         30 => "ThermalZoneInfo",
+        // Jelszó tároló visszahozása, csoportosítás nélkül, jelszavakat egyenként lehessen megosztani
+        // Jegyzetek visszahozása, melléklet nélkül
+        // Streaming / Könyv wishlist
         99 => "Combined",
     ];
     

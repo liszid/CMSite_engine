@@ -25,6 +25,7 @@ class Table extends Queries
     /**
      * Checks if DB Table exists, if not, it will create table and insert default data if exists
      * @public
+     * @return boolean Returns if table initialization was successfull or not
      * @author Daniel Liszi
      * @createDate 11/04/2020
      * @lastmodifiedBy Daniel Liszi

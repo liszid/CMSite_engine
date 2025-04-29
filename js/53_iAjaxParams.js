@@ -92,7 +92,8 @@ const iAjaxParams = (iAjaxParams = Object) =>
                             "modalDialog"
                         ],
                         ["admMemsEdit", "x=Administrative&y=Users&z=Edit&Save=", "button", [], "modalDialog"],
-                        ["admUsrPass", "x=Administrative&y=Users&z=Reset&Save=", "button", [], "modalDialog"]
+                        ["admUsrPass", "x=Administrative&y=Users&z=Reset&Save=", "button", [], "modalDialog"],
+                        ["usrCalendarAdd", "x=Plans&y=Calendar&z=Add&Save=", "button", [], "modalDialog"]
                     ];
                 }
             });

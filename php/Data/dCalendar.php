@@ -4,47 +4,50 @@ declare(strict_types=1);
 
 namespace Data;
 
-use Database\Routing;
-
 use Toolkit\{Log, Check, Valid};
 
-class dStorageGroup implements iData
+use Database\Routing;
+
+use Samples\sActivity;
+
+class dCalendar implements iData
 {
-    private static $dbStorageGroup;
+    private static $dbCalendar;
 
     public function __construct()
     {
-        self::$dbStorageGroup = new Routing(13);
+        self::$dbCalendar = new Routing(5);
     }
 
     public static function Insert(array $array = []): bool
     {
-        return self::$dbStorageGroup->Insert($array);
+        return self::$dbCalendar->Insert($array);
     }
 
     public static function Select(array $array = [], string $type = ""): array
     {
-        return self::$dbStorageGroup->Select($array, $type);
+        return self::$dbCalendar->Select($array, $type);
     }
 
     public static function Update(array $array = [], string $type = ""): bool
     {
-        return self::$dbStorageGroup->Update($array, $type);
+        return self::$dbCalendar->Update($array, $type);
     }
 
     public static function Delete(array $array = [], string $type = ""): bool
     {
-        return self::$dbStorageGroup->Delete($array, $type);
+        return self::$dbCalendar->Delete($array, $type);
     }
 
     public static function Class_Id(): int
     {
-        return self::$dbStorageGroup->Class_Id();
+        return self::$dbCalendar->Class_Id();
     }
 
     public static function Check(): bool
     {
-        return self::$dbStorageGroup->Check();
+        return self::$dbCalendar->Check();
     }
 }
+
 ?>

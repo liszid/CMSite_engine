@@ -147,7 +147,7 @@ float:left;
 width:100%;
 max-width:calc(100% - 600px);
 margin-left:200px;
-background-color:#fff;
+background-color:#adb5bd;
 box-shadow:5px 0 18px -3px rgba(0,0,0,.15);
 transition:all .3s ease;
 z-index:1
@@ -188,7 +188,7 @@ text-align:center;
 text-transform:uppercase;
 font-weight:600;
 font-size:30px;
-color:#8773c1
+color: white;
 }
 
 th[colspan="7"]::after {
@@ -262,7 +262,7 @@ right:0;
 width:400px;
 height:100%;
 padding:70px 30px 60px;
-background-color:#fbfbfb;
+background-color: #adb5bd;
 transition:all .3s ease;
 overflow-y:auto;
 z-index:0
