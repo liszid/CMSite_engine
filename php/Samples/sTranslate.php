@@ -6,7 +6,7 @@ namespace Samples;
 
 use Toolkit\{Log, Check, Valid};
 
-$lang = "en";
+$lang = "hu";
 
 abstract class AbstractTranslate
 {

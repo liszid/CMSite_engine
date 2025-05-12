@@ -14,7 +14,7 @@ class sCalendar
 {
     /** @var object $dCombined dCombined class object */
     protected static $dCalendar;
-    
+
     /** @var const CALENDAR Class constant for dCalendar form elements */
     const CALENDAR = [
         [
@@ -24,17 +24,14 @@ class sCalendar
             "tags" => "Add,View,Edit",
             "must-fill" => true,
         ],
-        ["data" => "eventDescription", "desc" => "Esemény leírása", "type" => "text", "tags" => "Add,View,Edit"],
         [
-            "data" => "eventStartDate",
-            "desc" => "Kezdete",
-            "type" => "date",
-            "tags" => "Add,View,Edit",
-            "must-fill" => true,
+            "data" => "eventDescription",
+            "desc" => "Esemény leírása", 
+            "type" => "text", 
+            "tags" => "Add,View,Edit"
         ],
-        ["data" => "eventEndDate", "desc" => "Vége", "type" => "date", "tags" => "Add,View,Edit"],
     ];
-    
+
     /** @var const TYPES Used for getting page specific variables, like form element IDs, form elements, tables */
     const TYPES = [
         "Calendar" => [
@@ -43,7 +40,7 @@ class sCalendar
             "dbTableId" => "eventId",
         ],
     ];
-    
+
     /**
      * Sets the class variable : dCalendar
      * @author Liszi Dániel
@@ -52,7 +49,7 @@ class sCalendar
     {
         self::$dCalendar = new dCalendar();
     }
-    
+
     /**
      * Used for events indicated by users
      * @param $array array
@@ -72,7 +69,7 @@ class sCalendar
 
         return $returnContent;
     }
-    
+
     /**
      * Returns Adding form
      * @param $array array
@@ -83,6 +80,8 @@ class sCalendar
     {
         self::setDCalendar();
         $wClass = self::$dCalendar;
+        $startDate = date("Y-m-d");
+        Log::Export($_POST);
         if (!isset($array["Save"])) {
             return '
                 <form method="post" class="form-group col-12 p-0 m-0" autocomplete="on">
@@ -99,6 +98,20 @@ class sCalendar
                     "constData" => $array["defaultData"],
                     "staticData" => ["origo" => $array["origo"], "tag" => "Add"],
                 ]) .
+                sForm::Input([
+                    "origo" => $array["origo"],
+                    "data" => "eventStartDate",
+                    "desc" => "Kezdete",
+                    "type" => "date",
+                    "value" => $startDate,
+                    "must-fill" => true,
+                ]) .
+                sForm::Input([
+                    "origo" => $array["origo"],
+                    "data" => "eventEndDate",
+                    "desc" => "Vége",
+                    "type" => "date"
+                ]) .
                 '</div>
                     </div>
                     <div class="form-group">
@@ -110,7 +123,6 @@ class sCalendar
                     </div>
                 </form>';
         } else {
-            Log::Export($array);
             return "<h4>" .
                 ($wClass->Insert($array)
                     ? sTranslate::ACTION["Success"]["content"]
@@ -129,9 +141,7 @@ class sCalendar
     public static function Delete(array $array): string
     {
         self::setDCalendar();
-
         $wClass = self::$dCalendar;
-
         return "<h4>" .
             ($wClass->Delete([
                 $array["dbTableId"] => (int) $array["dp"],

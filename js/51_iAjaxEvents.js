@@ -202,7 +202,7 @@ const iAjaxEvnts = (iAjaxEvnts = Object) =>
             if ($("#calendar").length !== 0) {
                 $("#calendar").evoCalendar({
                     theme: "Default",
-                    language: "en",
+                    language: "hu",
                     format: "mm/dd/yyyy",
                     todayHighlight: false,
                     firstDayOfWeek: 1,

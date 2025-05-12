@@ -218,7 +218,7 @@ interface TRANSLATE
             "card" => "",
         ],
         "Performance/Laptop" => [
-            "navbar" => "Laptop teljesítmény",
+            "navbar" => "Teljesítmény",
             "fa" => "hdd-o",
             "title" => "Lokális laptop teljesítménye",
             "help" => "",
@@ -227,7 +227,6 @@ interface TRANSLATE
                 "View" => "Teljesítmény megtekintése",
             ],
         ],
-        ,
         "Plans" => [
             "navbar" => "Tervező",
             "fa" => "calendar",
