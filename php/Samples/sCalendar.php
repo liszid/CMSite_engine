@@ -6,7 +6,7 @@ namespace Samples;
 
 use Toolkit\{Log, Check, Valid};
 
-use Data\{dCalendar};
+use Data\{dCalendar, dKanban};
 
 class sCalendar
 {

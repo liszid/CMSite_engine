@@ -10,7 +10,7 @@ interface USERS
         "tableId" => "tableHomeUsers",
         "tableRoot" => "Users",
         "data" => [
-            "userId" => ["text" => "Id", "tooltip" => ""],
+            "userId" => ["text" => "Id", "tooltip" => "", "never" => "true"],
             "userThumbnail" => ["text" => "Ikon", "tooltip" => ""],
             "userLastName" => ["text" => "Vezetéknév", "tooltip" => ""],
             "userFirstName" => ["text" => "Keresztnév", "tooltip" => ""],

@@ -10,7 +10,7 @@ interface STORAGE
         "tableId" => "tableCapMngmtStorage",
         "tableRoot" => "Storage",
         "data" => [
-            "storage_id" => ["text" => "Azonosító", "tooltip" => ""],
+            "storage_id" => ["text" => "Azonosító", "tooltip" => "", "never" => "true"],
             "sym_id" => ["text" => "Symmetrix azonosító", "tooltip" => ""],
             "srp_name" => ["text" => "SRP név", "tooltip" => ""],
             "insert_date" => ["text" => "Beillesztés dátuma", "tooltip" => ""],
@@ -23,7 +23,7 @@ interface STORAGE
         "tableId" => "tableCapMngmtStoragePhys",
         "tableRoot" => "StoragePhys",
         "data" => [
-            "sphys_id" => ["text" => "Azonosító", "tooltip" => ""],
+            "sphys_id" => ["text" => "Azonosító", "tooltip" => "", "never" => "true"],
             "storage_id" => ["text" => "Storage ID", "tooltip" => ""],
             "physical_capacity" => ["text" => "Fizikai kapacitás", "tooltip" => ""],
             "usable_capacity" => ["text" => "Használható kapacitás", "tooltip" => ""],
@@ -44,7 +44,7 @@ interface STORAGE
         "tableId" => "tableCapMngmtStorageTotal",
         "tableRoot" => "StorageTotal",
         "data" => [
-            "stotal_id" => ["text" => "Azonosító", "tooltip" => ""],
+            "stotal_id" => ["text" => "Azonosító", "tooltip" => "", "never" => "true"],
             "sphys_id" => ["text" => "Storage Phys ID", "tooltip" => ""],
             "provisioned_capacity" => ["text" => "Provisioned kapacitás", "tooltip" => ""],
             "subscribed_capacity" => ["text" => "Előfizetett kapacitás", "tooltip" => ""],
@@ -72,7 +72,7 @@ interface STORAGE
         "tableId" => "tableCapMngmtStorageGroup",
         "tableRoot" => "StorageGroup",
         "data" => [
-            "sgroup_id" => ["text" => "Azonosító", "tooltip" => ""],
+            "sgroup_id" => ["text" => "Azonosító", "tooltip" => "", "never" => "true"],
             "sphys_id" => ["text" => "Storage Phys ID", "tooltip" => ""],
             "group_name" => ["text" => "Csoport név", "tooltip" => ""],
             "provisioned" => ["text" => "Provisioned", "tooltip" => ""],

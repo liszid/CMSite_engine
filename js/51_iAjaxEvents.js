@@ -84,64 +84,83 @@ const iAjaxEvnts = (iAjaxEvnts = Object) =>
             }
         }
 
-        evntDataTable() {
-            let _self = this;
-            if ($("table").length !== 0) {
-                $("table").each(function () {
-                    if (!$.fn.dataTable.isDataTable(this)) {
-                        $('[data-toggle="tooltip"]').tooltip();
-                        if ($.inArray($(this).attr("id"), _self.tableSearching) >= 0) {
-                            $("#" + $(this).attr("id") + " thead tr:eq(0) th").each(function (i) {
-                                var title = $(this).text();
-                                if (title !== "" && !$(this).hasClass("never")) {
-                                    $(this).html('<center><input type="text" placeholder="' + title + '" /></center>');
-                                    $("input", this).attr("size", $("input", this).attr("placeholder").length);
-                                    $("input", this).on("keyup change", function () {
-                                        if (table.column(i).search() !== this.value) {
-                                            table.column(i).search(this.value).draw();
-                                        }
-                                    });
-                                }
-                            });
-                            var table = $(this).DataTable({
-                                columnDefs: [
-                                    { targets: "no-sort", orderable: false },
-                                    { targets: "never", orderable: false, order: [], visible: false }
-                                ],
-                                lengthMenu: [
-                                    [25, 50, 100, -1],
-                                    [25, 50, 100, "Mind"]
-                                ],
-                                order: [[0, "desc"]],
-                                fixedHeader: true,
-                                language: {
-                                    url: "plug-ins/datatable.lang.hungarian.json"
-                                }
-                            });
-                        } else {
-                            if ($.inArray($(this).attr("id"), _self.tableNonSearching) >= 0) {
-                                $(this).DataTable({
-                                    order: [[0, "asc"]],
-                                    columnDefs: [
-                                        { targets: "no-sort", orderable: false },
-                                        { targets: "never", orderable: false, order: [], visible: false }
-                                    ],
-                                    lengthMenu: [
-                                        [25, 50, 100, -1],
-                                        [25, 50, 100, "Mind"]
-                                    ],
-                                    paging: false,
-                                    searching: false,
-                                    language: {
-                                        url: "plug-ins/datatable.lang.hungarian.json"
-                                    }
-                                });
-                            }
+        evntDataTable(sortKey = null, sortOrder = "asc") {
+    let _self = this;
+    if ($("table").length !== 0) {
+        $("table").each(function () {
+            if (!$.fn.dataTable.isDataTable(this)) {
+                $('[data-toggle="tooltip"]').tooltip();
+
+                // Táblázat beállítások lekérése (PHP által definiált értékek)
+                let tableConfig = $(this).data("config") || { sortKey: null, hiddenColumns: [] };
+                let configSortKey = tableConfig.sortKey ? tableConfig.sortKey[0] : sortKey;
+                let configSortOrder = tableConfig.sortKey ? tableConfig.sortKey[1] : sortOrder;
+                let hiddenColumns = tableConfig.hiddenColumns || [];
+
+                // Ha nincs PHP által megadott sortKey, akkor automatikusan megkeressük az első "never" oszlopot
+                if (configSortKey === null) {
+                    $("#" + $(this).attr("id") + " thead tr:eq(0) th").each(function (i) {
+                        if ($(this).hasClass("never")) {
+                            configSortKey = i;
+                            return false; // Kilépünk az iterációból, ha megtaláltuk az első "never" oszlopot
                         }
+                    });
+                }
+
+                if ($.inArray($(this).attr("id"), _self.tableSearching) >= 0) {
+                    $("#" + $(this).attr("id") + " thead tr:eq(0) th").each(function (i) {
+                        var title = $(this).text();
+                        if (title !== "" && !$(this).hasClass("never")) {
+                            $(this).html('<center><input type="text" placeholder="' + title + '" /></center>');
+                            $("input", this).attr("size", $("input", this).attr("placeholder").length);
+                            $("input", this).on("keyup change", function () {
+                                if (table.column(i).search() !== this.value) {
+                                    table.column(i).search(this.value).draw();
+                                }
+                            });
+                        }
+                    });
+
+                    var table = $(this).DataTable({
+                        columnDefs: [
+                            { targets: "no-sort", orderable: false },
+                            { targets: "never", orderable: false, order: [], visible: false },
+                            { targets: hiddenColumns, visible: false } // Rejtett oszlopok kezelése
+                        ],
+                        lengthMenu: [
+                            [25, 50, 100, -1],
+                            [25, 50, 100, "Mind"]
+                        ],
+                        order: configSortKey !== null ? [[configSortKey, configSortOrder]] : [], // Megőrizzük a PHP-s prioritást
+                        fixedHeader: true,
+                        language: {
+                            url: "plug-ins/datatable.lang.hungarian.json"
+                        }
+                    });
+                } else {
+                    if ($.inArray($(this).attr("id"), _self.tableNonSearching) >= 0) {
+                        $(this).DataTable({
+                            order: configSortKey !== null ? [[configSortKey, configSortOrder]] : [], // Itt is megőrizzük a PHP prioritást
+                            columnDefs: [
+                                { targets: "no-sort", orderable: false },
+                                { targets: "never", orderable: false, order: [], visible: false }
+                            ],
+                            lengthMenu: [
+                                [25, 50, 100, -1],
+                                [25, 50, 100, "Mind"]
+                            ],
+                            paging: false,
+                            searching: false,
+                            language: {
+                                url: "plug-ins/datatable.lang.hungarian.json"
+                            }
+                        });
                     }
-                });
+                }
             }
-        }
+        });
+    }
+}
 
         evntHrefs(srcTag = this.tagA) {
             let _self = this;

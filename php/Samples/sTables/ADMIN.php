@@ -11,7 +11,7 @@ interface ADMIN
         "tableRoot" => "Administrative/Groups",
         "tableRole" => "mngGroups",
         "data" => [
-            "groupId" => ["text" => "Id", "tooltip" => ""],
+            "groupId" => ["text" => "Id", "tooltip" => "", "never" => "true"],
             "groupName" => ["text" => "Név", "tooltip" => ""],
             "groupDesc" => ["text" => "Leírás", "tooltip" => ""],
         ],
@@ -27,7 +27,7 @@ interface ADMIN
         "tableRoot" => "Administrative/Huntgroups",
         "tableRole" => "mngHuntgroups",
         "data" => [
-            "huntgroupId" => ["text" => "Id", "tooltip" => ""],
+            "huntgroupId" => ["text" => "Id", "tooltip" => "", "never" => "true"],
             "huntgroupName" => ["text" => "Név", "tooltip" => ""],
             "huntgroupDesc" => ["text" => "Leírás", "tooltip" => ""],
         ],
@@ -43,7 +43,7 @@ interface ADMIN
         "tableRoot" => "Administrative/Membership",
         "tableRole" => "mngMembers",
         "data" => [
-            "groupMemberId" => ["text" => "Id", "tooltip" => ""],
+            "groupMemberId" => ["text" => "Id", "tooltip" => "", "never" => "true"],
             "groupName" => ["text" => "Jogosultság", "tooltip" => ""],
             "groupDesc" => ["text" => "Jogosultság leírás", "tooltip" => ""],
             "userName" => ["text" => "Felhasználónév", "tooltip" => ""],
@@ -58,7 +58,7 @@ interface ADMIN
         "tableRoot" => "Administrative/Users",
         "tableRole" => "mngUsers",
         "data" => [
-            "userId" => ["text" => "Id", "tooltip" => ""],
+            "userId" => ["text" => "Id", "tooltip" => "", "never" => "true"],
             "userName" => ["text" => "Felhasználó", "tooltip" => ""],
             "groupName" => ["text" => "Jogosultság", "tooltip" => ""],
             "groupDesc" => ["text" => "Jogosultság leírás", "tooltip" => ""],
@@ -93,7 +93,7 @@ interface ADMIN
         "tableRoot" => "Administrative/Logs",
         "tableRole" => "mngTools",
         "data" => [
-            "logId" => ["text" => "Id", "tooltip" => ""],
+            "logId" => ["text" => "Id", "tooltip" => "", "never" => "true"],
             "logAction" => ["text" => "Action", "tooltip" => ""],
             "logCategory" => ["text" => "Category", "tooltip" => ""],
             "logText" => ["text" => "Text", "tooltip" => ""],

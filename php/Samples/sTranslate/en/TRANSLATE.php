@@ -245,10 +245,10 @@ interface TRANSLATE
             ],
         ],
         "Plans/Kanban" => [
-            "navbar" => "Kanban",
-            "fa" => "calendar",
-            "title" => "View Kanban",
-            "help" => "To view the kanban list, click on the 'Availability' button in the menu bar",
+            "navbar" => "Tasks",
+            "fa" => "list-ul",
+            "title" => "View Tasks",
+            "help" => "To view the kanban list, click on the button in the menu bar",
             "card" => "Click on the card to view the kanban list",
             "info" => [
                 "color" => "success",

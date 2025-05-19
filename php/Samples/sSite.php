@@ -167,7 +167,18 @@ class sSite
 				"Desc" => sTranslate::Prompt($navName),
 				"hidden" => 1,
 			];
-
+			
+			$navName = "Plans/Kanban";
+			$navArray[] = [
+				"liClass" => "",
+				"aClass" => "",
+				"faClass" => sTranslate::Prompt($navName, "fa"),
+				"dataToggle" => false,
+				"dataLink" => $navName,
+				"Desc" => sTranslate::Prompt($navName),
+				"hidden" => 1,
+			];
+			
 			$navName = "Performance/Laptop";
 			$navArray[] = [
 				"liClass" => "",

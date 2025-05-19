@@ -23,6 +23,8 @@ class Routing extends Table
         11 => ["Select"],                               // Storage Phys
         12 => ["Select"],                               // Storage Total
         13 => ["Select"],                               // Storage Group
+        31 => ["Select"],                               // Kanban Type
+        32 => ["Insert", "Select", "Update", "Delete"], // Kanban
         99 => ["Select"],                               // Combined
     ];
     

@@ -159,16 +159,11 @@ class sCard
                     <div class="card bg-%s">
                         <div class="d-flex flex-nowrap flex-column flex-sm-row m-1" id="%s">
                             <h5 class="mb-0 col-12 col-sm">
-                                <button class="d-flex justify-content-sm-start justify-content-center col-12 btn btn-link collapsed text-%s" data-toggle="collapse" data-target="#%s" aria-expanded="false" aria-controls="%s">
-                                    %s
+                                <button class="d-flex justify-content-sm-start justify-content-center col-12 btn btn-link disabled text-%s"  data-target="#%s" aria-expanded="false" aria-controls="%s">
+                                    
                                 </button>
                             </h5>
                             %s
-                        </div>
-                        <div id="%s" class="collapse" aria-labelledby="%s" data-parent="#%s">
-                            <div class="card-body" style="color:%s">
-                                %s
-                            </div>
                         </div>
                     </div>
                 </div>',
@@ -178,13 +173,7 @@ class sCard
                 self::getResolvedStyle("card_content_color"),
                 $collapseId,
                 $collapseId,
-                $contHeader,
                 $contAddButton,
-                $collapseId,
-                $headingId,
-                $accordionId,
-                self::getResolvedStyle("card_content_color"),
-                $contText
             );
         }
 

@@ -38,6 +38,13 @@ interface INSERT
 			) VALUES
 				(1, 1, 0)
 				,(1, 2, 0);",
+		31 => "
+			INSERT INTO `kanbanType`(
+				kanbanTypeName, kanbanTypeList, isDelete
+			) VALUES
+				('<span class=\'btn btn-success\'>Tervezett</span>', 'Tervezett', 0)
+				,('<span class=\'btn btn-warning\'>Folyamatban</span>', 'Folyamatban', 0)
+				,('<span class=\'btn btn-danger\'>Elvégezve</span>', 'Elvégezve', 0);",
 	];
 }
 ?>

@@ -93,7 +93,9 @@ const iAjaxParams = (iAjaxParams = Object) =>
                         ],
                         ["admMemsEdit", "x=Administrative&y=Users&z=Edit&Save=", "button", [], "modalDialog"],
                         ["admUsrPass", "x=Administrative&y=Users&z=Reset&Save=", "button", [], "modalDialog"],
-                        ["usrCalendarAdd", "x=Plans&y=Calendar&z=Add&Save=", "button", [], "modalDialog"]
+                        ["usrCalendarAdd", "x=Plans&y=Calendar&z=Add&Save=", "button", [], "modalDialog"],
+                        ["usrKanbanAdd", "x=Plans&y=Kanban&z=Add&Save=", "button", [], "modalDialog"],
+                        ["usrKanbanEdit", "x=Plans&y=Kanban&z=Edit&Save=", "button", [], "modalDialog"],
                     ];
                 }
             });
@@ -110,7 +112,8 @@ const iAjaxParams = (iAjaxParams = Object) =>
                         "tableCapMngmtStorage",
                         "tableCapMngmtStoragePhys",
                         "tableCapMngmtStorageTotal",
-                        "tableCapMngmtStorageGroup"
+                        "tableCapMngmtStorageGroup",
+                        "tableKanban",
                     ];
                 }
             });

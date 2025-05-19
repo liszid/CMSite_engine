@@ -34,6 +34,9 @@ class Queries extends Database
         28 => "VolumeInfo",
         29 => "MotherboardInfo",
         30 => "ThermalZoneInfo",
+        31 => "KanbanType",
+        32 => "Kanban",
+        
         // Jelszó tároló visszahozása, csoportosítás nélkül, jelszavakat egyenként lehessen megosztani
         // Jegyzetek visszahozása, melléklet nélkül
         // Streaming / Könyv wishlist

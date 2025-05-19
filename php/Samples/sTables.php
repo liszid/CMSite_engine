@@ -6,7 +6,7 @@ namespace Samples;
 
 use Toolkit\{Log, Check, Valid};
 
-class sTables implements sTables\ADMIN, sTables\USERS, sTables\STORAGE
+class sTables implements sTables\ADMIN, sTables\USERS, sTables\STORAGE, sTables\KANBAN
 {
     const ACTIONS = ["Edit", "View", "Delete", "Reset", "Upload"];
     const ENABLED_ACTIONS = ["View"];
@@ -19,21 +19,45 @@ class sTables implements sTables\ADMIN, sTables\USERS, sTables\STORAGE
 
     private static function Generate(array $array, array $data): string
     {
+        if (!empty($data["sortKey"])) {
+            $sortColumn = $data["sortKey"][0]; // Az oszlop neve
+            $sortOrder = $data["sortKey"][1]; // "asc" vagy "desc"
+
+            if (array_key_exists($sortColumn, $data["data"])) {
+                usort($array, function ($a, $b) use ($sortColumn, $sortOrder) {
+                    // Ellenőrzés: Ha számértékekkel dolgozunk, akkor numerikus összehasonlítást végzünk
+                    if (is_numeric($a[$sortColumn]) && is_numeric($b[$sortColumn])) {
+                        return $sortOrder === "asc" ? $a[$sortColumn] - $b[$sortColumn] : $b[$sortColumn] - $a[$sortColumn];
+                    }
+                    // Ha nem szám, akkor mehet a normál strcmp()
+                    return $sortOrder === "asc" ? strcmp((string) $a[$sortColumn], (string) $b[$sortColumn]) : strcmp((string) $b[$sortColumn], (string) $a[$sortColumn]);
+                });
+            }
+        }
+
+
         $selectedKeys = [];
         $returnString =
-            '<table id="' .
-            $data["tableId"] .
-            '" class="table table-striped display responsive tableBeautify bg-' .
-            $GLOBALS["Site"]["Style"]["Text"]["Header"] .
-            '" style="width:100%">
+            '<table id="' . $data["tableId"] . '" 
+            class="table table-striped display responsive tableBeautify bg-' .
+            $GLOBALS["Site"]["Style"]["Text"]["Header"] . '"
+            style="width:100%" 
+            data-config=\'' . json_encode([
+                "sortKey" => isset($data["sortKey"]) ? [
+                    array_search($data["sortKey"][0], array_keys($data["data"])), 
+                    $data["sortKey"][1]
+                ] : null,
+                "hiddenColumns" => array_keys(array_filter($data["data"], fn($col) => isset($col["never"]) && $col["never"] === true))
+            ]) . '\'>
             <thead><tr>';
+
 
         foreach ($data["data"] as $key => $value) {
             $thTooltip =
                 isset($value["tooltip"]) && Valid::vString($value["tooltip"])
                     ? "data-toggle='tooltip' data-placement='top' title='" . $value["tooltip"] . "'"
                     : "";
-            $thClass = $key === array_key_first($data["data"]) ? "never" : "no-sort";
+            $thClass = isset($value["never"]) && $value["never"] === "true" ? "never" : "no-sort";
             $returnString .=
                 '<th class="' . $thClass . '" ' . $thTooltip . "><center>" . $value["text"] . "</center></th>";
         }
@@ -80,7 +104,7 @@ class sTables implements sTables\ADMIN, sTables\USERS, sTables\STORAGE
                         $tdContent .
                         "</a>";
                 }
-                $returnString .= '<td class="align-baseline"><center>' . $tdContent . "</center></td>";
+                $returnString .= '<td class="align-baseline">' . $tdContent . "</td>";
             }
 
             if (!empty($data["button"])) {
@@ -130,11 +154,11 @@ class sTables implements sTables\ADMIN, sTables\USERS, sTables\STORAGE
                     $buttonData .= $aData . '<i class="fa fa-' . $b["fa"] . '" aria-hidden="true"></i></a>';
                 }
                 $returnString .=
-                    '<td class="align-baseline"><div class="btn-group" role="group">' . $buttonData . "</div></td>";
+                    '<td class="align-baseline"><div class="btn-group" role="group" style="float:right;">' . $buttonData . "</div></td>";
             }
 
             foreach ($selectedKeys as $key) {
-                $returnString .= '<td class="align-baseline"><center>' . $row[$key] . "</center></td>";
+                $returnString .= '<td class="align-baseline">' . $row[$key] . "</td>";
             }
 
             $returnString .= "</tr>";

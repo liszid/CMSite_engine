@@ -8,7 +8,7 @@ use Samples\{sCard, sBreadcrumbs, sFrame, sRedirect};
 
 use Samples\sCalendar as CalDisplay;
 
-use Page\Classes\sCalendar;
+use Page\Classes\{sCalendar, sKanban};
 
 if (isset($sessionUsr["userId"]) && (int) $sessionUsr["canLogin"] > 0) {
     /** @var array $returnArray It stores the content to be displayed */
@@ -27,7 +27,15 @@ if (isset($sessionUsr["userId"]) && (int) $sessionUsr["canLogin"] > 0) {
     if (isset($_POST["y"]) && isset($_POST["z"])) {
         if (Valid::vString(Check::isPost("y")) && Valid::vString(Check::isPost("z"))) {
             $returnArray["path"] = $urlPaths[Check::isPost("y")]["path"] . "/" . Check::isPost("z");
-            $returnArray["content"] = sCalendar::Action($_POST);
+            $returnArray["content"] = '';
+            switch ($_POST["y"]) {
+                case "Calendar":
+                    $returnArray["content"] =sCalendar::Action($_POST);
+                        break;
+                case "Kanban":
+                    $returnArray["content"] =sKanban::Action($_POST);
+                        break;
+            }
         }
         /**
          * Printable section
@@ -50,8 +58,17 @@ if (isset($sessionUsr["userId"]) && (int) $sessionUsr["canLogin"] > 0) {
     } elseif (isset($_POST["y"]) || isset($_POST["b"])) {
         $postUrl = Check::isEither(["post" => ["y", "b"], "fallBack" => "Calendar"]);
         $returnArray["path"] = $urlPaths[$postUrl]["path"];
-        $returnArray["content"] =
-            (int) $sessionUsr[$urlPaths[$postUrl]["role"]] > 0 ? CalDisplay::Display($returnArray) : "";
+        $returnArray["content"] = '';
+        switch ($postUrl) {
+            case "Calendar":
+                $returnArray["content"] =
+                    (int) $sessionUsr[$urlPaths[$postUrl]["role"]] > 0 ? CalDisplay::Display($returnArray) : "";
+                    break;
+            case "Kanban":
+                $returnArray["content"] =
+                    (int) $sessionUsr[$urlPaths[$postUrl]["role"]] > 0 ? sKanban::Page($returnArray) : "";
+                    break;
+        }
         echo isset($returnArray["content"]) ? sFrame::Page($returnArray) : sRedirect::Home();
         /**
          * Collective page with Cards

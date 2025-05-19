@@ -281,7 +281,26 @@ interface CREATE
                 current_temperature DECIMAL(5,2),
                 FOREIGN KEY (computer_info_id) REFERENCES ComputerInfo(id)
             );",
-
+        31 => "
+            CREATE TABLE IF NOT EXISTS `KanbanType`(
+                kanbanTypeId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
+                kanbanTypeName VARCHAR(128) NULL,
+                kanbanTypeList VARCHAR(128) NULL,
+                isDelete INT(1) DEFAULT 1,
+                CONSTRAINT primaryKeyKanbanType PRIMARY KEY (kanbanTypeId)
+            );",
+        32 => "
+            CREATE TABLE IF NOT EXISTS `Kanban`(
+                kanbanId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,
+                kanbanTypeId INT(6) UNSIGNED NOT NULL,
+                kanbanTitle VARCHAR(128) NULL,
+                kanbanText LONGTEXT NULL,
+                userId INT(6) UNSIGNED NOT NULL,
+                isDelete INT(1) DEFAULT 1,
+                CONSTRAINT primaryKeyKanban PRIMARY KEY (kanbanId),
+                CONSTRAINT kanbanTypeCascade FOREIGN KEY (kanbanTypeId) REFERENCES `KanbanType` (kanbanTypeId) ON DELETE CASCADE,
+                CONSTRAINT kanbanUserCascade FOREIGN KEY (userId) REFERENCES `User` (userId) ON DELETE CASCADE
+            );",
         90 => "
             CREATE TABLE IF NOT EXISTS `Log`(
                 logId INT(6) UNSIGNED AUTO_INCREMENT NOT NULL,

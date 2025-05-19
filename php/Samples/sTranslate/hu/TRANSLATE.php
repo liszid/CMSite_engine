@@ -278,7 +278,7 @@ interface TRANSLATE
         ],
         "Plans/Kanban" => [
             "navbar" => "Kanban",
-            "fa" => "calendar",
+            "fa" => "list-ul",
             "title" => "View Kanban",
             "help" => "To view the kanban list, click on the 'Availability' button in the menu bar",
             "card" => "Click on the card to view the kanban list",
@@ -291,10 +291,10 @@ interface TRANSLATE
                 "content" => "",
             ],
             "action" => [
-                "Add" => "Add Event",
-                "Edit" => "Edit Event",
-                "View" => "View Event",
-                "Delete" => "Delete Event",
+                "Add" => "Hozzáad",
+                "Edit" => "Szerkeszt",
+                "View" => "Megtekint",
+                "Delete" => "Töröl",
             ],
         ],
     ];
